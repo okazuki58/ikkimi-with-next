@@ -1,7 +1,7 @@
 import Header from "@/app/ui/header";
 import { ReactNode } from "react";
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+export default function ContentLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />

@@ -1,3 +1,3 @@
-export default function Home() {
-  return <h1>あああ</h1>;
+export default function ContentHome() {
+  return <h1>Content Home</h1>;
 }
