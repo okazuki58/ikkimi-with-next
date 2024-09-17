@@ -1,0 +1,45 @@
+.likeButton {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.heart {
+  fill: #fff;
+  stroke: #6b7280;
+  stroke-width: 1.3px;
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.liked .heart {
+  fill: #fe2c55;
+  stroke: #fe2c55;
+}
+
+.animate {
+  animation: bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+.likeCount {
+  margin-left: 4px;
+  font-size: 14px;
+  color: #6b7280;
+  transition: color 0.3s ease;
+}
+
+.liked .likeCount {
+  color: #fe2c55;
+}
