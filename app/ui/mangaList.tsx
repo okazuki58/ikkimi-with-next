@@ -38,7 +38,7 @@ export default function MangaList({
             >
               <div className="rounded-md overflow-hidden">
                 <Image
-                  src={`https://res.cloudinary.com/ddk8mexzj/image/upload/v1726605680/cover-${manga.id}.jpg`}
+                  src={manga.cover_url}
                   alt={manga.title}
                   width={549}
                   height={780}
