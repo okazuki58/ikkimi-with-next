@@ -3,4 +3,5 @@ export type Manga = {
   title: string;
   cover_url: string;
   description: string;
+  likes: number;
 };

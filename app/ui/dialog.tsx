@@ -14,12 +14,14 @@ interface MangaDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   manga: Manga | null;
+  isAnimating: boolean;
 }
 
 export default function MangaDialog({
   isOpen,
   setIsOpen,
   manga,
+  isAnimating,
 }: MangaDialogProps) {
   if (!manga) return null;
 
@@ -30,14 +32,15 @@ export default function MangaDialog({
       className="relative z-10"
     >
       <DialogBackdrop
-        transition
-        className="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in md:block"
+        className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+        aria-hidden="true"
       />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
+        <div className="flex min-h-full items-stretch justify-center text-center md:items-center px-4">
           <DialogPanel
             transition
-            className="flex w-full transform text-left text-base transition data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in md:my-8 md:max-w-2xl md:px-4 data-[closed]:md:translate-y-0 data-[closed]:md:scale-95 lg:max-w-4xl"
+            className={`flex w-full transform text-left text-base transition data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in my-8 md:max-w-2xl md:px-4 data-[closed]:md:translate-y-0 data-[closed]:md:scale-95 lg:max-w-4xl
+            ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
           >
             <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
               <button

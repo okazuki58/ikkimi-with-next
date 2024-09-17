@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Manga } from "../lib/definitions";
-import { HeartIcon } from "@heroicons/react/24/outline";
-import MangaDialog from "./dialog";
+import LikeButton from "./likeButton";
 import { useState } from "react";
+import MangaDialog from "./dialog";
 
 export default function MangaList({
   mangas,
@@ -14,12 +13,14 @@ export default function MangaList({
   mangas: Manga[];
   sectionTitle: string;
 }) {
-  let [isOpen, setIsOpen] = useState(false);
-  let [selectedManga, setSelectedManga] = useState<Manga | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
     setIsOpen(true);
+    setTimeout(() => setIsAnimating(true), 50);
   };
 
   return (
@@ -32,7 +33,6 @@ export default function MangaList({
         {mangas.map((manga) => (
           <div key={manga.id} className="flex flex-col pb-5">
             <div
-              // href={`/content/description/${manga.id}`}
               className="flex flex-col gap-2 group pb-2 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
             >
@@ -46,14 +46,9 @@ export default function MangaList({
                   className="transition-transform transform md:group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-sm font-medium line-clamp-2">
-                {manga.title}
-              </h3>
+              <h3 className="md:text-sm line-clamp-2">{manga.title}</h3>
             </div>
-            <button className="flex gap-1 text-gray-500">
-              <HeartIcon className="w-5 h-5" />
-              <span className="text-sm">1,900</span>
-            </button>
+            <LikeButton initialLikes={manga.likes} mangaId={manga.id} />
           </div>
         ))}
       </div>
@@ -61,6 +56,7 @@ export default function MangaList({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         manga={selectedManga}
+        isAnimating={isAnimating}
       />
     </div>
   );

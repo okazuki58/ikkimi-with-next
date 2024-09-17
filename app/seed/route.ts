@@ -8,18 +8,21 @@ async function seedMangaDatas() {
   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
   await client.sql`
-    CREATE TABLE IF NOT EXISTS mangadatas (
+    DROP TABLE IF EXISTS mangadatas;
+    CREATE TABLE mangadatas (
       id INTEGER PRIMARY KEY,
       title VARCHAR(255) NOT NULL,
       cover_url VARCHAR(255) NOT NULL,
-      description TEXT
-  )`;
+      description TEXT,
+      likes INTEGER
+    )
+  `;
 
   const insertedMangaDatas = await Promise.all(
     mangadatas.map(
       (mangadata) => client.sql`
-        INSERT INTO mangadatas (id, title, cover_url, description)
-        VALUES (${mangadata.id},${mangadata.title},${mangadata.cover_url},${mangadata.description})
+        INSERT INTO mangadatas (id, title, cover_url, description, likes)
+        VALUES (${mangadata.id},${mangadata.title},${mangadata.cover_url},${mangadata.description},${mangadata.likes})
         ON CONFLICT (id) DO NOTHING;
       `
     )
