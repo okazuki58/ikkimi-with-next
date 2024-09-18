@@ -5,17 +5,20 @@ import { Manga } from "../lib/definitions";
 import LikeButton from "./likeButton";
 import { useState } from "react";
 import MangaDialog from "./dialog";
+import { MangaListSkeleton } from "./skeletons";
 
 export default function MangaList({
   mangas,
   userLikes,
   sectionTitle,
   onMangaUpdate,
+  isLoading,
 }: {
   mangas: Manga[];
   userLikes: number[];
   sectionTitle: string;
   onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
+  isLoading: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
@@ -27,6 +30,10 @@ export default function MangaList({
     setIsAnimating(true);
     setTimeout(() => setIsAnimating(true), 500);
   };
+
+  if (isLoading) {
+    return <MangaListSkeleton />;
+  }
 
   return (
     <div>
@@ -70,6 +77,8 @@ export default function MangaList({
         setIsOpen={setIsOpen}
         manga={selectedManga}
         isAnimating={isAnimating}
+        onMangaUpdate={onMangaUpdate}
+        userLikes={userLikes}
       />
     </div>
   );

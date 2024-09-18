@@ -10,12 +10,17 @@ import {
 import { Manga } from "../lib/definitions";
 import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import LikeButton from "./likeButton";
+import { ImageSkeleton, MangaDialogSkeleton } from "./skeletons";
+import Image from "next/image";
+import { useState } from "react";
 
 interface MangaDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   manga: Manga | null;
   isAnimating: boolean;
+  onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
+  userLikes: number[];
 }
 
 export default function MangaDialog({
@@ -23,7 +28,10 @@ export default function MangaDialog({
   setIsOpen,
   manga,
   isAnimating,
+  onMangaUpdate,
+  userLikes,
 }: MangaDialogProps) {
+  const [isImageLoading, setIsImageLoading] = useState(true);
   if (!manga) return null;
 
   return (
@@ -54,12 +62,18 @@ export default function MangaDialog({
               </button>
 
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-                <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                  <img
-                    alt=""
-                    src={manga.cover_url}
-                    className="object-cover object-center"
-                  />
+                <div className="sm:col-span-4 lg:col-span-5">
+                  {/* {isImageLoading && <ImageSkeleton />} */}
+                  <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100">
+                    <Image
+                      src={manga.cover_url}
+                      alt={manga.title}
+                      className="object-cover object-center"
+                      width={549}
+                      height={780}
+                      onLoad={() => setIsImageLoading(false)}
+                    />
+                  </div>
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
                   <h2 className="text-3xl text-gray-900 sm:pr-12">
@@ -77,7 +91,12 @@ export default function MangaDialog({
                     </li>
                   </ul>
                   <div className="flex">
-                    <LikeButton initialLikes={manga.likes} mangaId={manga.id} />
+                    <LikeButton
+                      initialLikes={manga.likes}
+                      mangaId={manga.id}
+                      isLiked={userLikes.includes(manga.id)}
+                      onMangaUpdate={onMangaUpdate}
+                    />
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">{manga.description}</p>

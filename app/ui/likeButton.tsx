@@ -28,6 +28,11 @@ export default function LikeButton({
 
   const handleLike = async () => {
     setIsAnimating(true);
+    const newIsLikedState = !isLikedState;
+    setIsLikedState(newIsLikedState);
+    setLikes((prev) => (newIsLikedState ? prev + 1 : prev - 1));
+    onMangaUpdate(mangaId, newIsLikedState);
+
     try {
       const newIsLikedState = !isLikedState;
       if (newIsLikedState) {
@@ -35,11 +40,12 @@ export default function LikeButton({
       } else {
         await removeLike(TEMP_USER_ID, mangaId);
       }
-      setIsLikedState(newIsLikedState);
-      setLikes((prev) => (newIsLikedState ? prev + 1 : prev - 1));
-      onMangaUpdate(mangaId, newIsLikedState);
     } catch (error) {
       console.error("Failed to update like:", error);
+      // エラーが発生した場合、状態を元に戻す
+      setIsLikedState(!newIsLikedState);
+      setLikes((prev) => (newIsLikedState ? prev - 1 : prev + 1));
+      onMangaUpdate(mangaId, !newIsLikedState);
     }
     setTimeout(() => setIsAnimating(false), 300);
   };

@@ -11,10 +11,20 @@ const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 export default function ContentHome() {
   const [mangas, setMangas] = useState<Manga[]>([]);
   const [userLikes, setUserLikes] = useState<number[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchMangaList().then(setMangas);
-    getUserLikes(TEMP_USER_ID).then(setUserLikes); //特定のユーザーのいいね情報をデータベースから取得
+    setIsLoading(true);
+    Promise.all([fetchMangaList(), getUserLikes(TEMP_USER_ID)])
+      .then(([mangaData, likesData]) => {
+        setMangas(mangaData);
+        setUserLikes(likesData);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch data:", error);
+        setIsLoading(false);
+      });
   }, []);
 
   // likeButtonまで渡る関数　データベースではなく画面の状態のみ管理する
@@ -40,18 +50,21 @@ export default function ContentHome() {
         userLikes={userLikes}
         sectionTitle="Top Manga Rankings"
         onMangaUpdate={onMangaUpdate}
+        isLoading={isLoading}
       />
       <MangaList
         mangas={mangas}
         userLikes={userLikes}
         sectionTitle="Trending"
         onMangaUpdate={onMangaUpdate}
+        isLoading={isLoading}
       />
       <MangaList
         mangas={mangas}
         userLikes={userLikes}
         sectionTitle="Your Friends Are Reading"
         onMangaUpdate={onMangaUpdate}
+        isLoading={isLoading}
       />
     </div>
   );
