@@ -32,8 +32,8 @@ export default function LikeButton({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         className={`${styles.heart} ${isAnimating ? styles.animate : ""}`}
-        width="24"
-        height="24"
+        width="22"
+        height="22"
         strokeWidth="1.5"
         stroke="currentColor"
         fill="none"

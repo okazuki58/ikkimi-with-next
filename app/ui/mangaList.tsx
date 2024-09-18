@@ -5,6 +5,7 @@ import { Manga } from "../lib/definitions";
 import LikeButton from "./likeButton";
 import { useState } from "react";
 import MangaDialog from "./dialog";
+// import { MangaDialog2 } from "./dialog2";
 
 export default function MangaList({
   mangas,
@@ -20,7 +21,8 @@ export default function MangaList({
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
     setIsOpen(true);
-    setTimeout(() => setIsAnimating(true), 50);
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(true), 300);
   };
 
   return (

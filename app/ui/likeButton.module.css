@@ -40,6 +40,15 @@
   transition: color 0.3s ease;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .likeButton:hover .heart {
+    stroke: #fe2c55;
+  }
+  .likeButton:hover .likeCount {
+    color: #fe2c55;
+  }
+}
+
 .liked .likeCount {
   color: #fe2c55;
 }

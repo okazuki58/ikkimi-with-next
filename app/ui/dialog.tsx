@@ -8,7 +8,8 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import LikeButton from "./likeButton";
 
 interface MangaDialogProps {
   isOpen: boolean;
@@ -76,16 +77,16 @@ export default function MangaDialog({
                     </li>
                   </ul>
                   <div className="flex">
-                    <span>98+ users</span>
+                    <LikeButton initialLikes={manga.likes} mangaId={manga.id} />
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">{manga.description}</p>
                   </div>
                   <button
                     type="submit"
-                    className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-[#ff9900] px-8 py-3 text-base font-medium text-[#0f1111] hover:bg-[#E68A00] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
                   >
-                    Add to bag
+                    商品ページへ
                   </button>
                 </div>
               </div>
