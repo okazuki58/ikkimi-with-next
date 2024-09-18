@@ -5,3 +5,16 @@ export type Manga = {
   description: string;
   likes: number;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type UserLike = {
+  id: number;
+  user_id: string;
+  manga_id: number;
+};

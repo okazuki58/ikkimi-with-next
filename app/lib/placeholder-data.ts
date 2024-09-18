@@ -1,3 +1,18 @@
+const users = [
+  {
+    id: "410544b2-4001-4271-9855-fec4b6a6442a",
+    name: "User",
+    email: "user@nextmail.com",
+    password: "123456",
+  },
+];
+
+const userlikes = [
+  { id: 1, user_id: "410544b2-4001-4271-9855-fec4b6a6442a", manga_id: 1 },
+  { id: 1, user_id: "410544b2-4001-4271-9855-fec4b6a6442a", manga_id: 3 },
+  { id: 1, user_id: "410544b2-4001-4271-9855-fec4b6a6442a", manga_id: 6 },
+];
+
 const mangadatas = [
   {
     id: 1,
@@ -49,4 +64,4 @@ const mangadatas = [
   },
 ];
 
-export { mangadatas };
+export { mangadatas, users, userlikes };

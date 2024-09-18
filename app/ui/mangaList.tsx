@@ -5,14 +5,17 @@ import { Manga } from "../lib/definitions";
 import LikeButton from "./likeButton";
 import { useState } from "react";
 import MangaDialog from "./dialog";
-// import { MangaDialog2 } from "./dialog2";
 
 export default function MangaList({
   mangas,
+  userLikes,
   sectionTitle,
+  onMangaUpdate,
 }: {
   mangas: Manga[];
+  userLikes: number[];
   sectionTitle: string;
+  onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
@@ -22,7 +25,7 @@ export default function MangaList({
     setSelectedManga(manga);
     setIsOpen(true);
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(true), 300);
+    setTimeout(() => setIsAnimating(true), 500);
   };
 
   return (
@@ -33,7 +36,10 @@ export default function MangaList({
 
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
         {mangas.map((manga) => (
-          <div key={manga.id} className="flex flex-col pb-5">
+          <div
+            key={`${manga.id}-${sectionTitle}`}
+            className="flex flex-col pb-5"
+          >
             <div
               className="flex flex-col gap-2 group pb-2 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
@@ -50,7 +56,12 @@ export default function MangaList({
               </div>
               <h3 className="md:text-sm line-clamp-2">{manga.title}</h3>
             </div>
-            <LikeButton initialLikes={manga.likes} mangaId={manga.id} />
+            <LikeButton
+              initialLikes={manga.likes}
+              mangaId={manga.id}
+              isLiked={userLikes.includes(manga.id)}
+              onMangaUpdate={onMangaUpdate}
+            />
           </div>
         ))}
       </div>

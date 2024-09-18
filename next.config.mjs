@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
+  env: {
+    POSTGRES_URL: process.env.POSTGRES_URL,
+  },
 };
 
 export default nextConfig;

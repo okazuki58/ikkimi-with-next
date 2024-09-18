@@ -1,32 +1,53 @@
 "use client";
 
-import { useState } from "react";
-import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
 import styles from "./likeButton.module.css";
+import { addLike, removeLike } from "../lib/actions";
+
+const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 
 export default function LikeButton({
   initialLikes,
   mangaId,
+  isLiked,
+  onMangaUpdate,
 }: {
   initialLikes: number;
   mangaId: number;
+  isLiked: boolean;
+  onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
 }) {
-  const [likes, setLikes] = useState(initialLikes || 0);
-  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(initialLikes);
+  const [isLikedState, setIsLikedState] = useState(isLiked);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleLike = () => {
+  useEffect(() => {
+    setIsLikedState(isLiked);
+    setLikes(initialLikes);
+  }, [isLiked, initialLikes]);
+
+  const handleLike = async () => {
     setIsAnimating(true);
-    setIsLiked(!isLiked);
-    setLikes((prevLikes) => (isLiked ? prevLikes - 1 : prevLikes + 1));
+    try {
+      const newIsLikedState = !isLikedState;
+      if (newIsLikedState) {
+        await addLike(TEMP_USER_ID, mangaId);
+      } else {
+        await removeLike(TEMP_USER_ID, mangaId);
+      }
+      setIsLikedState(newIsLikedState);
+      setLikes((prev) => (newIsLikedState ? prev + 1 : prev - 1));
+      onMangaUpdate(mangaId, newIsLikedState);
+    } catch (error) {
+      console.error("Failed to update like:", error);
+    }
     setTimeout(() => setIsAnimating(false), 300);
   };
 
   return (
     <button
       onClick={handleLike}
-      className={`${styles.likeButton} ${isLiked ? styles.liked : ""}`}
+      className={`${styles.likeButton} ${isLikedState ? styles.liked : ""}`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
