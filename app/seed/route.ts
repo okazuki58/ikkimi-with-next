@@ -39,15 +39,16 @@ async function seedMangaDatas() {
       title VARCHAR(255) NOT NULL,
       cover_url VARCHAR(255) NOT NULL,
       description TEXT,
-      likes INTEGER
+      likes INTEGER,
+      amazon_url VARCHAR(255) NOT NULL
     )
   `;
 
   const insertedMangaDatas = await Promise.all(
     mangadatas.map(
       (mangadata) => client.sql`
-        INSERT INTO mangadatas (id, title, cover_url, description, likes)
-        VALUES (${mangadata.id},${mangadata.title},${mangadata.cover_url},${mangadata.description},${mangadata.likes})
+        INSERT INTO mangadatas (id, title, cover_url, description, likes, amazon_url)
+        VALUES (${mangadata.id},${mangadata.title},${mangadata.cover_url},${mangadata.description},${mangadata.likes},${mangadata.amazon_url})
         ON CONFLICT (id) DO NOTHING;
       `
     )

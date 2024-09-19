@@ -12,7 +12,8 @@ import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import LikeButton from "./likeButton";
 import { ImageSkeleton, MangaDialogSkeleton } from "./skeletons";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface MangaDialogProps {
   isOpen: boolean;
@@ -32,13 +33,28 @@ export default function MangaDialog({
   userLikes,
 }: MangaDialogProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  if (!manga) return null;
+  const [localManga, setLocalManga] = useState(manga);
+
+  useEffect(() => {
+    setLocalManga(manga);
+  }, [manga]);
+
+  const handleLocalMangaUpdate = (mangaId: number, isLiked: boolean) => {
+    setLocalManga((prev) =>
+      prev
+        ? { ...prev, likes: isLiked ? prev.likes + 1 : prev.likes - 1 }
+        : null
+    );
+    onMangaUpdate(mangaId, isLiked);
+  };
+
+  if (!localManga) return null;
 
   return (
     <Dialog
       open={isOpen}
       onClose={() => setIsOpen(false)}
-      className="relative z-10"
+      className="relative z-50"
     >
       <DialogBackdrop
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
@@ -66,8 +82,8 @@ export default function MangaDialog({
                   {/* {isImageLoading && <ImageSkeleton />} */}
                   <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100">
                     <Image
-                      src={manga.cover_url}
-                      alt={manga.title}
+                      src={localManga.cover_url}
+                      alt={localManga.title}
                       className="object-cover object-center"
                       width={549}
                       height={780}
@@ -77,7 +93,7 @@ export default function MangaDialog({
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
                   <h2 className="text-3xl text-gray-900 sm:pr-12">
-                    {manga.title}
+                    {localManga.title}
                   </h2>
                   <ul className="flex gap-2 my-4">
                     <li className="px-2 py-1 text-xs border rounded-lg">
@@ -92,21 +108,30 @@ export default function MangaDialog({
                   </ul>
                   <div className="flex">
                     <LikeButton
-                      initialLikes={manga.likes}
-                      mangaId={manga.id}
-                      isLiked={userLikes.includes(manga.id)}
-                      onMangaUpdate={onMangaUpdate}
+                      initialLikes={localManga.likes}
+                      mangaId={localManga.id}
+                      isLiked={userLikes.includes(localManga.id)}
+                      onMangaUpdate={handleLocalMangaUpdate}
                     />
                   </div>
                   <div className="mt-4">
-                    <p className="text-sm text-gray-700">{manga.description}</p>
+                    <p className="text-sm text-gray-700">
+                      {localManga.description}
+                    </p>
                   </div>
-                  <button
-                    type="submit"
-                    className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-[#ff9900] px-8 py-3 text-base font-medium text-[#0f1111] hover:bg-[#E68A00] focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                  <Link
+                    href={localManga.amazon_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full"
                   >
-                    商品ページへ
-                  </button>
+                    <button
+                      type="button"
+                      className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                    >
+                      商品ページへ
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

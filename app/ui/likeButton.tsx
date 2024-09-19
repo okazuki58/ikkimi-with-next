@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./likeButton.module.css";
 import { addLike, removeLike } from "../lib/actions";
 
@@ -19,7 +19,8 @@ export default function LikeButton({
 }) {
   const [likes, setLikes] = useState(initialLikes);
   const [isLikedState, setIsLikedState] = useState(isLiked);
-  const [isAnimating, setIsAnimating] = useState(false);
+  // const [isAnimating, setIsAnimating] = useState(false);
+  const heartRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     setIsLikedState(isLiked);
@@ -27,11 +28,15 @@ export default function LikeButton({
   }, [isLiked, initialLikes]);
 
   const handleLike = async () => {
-    setIsAnimating(true);
+    // setIsAnimating(true);
     const newIsLikedState = !isLikedState;
     setIsLikedState(newIsLikedState);
     setLikes((prev) => (newIsLikedState ? prev + 1 : prev - 1));
     onMangaUpdate(mangaId, newIsLikedState);
+
+    if (heartRef.current) {
+      heartRef.current.classList.add(styles.animate);
+    }
 
     try {
       const newIsLikedState = !isLikedState;
@@ -47,7 +52,13 @@ export default function LikeButton({
       setLikes((prev) => (newIsLikedState ? prev - 1 : prev + 1));
       onMangaUpdate(mangaId, !newIsLikedState);
     }
-    setTimeout(() => setIsAnimating(false), 300);
+    // setTimeout(() => setIsAnimating(false), 300);
+  };
+
+  const handleAnimationEnd = () => {
+    if (heartRef.current) {
+      heartRef.current.classList.remove(styles.animate);
+    }
   };
 
   return (
@@ -58,12 +69,15 @@ export default function LikeButton({
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        className={`${styles.heart} ${isAnimating ? styles.animate : ""}`}
+        className={`${styles.heart}`}
+        // ${isAnimating ? styles.animate : ""}
         width="22"
         height="22"
         strokeWidth="1.5"
         stroke="currentColor"
         fill="none"
+        ref={heartRef}
+        onAnimationEnd={handleAnimationEnd}
       >
         <path
           strokeLinecap="round"

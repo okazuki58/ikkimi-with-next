@@ -4,6 +4,7 @@ export type Manga = {
   cover_url: string;
   description: string;
   likes: number;
+  amazon_url: string;
 };
 
 export type User = {

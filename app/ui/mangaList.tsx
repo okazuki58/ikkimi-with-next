@@ -36,19 +36,26 @@ export default function MangaList({
   }
 
   return (
-    <div>
-      <h2 className="tracking-light text-3xl font-bold leading-tight px-4">
-        {sectionTitle}
-      </h2>
+    <div className="py-10">
+      <div className="flex items-end justify-between">
+        <div className="flex flex-col">
+          <span className="text-indigo-600 pl-1 text-sm font-semibold font-inter mb-2 leading-6">
+            Monthly Ranking
+          </span>
+          <h1 className="inline-block tracking-light text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
+            {sectionTitle}
+          </h1>
+        </div>
+        <a href="#" className="text-sm leading-10">
+          すべて見る
+        </a>
+      </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5 py-4">
         {mangas.map((manga) => (
-          <div
-            key={`${manga.id}-${sectionTitle}`}
-            className="flex flex-col pb-5"
-          >
+          <div key={`${manga.id}-${sectionTitle}`} className="flex flex-col">
             <div
-              className="flex flex-col gap-2 group pb-2 hover:cursor-pointer"
+              className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
             >
               <div className="rounded-md overflow-hidden">
@@ -61,7 +68,9 @@ export default function MangaList({
                   className="transition-transform transform md:group-hover:scale-105"
                 />
               </div>
-              <h3 className="md:text-sm line-clamp-2">{manga.title}</h3>
+              <h3 className="md:text-sm line-clamp-1 text-slate-900 dark:text-slate-200 md:first-line:group-hover:text-indigo-600">
+                {manga.title}
+              </h3>
             </div>
             <LikeButton
               initialLikes={manga.likes}

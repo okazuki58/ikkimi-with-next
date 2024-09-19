@@ -22,9 +22,11 @@ const config: Config = {
           "Arial",
           "sans-serif",
         ],
+        inter: ["var(--font-inter)"],
       },
     },
   },
-  plugins: [],
+
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config;

@@ -5,6 +5,7 @@ import MangaList from "../ui/mangaList";
 import { useState, useEffect } from "react";
 import { Manga } from "../lib/definitions";
 import { getUserLikes } from "../lib/actions";
+import Divider from "../ui/divider";
 
 const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 
@@ -44,25 +45,35 @@ export default function ContentHome() {
   };
 
   return (
-    <div className="container mx-auto max-w-5xl w-full flex flex-col gap-5 py-5">
+    <div className="container mx-auto max-w-5xl w-full flex flex-col gap-5 py-5 px-4">
       <MangaList
         mangas={mangas}
         userLikes={userLikes}
-        sectionTitle="Top Manga Rankings"
+        sectionTitle="ランキング"
         onMangaUpdate={onMangaUpdate}
         isLoading={isLoading}
       />
+      <Divider />
       <MangaList
         mangas={mangas}
         userLikes={userLikes}
-        sectionTitle="Trending"
+        sectionTitle="今話題の作品"
         onMangaUpdate={onMangaUpdate}
         isLoading={isLoading}
       />
+      <Divider />
       <MangaList
         mangas={mangas}
         userLikes={userLikes}
-        sectionTitle="Your Friends Are Reading"
+        sectionTitle="ユーザー広場"
+        onMangaUpdate={onMangaUpdate}
+        isLoading={isLoading}
+      />
+      <Divider />
+      <MangaList
+        mangas={mangas}
+        userLikes={userLikes}
+        sectionTitle="今いいね!されました"
         onMangaUpdate={onMangaUpdate}
         isLoading={isLoading}
       />

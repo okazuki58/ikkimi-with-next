@@ -8,10 +8,10 @@
 }
 
 .heart {
-  fill: #fff;
+  fill: none;
   stroke: #6b7280;
   stroke-width: 1.3px;
-  transition: fill 0.3s ease, transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .liked .heart {
@@ -20,7 +20,7 @@
 }
 
 .animate {
-  animation: bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: bounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @keyframes bounce {
@@ -30,6 +30,9 @@
   }
   50% {
     transform: scale(1.2);
+  }
+  75% {
+    transform: scale(0.95);
   }
 }
 
@@ -45,6 +48,7 @@
     stroke: #fe2c55;
   }
   .likeButton:hover .likeCount {
+    transition: none;
     color: #fe2c55;
   }
 }
