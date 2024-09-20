@@ -7,8 +7,14 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  XMarkIcon,
+  BookmarkIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import Avatar from "boring-avatars";
 
 const user = {
   name: "Tom Cook",
@@ -32,12 +38,12 @@ function classNames(...classes: string[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Header2() {
   return (
-    <Disclosure as="header" className="bg-white">
-      <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8">
+    <Disclosure as="header" className="bg-transparent">
+      <div className="mx-auto max-w-5xl px-4 lg:divide-y lg:divide-gray-200 lgpx-8">
         <div className="relative flex h-16 justify-between">
-          <div className="relative z-10 flex px-2 lg:px-0">
+          <div className="relative z-10 flex px-0">
             <div className="flex flex-shrink-0 items-center">
               <img
                 alt="Your Company"
@@ -47,7 +53,7 @@ export default function Example() {
             </div>
           </div>
           {/* Search Box */}
-          <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
+          {/* <div className="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
             <div className="w-full sm:max-w-md">
               <label htmlFor="search" className="sr-only">
                 Search
@@ -64,14 +70,13 @@ export default function Example() {
                   name="search"
                   type="search"
                   placeholder="Search"
-                  className="block w-full h-10 rounded-md border-0 bg-slate-200/60 py-1.5 pl-10 pr-3 text-gray-900  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full h-10 rounded-md border-0 bg-slate-200/60 hover:bg-slate-200 transition duration-300 ease-in-out dark:bg-transparent py-1.5 pl-10 pr-3 text-gray-900  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   // ring-1 ring-inset ring-gray-300
                 />
               </div>
             </div>
-          </div>
-          <div className="relative z-10 flex items-center lg:hidden">
-            {/* Mobile menu button */}
+          </div> */}
+          {/* <div className="relative z-10 flex items-center lg:hidden">
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open menu</span>
@@ -84,28 +89,39 @@ export default function Example() {
                 className="hidden h-6 w-6 group-data-[open]:block"
               />
             </DisclosureButton>
-          </div>
-          <div className="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+          </div> */}
+          <div className="relative z-10 ml-4 flex items-center gap-5">
             <button
               type="button"
               className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">View notifications</span>
-              <BellIcon aria-hidden="true" className="h-6 w-6" />
+              <MagnifyingGlassIcon aria-hidden="true" className="h-6 w-6" />
+            </button>
+
+            <button
+              type="button"
+              className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <BookmarkIcon aria-hidden="true" className="h-6 w-6" />
             </button>
 
             {/* Profile dropdown */}
-            <Menu as="div" className="relative ml-4 flex-shrink-0">
+            <Menu as="div" className="relative flex-shrink-0">
               <div>
-                <MenuButton className="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <MenuButton className="relative flex rounded-full bg-white focus:outline-none ">
+                  {/* focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 */}
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <img
+                  <Avatar name="Alice Paul" variant="beam" size={36} />
+                  {/* <img
                     alt=""
                     src={user.imageUrl}
                     className="h-8 w-8 rounded-full"
-                  />
+                  /> */}
                 </MenuButton>
               </div>
               <MenuItems

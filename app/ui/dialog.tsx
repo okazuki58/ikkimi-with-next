@@ -8,19 +8,19 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
-import { ShoppingCartIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import LikeButton from "./likeButton";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+// import LikeButton from "./likeButton";
 import { ImageSkeleton, MangaDialogSkeleton } from "./skeletons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import BookmarkButton from "./bookmarkButton";
 
 interface MangaDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   manga: Manga | null;
   isAnimating: boolean;
-  onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
   userLikes: number[];
 }
 
@@ -29,7 +29,6 @@ export default function MangaDialog({
   setIsOpen,
   manga,
   isAnimating,
-  onMangaUpdate,
   userLikes,
 }: MangaDialogProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -38,15 +37,6 @@ export default function MangaDialog({
   useEffect(() => {
     setLocalManga(manga);
   }, [manga]);
-
-  const handleLocalMangaUpdate = (mangaId: number, isLiked: boolean) => {
-    setLocalManga((prev) =>
-      prev
-        ? { ...prev, likes: isLiked ? prev.likes + 1 : prev.likes - 1 }
-        : null
-    );
-    onMangaUpdate(mangaId, isLiked);
-  };
 
   if (!localManga) return null;
 
@@ -67,7 +57,7 @@ export default function MangaDialog({
             className={`flex w-full transform text-left text-base transition data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in my-8 md:max-w-2xl md:px-4 data-[closed]:md:translate-y-0 data-[closed]:md:scale-95 lg:max-w-4xl
             ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
           >
-            <div className="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+            <div className="relative flex w-full items-center rounded-lg overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
@@ -107,12 +97,17 @@ export default function MangaDialog({
                     </li>
                   </ul>
                   <div className="flex">
-                    <LikeButton
+                    <BookmarkButton
+                      mangaId={localManga.id}
+                      likes={localManga.likes}
+                    />
+
+                    {/* <LikeButton
                       initialLikes={localManga.likes}
                       mangaId={localManga.id}
                       isLiked={userLikes.includes(localManga.id)}
                       onMangaUpdate={handleLocalMangaUpdate}
-                    />
+                    /> */}
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">

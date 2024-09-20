@@ -2,22 +2,21 @@
 
 import Image from "next/image";
 import { Manga } from "../lib/definitions";
-import LikeButton from "./likeButton";
 import { useState } from "react";
 import MangaDialog from "./dialog";
 import { MangaListSkeleton } from "./skeletons";
+import "react-toastify/dist/ReactToastify.css";
+import BookmarkButton from "./bookmarkButton";
 
 export default function MangaList({
   mangas,
   userLikes,
   sectionTitle,
-  onMangaUpdate,
   isLoading,
 }: {
   mangas: Manga[];
   userLikes: number[];
   sectionTitle: string;
-  onMangaUpdate: (mangaId: number, isLiked: boolean) => void;
   isLoading: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,14 +38,14 @@ export default function MangaList({
     <div className="py-10">
       <div className="flex items-end justify-between">
         <div className="flex flex-col">
-          <span className="text-indigo-600 pl-1 text-sm font-semibold font-inter mb-2 leading-6">
+          <span className="text-indigo-600 dark:text-[#FC4747] pl-1 text-sm font-semibold font-inter mb-2 leading-6">
             Monthly Ranking
           </span>
           <h1 className="inline-block tracking-light text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
             {sectionTitle}
           </h1>
         </div>
-        <a href="#" className="text-sm leading-10">
+        <a href="#" className="text-sm leading-10 dark:text-white">
           すべて見る
         </a>
       </div>
@@ -58,7 +57,7 @@ export default function MangaList({
               className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
             >
-              <div className="rounded-md overflow-hidden">
+              <div className="relative rounded-md overflow-hidden">
                 <Image
                   src={manga.cover_url}
                   alt={manga.title}
@@ -68,25 +67,22 @@ export default function MangaList({
                   className="transition-transform transform md:group-hover:scale-105"
                 />
               </div>
-              <h3 className="md:text-sm line-clamp-1 text-slate-900 dark:text-slate-200 md:first-line:group-hover:text-indigo-600">
+              <h3 className="md:text-sm line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600 dark:md:group-hover:text-[#FC4747]">
                 {manga.title}
               </h3>
             </div>
-            <LikeButton
-              initialLikes={manga.likes}
-              mangaId={manga.id}
-              isLiked={userLikes.includes(manga.id)}
-              onMangaUpdate={onMangaUpdate}
-            />
+
+            {/* Bookmark Button */}
+            <BookmarkButton mangaId={manga.id} likes={manga.likes} />
           </div>
         ))}
       </div>
+
       <MangaDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         manga={selectedManga}
         isAnimating={isAnimating}
-        onMangaUpdate={onMangaUpdate}
         userLikes={userLikes}
       />
     </div>

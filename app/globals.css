@@ -13,3 +13,30 @@
     --foreground: #ededed;
   }
 }
+
+@media (max-width: 640px) {
+  .Toastify__toast-container {
+    width: 300px !important;
+    left: 50% !important; /* 追加 */
+    transform: translateX(-50%) !important; /* 追加 */
+    top: 10px !important; /* 必要に応じて調整 */
+  }
+  .Toastify__toast {
+    border-radius: 8px !important;
+    margin-bottom: 10px !important;
+  }
+}
+
+.Toastify__toast {
+  background-color: #4f46e5 !important;
+  color: #fff !important;
+}
+
+.Toastify__toast-icon {
+  /* チェックマークアイコンのクラス名を指定 */
+  color: #fff !important;
+}
+
+:root {
+  --toastify-icon-color-success: #fff !important;
+}

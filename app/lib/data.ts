@@ -3,7 +3,8 @@ import { Manga } from "./definitions";
 
 export async function fetchMangaList() {
   try {
-    const data = await sql<Manga>`SELECT * FROM mangadatas ORDER BY id ASC`;
+    const data =
+      await sql<Manga>`SELECT * FROM mangadatas ORDER BY id ASC LIMIT 8`;
     return data.rows;
   } catch (error) {
     throw new Error("Failed to fetch manga data.");
