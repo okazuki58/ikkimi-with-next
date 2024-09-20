@@ -50,7 +50,7 @@ export async function addLike(userId: string, mangaId: number): Promise<void> {
   try {
     await sql`
     INSERT INTO user_likes (user_id, manga_id)
-    VALUE (${userId}, ${mangaId})
+    VALUES (${userId}, ${mangaId})
   `;
     await sql`
     UPDATE mangadatas
