@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  Description,
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-// import LikeButton from "./likeButton";
-import { ImageSkeleton, MangaDialogSkeleton } from "./skeletons";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -21,7 +13,6 @@ interface MangaDialogProps {
   setIsOpen: (isOpen: boolean) => void;
   manga: Manga | null;
   isAnimating: boolean;
-  userLikes: number[];
 }
 
 export default function MangaDialog({
@@ -29,7 +20,6 @@ export default function MangaDialog({
   setIsOpen,
   manga,
   isAnimating,
-  userLikes,
 }: MangaDialogProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [localManga, setLocalManga] = useState(manga);

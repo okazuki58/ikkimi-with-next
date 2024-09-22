@@ -1,5 +1,6 @@
 import Avatar from "boring-avatars";
 import Image from "next/image";
+import { MangaListHeader } from "./listHeader";
 
 const people = [
   {
@@ -50,23 +51,41 @@ const people = [
       "/new-covers/cover-4.webp",
     ],
   },
-  // {
-  //   name: "へんしんパンダ",
-  //   email: "panda.transform@example.com",
-  //   id: "@shape_shifter",
-  //   saved: 31,
-  // },
-  // {
-  //   name: "ゲーム廃人予備軍",
-  //   email: "game.addict2b@example.com",
-  //   id: "@game_junkie",
-  //   saved: 89,
-  // },
+  {
+    name: "へんしんパンダ",
+    email: "panda.transform@example.com",
+    id: "@shape_shifter",
+    saved: 31,
+    image: [
+      "/new-covers/cover-1.webp",
+      "/new-covers/cover-2.webp",
+      "/new-covers/cover-3.webp",
+      "/new-covers/cover-4.webp",
+    ],
+  },
+  {
+    name: "ゲーム廃人予備軍",
+    email: "game.addict2b@example.com",
+    id: "@game_junkie",
+    saved: 89,
+    image: [
+      "/new-covers/cover-1.webp",
+      "/new-covers/cover-2.webp",
+      "/new-covers/cover-3.webp",
+      "/new-covers/cover-4.webp",
+    ],
+  },
   // {
   //   name: "こたつむり💤",
   //   email: "kotatsu.life@example.com",
   //   id: "@warm_n_cozy",
   //   saved: 12,
+  //   image: [
+  //     "/new-covers/cover-1.webp",
+  //     "/new-covers/cover-2.webp",
+  //     "/new-covers/cover-3.webp",
+  //     "/new-covers/cover-4.webp",
+  //   ],
   // },
   // {
   //   name: "麦茶ごくごく",
@@ -90,21 +109,7 @@ const people = [
 
 export default function UserList() {
   return (
-    <div className="py-10">
-      <div className="flex items-end justify-between pb-4">
-        <div className="flex flex-col">
-          <span className="text-indigo-600 pl-1 text-sm font-semibold font-inter mb-2 leading-6 dark:text-[#FC4747]">
-            Monthly Ranking
-          </span>
-          <h1 className="inline-block tracking-light text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
-            おすすめのユーザー
-          </h1>
-        </div>
-        <a href="#" className="text-sm leading-10 dark:text-white">
-          すべて見る
-        </a>
-      </div>
-
+    <div>
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
         {people.map((person) => (
           <div className="flex flex-col" key={person.email}>
@@ -153,7 +158,7 @@ export default function UserList() {
               </div>
             </a>
 
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-4 gap-3">
               {Array.from({ length: 4 }).map((_, index) => (
                 <div
                   className="rounded-md overflow-hidden relative group"

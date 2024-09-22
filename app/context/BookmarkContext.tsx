@@ -1,7 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { addLike, removeLike } from "../lib/actions";
+import { createContext, useContext, useEffect, useState } from "react";
+import { addLike, getUserLikes, removeLike } from "../lib/actions";
 
 const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 
@@ -22,6 +22,16 @@ export const BookmarkProvider = ({
 }) => {
   const [bookmarkedMangas, setBookmarkedMangas] = useState<number[]>([]);
   const [animatingMangas, setAnimatingMangas] = useState<number[]>([]);
+
+  // 初回ロード時にログインユーザーのブックマーク情報を反映
+  useEffect(() => {
+    const fetchUserLikes = async () => {
+      const likes = await getUserLikes(TEMP_USER_ID);
+      setBookmarkedMangas(likes);
+    };
+
+    fetchUserLikes();
+  }, []);
 
   const toggleBookmark = async (mangaId: number) => {
     const isBookmarked = bookmarkedMangas.includes(mangaId);

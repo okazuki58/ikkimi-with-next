@@ -5,6 +5,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BookmarkProvider } from "./context/BookmarkContext";
+import { SearchProvider } from "./context/SearchContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,6 +24,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+export const metadata = {
+  title: "ikkimi",
+  keyword: "manga, comic, share",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -33,7 +39,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} font-sf antialiased flex size-full min-h-screen flex-col bg-white dark:bg-[#10141E]`}
       >
-        <BookmarkProvider>{children}</BookmarkProvider>
+        <BookmarkProvider>
+          <SearchProvider>{children}</SearchProvider>
+        </BookmarkProvider>
         <ToastContainer />
       </body>
     </html>

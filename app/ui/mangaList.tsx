@@ -10,13 +10,9 @@ import BookmarkButton from "./bookmarkButton";
 
 export default function MangaList({
   mangas,
-  userLikes,
-  sectionTitle,
   isLoading,
 }: {
   mangas: Manga[];
-  userLikes: number[];
-  sectionTitle: string;
   isLoading: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +23,6 @@ export default function MangaList({
     setSelectedManga(manga);
     setIsOpen(true);
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(true), 500);
   };
 
   if (isLoading) {
@@ -35,24 +30,10 @@ export default function MangaList({
   }
 
   return (
-    <div className="py-10">
-      <div className="flex items-end justify-between">
-        <div className="flex flex-col">
-          <span className="text-indigo-600 dark:text-[#FC4747] pl-1 text-sm font-semibold font-inter mb-2 leading-6">
-            Monthly Ranking
-          </span>
-          <h1 className="inline-block tracking-light text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
-            {sectionTitle}
-          </h1>
-        </div>
-        <a href="#" className="text-sm leading-10 dark:text-white">
-          すべて見る
-        </a>
-      </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5 py-4">
+    <>
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5">
         {mangas.map((manga) => (
-          <div key={`${manga.id}-${sectionTitle}`} className="flex flex-col">
+          <div key={`${manga.id}`} className="flex flex-col">
             <div
               className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
@@ -83,8 +64,7 @@ export default function MangaList({
         setIsOpen={setIsOpen}
         manga={selectedManga}
         isAnimating={isAnimating}
-        userLikes={userLikes}
       />
-    </div>
+    </>
   );
 }

@@ -1,124 +1,137 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Popover,
-  PopoverButton,
-  PopoverGroup,
-  PopoverPanel,
-} from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { BookmarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Avatar from "boring-avatars";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+const userNavigation = [
+  { name: "Your Profile", href: "/home/userprofile" },
+  { name: "Settings", href: "#" },
+  { name: "Sign out", href: "#" },
+];
 
 export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  return (
-    <header className="bg-white">
-      <nav
-        aria-label="Global"
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-      >
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img
-              alt=""
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              className="h-8 w-auto"
-            />
-          </a>
-        </div>
-        {/* Bar3Icon */}
-        <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
-        </div>
-        {/* Login Button */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
-      </nav>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
-      {/* Mobile Menu */}
-      <Dialog
-        open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
-        className="lg:hidden"
-      >
-        <div className="fixed inset-0 z-10" />
-        <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(false)}
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div>
+  const [isVisible, setIsVisible] = useState(true);
+  const scrollThreshold = 50;
+  let lastScrollY = 0;
+
+  const handleScroll = () => {
+    if (typeof window !== "undefined") {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY === 0) {
+        setIsVisible(true); // 一番上にスクロールしたときはヘッダーを表示
+      } else if (
+        currentScrollY > lastScrollY &&
+        isVisible &&
+        currentScrollY > scrollThreshold
+      ) {
+        setIsVisible(false); // 下にスクロールしているときにヘッダーを隠す
+      } else if (
+        currentScrollY < lastScrollY &&
+        currentScrollY > scrollThreshold
+      ) {
+        setIsVisible(true); // 上にスクロールしているときにヘッダーを表示
+      }
+
+      lastScrollY = currentScrollY;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // プロフィールアイコンのドロップダウンメニューで、画面をクリックした時に閉じるようにする
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isMenuOpen && !target.closest(".relative")) {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  return (
+    <header
+      className={`fixed left-0 top-0 w-full transition-transform duration-300 z-50 bg-white ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      <div className="mx-auto max-w-6xl px-4 lg:divide-y lg:divide-gray-200">
+        <div className="relative flex h-16 justify-between">
+          <div className="relative z-10 flex px-0">
+            <div className="flex flex-shrink-0 items-center">
+              <Link href="/home" passHref>
+                <img
+                  alt="Your Company"
+                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  className="h-8 w-auto cursor-pointer"
+                />
+              </Link>
             </div>
           </div>
-        </DialogPanel>
-      </Dialog>
+          <div className="relative z-10 ml-4 flex items-center gap-5">
+            <button
+              type="button"
+              className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <MagnifyingGlassIcon aria-hidden="true" className="h-6 w-6" />
+            </button>
+
+            <Link href="/home/userprofile">
+              <button
+                type="button"
+                className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                <span className="absolute -inset-1.5" />
+                <span className="sr-only">View notifications</span>
+                <BookmarkIcon aria-hidden="true" className="h-6 w-6" />
+              </button>
+            </Link>
+
+            {/* Profile dropdown */}
+            <div className="relative flex-shrink-0">
+              <button
+                onClick={handleMenuToggle}
+                className="relative flex rounded-full bg-white focus:outline-none"
+              >
+                <span className="absolute -inset-1.5" />
+                <span className="sr-only">Open user menu</span>
+                <Avatar name="Alice Paul" variant="beam" size={36} />
+              </button>
+              {isMenuOpen && (
+                <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+                  {userNavigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </header>
   );
 }
