@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/(withHeaderFooter)/(withHero)/home/userprofile"
-  ],
+, "app/algolia.mjs", "app/algolia/Hit.jsx"  ],
   "exclude": ["node_modules"]
 }

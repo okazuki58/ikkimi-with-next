@@ -1,7 +1,7 @@
 export function Footer() {
   return (
     <footer
-      className="mx-auto mt-32 w-full max-w-5xl px-4"
+      className="mx-auto mt-32 w-full max-w-5xl px-4 sm:px-8"
       aria-labelledby="footer-heading"
     >
       <h2 id="footer-heading" className="sr-only">

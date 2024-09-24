@@ -7,6 +7,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import BookmarkButton from "./bookmarkButton";
+import { getImageUrl } from "../lib/data";
+import { useRouter } from "next/navigation";
 
 interface MangaDialogProps {
   isOpen: boolean;
@@ -27,6 +29,14 @@ export default function MangaDialog({
   useEffect(() => {
     setLocalManga(manga);
   }, [manga]);
+
+  const router = useRouter();
+
+  function handleNav(params: string) {
+    if (params) {
+      router.push(`/home/result?query=${encodeURIComponent(params)}`);
+    }
+  }
 
   if (!localManga) return null;
 
@@ -62,7 +72,7 @@ export default function MangaDialog({
                   {/* {isImageLoading && <ImageSkeleton />} */}
                   <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100">
                     <Image
-                      src={localManga.cover_url}
+                      src={getImageUrl(localManga.image_id)}
                       alt={localManga.title}
                       className="object-cover object-center"
                       width={549}
@@ -76,28 +86,33 @@ export default function MangaDialog({
                     {localManga.title}
                   </h2>
                   <ul className="flex gap-2 my-4">
-                    <li className="px-2 py-1 text-xs border rounded-lg">
-                      サスペンス
+                    <li
+                      className="px-2 py-1 text-xs border rounded-md cursor-pointer hover:bg-gray-50"
+                      onClick={() => handleNav(localManga.authors[0])}
+                    >
+                      {localManga.authors[0]}
                     </li>
-                    <li className="px-2 py-1 text-xs border rounded-lg">
-                      推理
-                    </li>
-                    <li className="px-2 py-1 text-xs border rounded-lg">
-                      マンガ大賞
+                    {localManga.genres.map((genre) => (
+                      <li
+                        key={genre}
+                        className="px-2 py-1 text-xs border rounded-md cursor-pointer hover:bg-gray-50"
+                        onClick={() => handleNav(genre)}
+                      >
+                        {genre}
+                      </li>
+                    ))}
+                    <li
+                      className="px-2 py-1 text-xs border rounded-md cursor-pointer hover:bg-gray-50"
+                      onClick={() => handleNav(localManga.publisher)}
+                    >
+                      {localManga.publisher}
                     </li>
                   </ul>
                   <div className="flex">
                     <BookmarkButton
                       mangaId={localManga.id}
-                      likes={localManga.likes}
+                      bookmark={localManga.bookmark}
                     />
-
-                    {/* <LikeButton
-                      initialLikes={localManga.likes}
-                      mangaId={localManga.id}
-                      isLiked={userLikes.includes(localManga.id)}
-                      onMangaUpdate={handleLocalMangaUpdate}
-                    /> */}
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">
@@ -114,7 +129,7 @@ export default function MangaDialog({
                       type="button"
                       className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                     >
-                      商品ページへ
+                      Amazonで購入
                     </button>
                   </Link>
                 </div>

@@ -1,17 +1,21 @@
 "use client";
 
+import { supabase } from "@/lib/supabaseClient";
 import { BookmarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Avatar from "boring-avatars";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
+import { useUser } from "../context/UserContext";
 
 const userNavigation = [
   { name: "Your Profile", href: "/home/userprofile" },
   { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  // { name: "Sign out", href: "#" },
 ];
 
 export default function Header() {
+  const { user } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuToggle = () => {
     setIsMenuOpen((prev) => !prev);
@@ -51,6 +55,13 @@ export default function Header() {
     };
   }, []);
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("ログアウトに失敗しました:", error.message);
+    }
+  };
+
   // プロフィールアイコンのドロップダウンメニューで、画面をクリックした時に閉じるようにする
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -71,7 +82,7 @@ export default function Header() {
         isVisible ? "translate-y-0" : "-translate-y-full"
       }`}
     >
-      <div className="mx-auto max-w-6xl px-4 lg:divide-y lg:divide-gray-200">
+      <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:divide-y lg:divide-gray-200">
         <div className="relative flex h-16 justify-between">
           <div className="relative z-10 flex px-0">
             <div className="flex flex-shrink-0 items-center">
@@ -106,27 +117,48 @@ export default function Header() {
             </Link>
 
             {/* Profile dropdown */}
+
             <div className="relative flex-shrink-0">
-              <button
-                onClick={handleMenuToggle}
-                className="relative flex rounded-full bg-white focus:outline-none"
-              >
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">Open user menu</span>
-                <Avatar name="Alice Paul" variant="beam" size={36} />
-              </button>
-              {isMenuOpen && (
-                <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
-                  {userNavigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
+              {user ? (
+                <>
+                  <button
+                    onClick={handleMenuToggle}
+                    className="relative flex rounded-full bg-white focus:outline-none"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Open user menu</span>
+                    <Avatar name="Alice Paul" variant="beam" size={36} />
+                  </button>
+                  {isMenuOpen && (
+                    <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+                      {userNavigation.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={handleLogout}
+                      >
+                        Sing out
+                      </a>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link href="/login">
+                  <button
+                    type="button"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    ログイン
+                  </button>
+                </Link>
               )}
             </div>
           </div>

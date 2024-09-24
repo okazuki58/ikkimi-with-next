@@ -2,43 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Fuse from "fuse.js";
-import { Manga } from "../lib/definitions";
 import { fetchMangaList } from "../lib/data";
 import { useRouter } from "next/navigation";
-
-interface NormalizedManga extends Omit<Manga, "id" | "likes"> {
-  id: string;
-  likes: string;
-}
-
-// ひらがなとカタカナを正規化する関数
-const normalizeString = (str: string) => {
-  if (!str) return ""; // undefined または null の場合は空文字を返す
-  return (
-    str
-      .normalize("NFKC")
-      // カタカナをひらがなに変換
-      .replace(/[\u30A1-\u30FA]/g, (match) =>
-        String.fromCharCode(match.charCodeAt(0) - 0x60)
-      )
-      // 半角カナを全角に変換
-      .replace(/[\uff66-\uff9d]/g, (match) =>
-        String.fromCharCode(match.charCodeAt(0) - 0xcf25)
-      )
-  );
-};
+import normalizeString from "@/utils/normalizeString";
 
 // Fuse.js options
 const options = {
-  keys: ["title", "reading"],
+  keys: ["title", "authors"],
   threshold: 0.3,
-  getFn: (obj: { [key: string]: string }, key: string | string[]) => {
-    if (Array.isArray(key)) {
-      return key.map((k) => normalizeString(obj[k])).join(" ");
-    } else {
-      return normalizeString(obj[key]);
-    }
-  },
 };
 
 interface MangaSearchProps {
@@ -48,24 +19,22 @@ interface MangaSearchProps {
 export default function MangaSearch({ onSearch }: MangaSearchProps) {
   const [query, setQuery] = useState("");
   const [isComposing, setIsComposing] = useState(false);
-  const [suggestions, setSuggestions] = useState<{ title: string }[]>([]);
-  const [fuse, setFuse] = useState<Fuse<NormalizedManga>>();
-  const router = useRouter();
+  const [suggestions, setSuggestions] = useState<
+    { title: string; author: string }[]
+  >([]);
+  const [fuse, setFuse] = useState<Fuse<any>>();
 
   useEffect(() => {
     const loadMangaData = async () => {
       const data = await fetchMangaList();
-      // idとlikesを文字列に変換
-      const normalizedData = data.map((manga) => ({
-        ...manga,
-        id: manga.id.toString(),
-        likes: manga.likes.toString(),
-      }));
-      const fuseInstance = new Fuse(normalizedData, options);
+      const mangalist = data.map((manga) => ({ ...manga }));
+      const fuseInstance = new Fuse(mangalist, options);
       setFuse(fuseInstance);
     };
     loadMangaData();
   }, []);
+
+  const router = useRouter();
 
   // 検索を実行する関数
   const handleSearch = (searchQuery?: string) => {
@@ -87,6 +56,7 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
       setSuggestions(
         results.map((result) => ({
           title: result.item.title,
+          author: result.item.authors[0],
         }))
       );
     } else {
@@ -115,7 +85,7 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
             handleSearch();
           }
         }}
-        placeholder="漫画を検索..."
+        placeholder="作品名、作者名、キーワードで検索"
         className="w-full h-12 pl-4 pr-12 bg-white rounded-lg border-2 border-indigo-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
       />
       <button
@@ -131,12 +101,19 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
           className="absolute left-0 z-10 mt-2 w-2/3 origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
         >
           {suggestions.map((suggestion) => (
-            <div
-              key={suggestion.title}
-              className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
-              onClick={() => handleSuggestionClick(suggestion.title)}
-            >
-              {suggestion.title}
+            <div key={suggestion.title || suggestion.author}>
+              <div
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
+                onClick={() => handleSuggestionClick(suggestion.title)}
+              >
+                {suggestion.title}
+              </div>
+              <div
+                className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
+                onClick={() => handleSuggestionClick(suggestion.author)}
+              >
+                {suggestion.author}
+              </div>
             </div>
           ))}
         </div>

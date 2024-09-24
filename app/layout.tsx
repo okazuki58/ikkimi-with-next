@@ -1,11 +1,10 @@
-import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { BookmarkProvider } from "./context/BookmarkContext";
 import { SearchProvider } from "./context/SearchContext";
+import { Toaster } from "sonner";
+import { UserProvider } from "./context/UserContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,14 +34,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className="bg-gray-50">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} font-sf antialiased flex size-full min-h-screen flex-col bg-white dark:bg-[#10141E]`}
       >
-        <BookmarkProvider>
-          <SearchProvider>{children}</SearchProvider>
-        </BookmarkProvider>
-        <ToastContainer />
+        <UserProvider>
+          <BookmarkProvider>
+            <SearchProvider>{children}</SearchProvider>
+          </BookmarkProvider>
+        </UserProvider>
+        {/* <ToastContainer /> */}
+        <Toaster position="top-center" />
       </body>
     </html>
   );

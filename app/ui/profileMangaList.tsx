@@ -5,16 +5,17 @@ import MangaDialog from "./dialog";
 import { MangaListSkeleton } from "./skeletons";
 import BookmarkButton from "./bookmarkButton";
 import { useBookmark } from "../context/BookmarkContext";
+import { getImageUrl } from "../lib/data";
 
 interface ProfileMangaListProps {
   mangas: Manga[];
   isLoading: boolean;
 }
 
-const ProfileMangaList: React.FC<ProfileMangaListProps> = ({
+export default function ProfileMangaList({
   mangas,
   isLoading,
-}) => {
+}: ProfileMangaListProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -43,7 +44,7 @@ const ProfileMangaList: React.FC<ProfileMangaListProps> = ({
               >
                 <div className="relative rounded-md overflow-hidden">
                   <Image
-                    src={manga.cover_url}
+                    src={getImageUrl(manga.image_id)}
                     alt={manga.title}
                     width={549}
                     height={780}
@@ -57,7 +58,7 @@ const ProfileMangaList: React.FC<ProfileMangaListProps> = ({
               </div>
 
               {/* Bookmark Button */}
-              <BookmarkButton mangaId={manga.id} likes={manga.likes} />
+              <BookmarkButton mangaId={manga.id} bookmark={manga.bookmark} />
             </div>
           ))}
       </div>
@@ -70,6 +71,4 @@ const ProfileMangaList: React.FC<ProfileMangaListProps> = ({
       />
     </>
   );
-};
-
-export default ProfileMangaList;
+}

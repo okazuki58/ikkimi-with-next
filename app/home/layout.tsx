@@ -10,7 +10,7 @@ export default function HomeLayout({
     <>
       <Header />
       <main
-        className="container mx-auto flex flex-col justify-center items-center px-4 py-5 max-w-5xl"
+        className="container mx-auto flex flex-col justify-center items-center px-4 sm:px-8 py-5 max-w-5xl"
         style={{ marginTop: "100px" }}
       >
         {children}

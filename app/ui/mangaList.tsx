@@ -5,8 +5,8 @@ import { Manga } from "../lib/definitions";
 import { useState } from "react";
 import MangaDialog from "./dialog";
 import { MangaListSkeleton } from "./skeletons";
-import "react-toastify/dist/ReactToastify.css";
 import BookmarkButton from "./bookmarkButton";
+import { getImageUrl } from "../lib/data";
 
 export default function MangaList({
   mangas,
@@ -40,7 +40,7 @@ export default function MangaList({
             >
               <div className="relative rounded-md overflow-hidden">
                 <Image
-                  src={manga.cover_url}
+                  src={getImageUrl(manga.image_id)}
                   alt={manga.title}
                   width={549}
                   height={780}
@@ -54,7 +54,7 @@ export default function MangaList({
             </div>
 
             {/* Bookmark Button */}
-            <BookmarkButton mangaId={manga.id} likes={manga.likes} />
+            <BookmarkButton mangaId={manga.id} bookmark={manga.bookmark} />
           </div>
         ))}
       </div>

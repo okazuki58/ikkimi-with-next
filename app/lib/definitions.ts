@@ -1,9 +1,25 @@
 export type Manga = {
   id: number;
   title: string;
-  cover_url: string;
+  authors: string[];
+  publisher: string;
+  genres: string[];
   description: string;
-  likes: number;
+  image_url: string;
+  image_id: string;
+  amazon_url: string;
+  bookmark: number;
+};
+
+export type NewManga = {
+  id: number;
+  title: string;
+  authors: string[];
+  publisher: string;
+  genres: string[];
+  description: string;
+  image_file: string;
+  image_url: string;
   amazon_url: string;
 };
 

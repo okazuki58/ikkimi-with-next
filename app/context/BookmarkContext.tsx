@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { addLike, getUserLikes, removeLike } from "../lib/actions";
+import { getUserBookmarks, deleteBookmark, saveBookmark } from "../lib/actions";
+import { useUser } from "./UserContext";
 
 const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 
@@ -20,18 +21,20 @@ export const BookmarkProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { user } = useUser();
   const [bookmarkedMangas, setBookmarkedMangas] = useState<number[]>([]);
   const [animatingMangas, setAnimatingMangas] = useState<number[]>([]);
 
   // 初回ロード時にログインユーザーのブックマーク情報を反映
   useEffect(() => {
-    const fetchUserLikes = async () => {
-      const likes = await getUserLikes(TEMP_USER_ID);
-      setBookmarkedMangas(likes);
-    };
-
-    fetchUserLikes();
-  }, []);
+    if (user) {
+      const fetchUserBookmarks = async () => {
+        const bookmarks = await getUserBookmarks(user.id);
+        setBookmarkedMangas(bookmarks);
+      };
+      fetchUserBookmarks();
+    }
+  }, [user]);
 
   const toggleBookmark = async (mangaId: number) => {
     const isBookmarked = bookmarkedMangas.includes(mangaId);
@@ -48,9 +51,9 @@ export const BookmarkProvider = ({
     // データベースを更新
     try {
       if (isBookmarked) {
-        await removeLike(TEMP_USER_ID, mangaId);
+        await deleteBookmark(user?.id, mangaId);
       } else {
-        await addLike(TEMP_USER_ID, mangaId);
+        await saveBookmark(user?.id, mangaId);
       }
     } catch (error) {
       console.error("Failed to update bookmark:", error);
