@@ -11,9 +11,9 @@ import { useUser } from "./UserContext";
 
 interface BookmarkContextType {
   bookmarkedMangas: number[];
-  bookmarkCounts: { [mangaId: number]: number }; // ブックマーク数を管理
   toggleBookmark: (mangaId: number) => void;
   animatingMangas: number[];
+  refreshBookmarks: () => void;
 }
 
 const BookmarkContext = createContext<BookmarkContextType | undefined>(
@@ -27,67 +27,48 @@ export const BookmarkProvider = ({
 }) => {
   const { user } = useUser();
   const [bookmarkedMangas, setBookmarkedMangas] = useState<number[]>([]);
-  const [bookmarkCounts, setBookmarkCounts] = useState<{
-    [mangaId: number]: number;
-  }>({});
   const [animatingMangas, setAnimatingMangas] = useState<number[]>([]);
+
+  // ブックマーク情報を再取得する関数
+  const refreshBookmarks = async () => {
+    if (user) {
+      // ユーザーのブックマークを取得
+      const bookmarks = await getUserBookmarks(user.id);
+      console.log(bookmarks);
+      setBookmarkedMangas(bookmarks);
+    }
+  };
 
   // ログインユーザーのブックマーク情報とブックマーク数を取得
   useEffect(() => {
-    const fetchBookmarkCounts = async () => {
-      const counts = await getBookmarkCounts(); // すべての漫画のブックマーク数を取得する関数を実装する
-      setBookmarkCounts(counts);
-    };
-
-    fetchBookmarkCounts();
-
-    if (user) {
-      const fetchUserBookmarks = async () => {
-        const bookmarks = await getUserBookmarks(user.id);
-        setBookmarkedMangas(bookmarks);
-      };
-
-      fetchUserBookmarks();
-    }
+    refreshBookmarks();
   }, [user]);
 
   const toggleBookmark = async (mangaId: number) => {
-    const isBookmarked = bookmarkedMangas.includes(mangaId);
-    setBookmarkedMangas((prev) =>
-      isBookmarked ? prev.filter((id) => id !== mangaId) : [...prev, mangaId]
-    );
-
-    // ブックマーク数を更新
-    setBookmarkCounts((prevCounts) => ({
-      ...prevCounts,
-      [mangaId]: (prevCounts[mangaId] || 0) + (isBookmarked ? -1 : 1),
-    }));
-
+    console.log("mangaId:", mangaId, typeof mangaId);
+    if (mangaId == null) {
+      console.error("mangaId is null or undefined");
+    }
     // アニメーションをトリガー
     setAnimatingMangas((prev) => [...prev, mangaId]);
     setTimeout(() => {
       setAnimatingMangas((prev) => prev.filter((id) => id !== mangaId));
     }, 500);
 
-    // データベースを更新
     try {
+      const isBookmarked = bookmarkedMangas.includes(mangaId);
+
       if (isBookmarked) {
         await deleteBookmark(user?.id, mangaId);
       } else {
         await saveBookmark(user?.id, mangaId);
       }
+
+      // ブックマーク情報とカウントを再取得
+      await refreshBookmarks();
     } catch (error) {
       console.error("Failed to update bookmark:", error);
-      // エラー時には状態を元に戻す
-      setBookmarkedMangas((prev) =>
-        isBookmarked ? [...prev, mangaId] : prev.filter((id) => id !== mangaId)
-      );
-
-      // ブックマーク数も元に戻す
-      setBookmarkCounts((prevCounts) => ({
-        ...prevCounts,
-        [mangaId]: (prevCounts[mangaId] || 0) + (isBookmarked ? 1 : -1),
-      }));
+      // エラーメッセージの表示など必要に応じて追加
     }
   };
 
@@ -95,9 +76,9 @@ export const BookmarkProvider = ({
     <BookmarkContext.Provider
       value={{
         bookmarkedMangas,
-        bookmarkCounts,
         animatingMangas,
         toggleBookmark,
+        refreshBookmarks,
       }}
     >
       {children}

@@ -52,6 +52,7 @@ export const fetchRisingManga = async (): Promise<Manga[]> => {
   const { data, error } = await supabase.rpc("get_rising_manga", {
     time_limit: timeLimit,
   });
+  console.log("timeLimit:", timeLimit);
 
   if (error) {
     console.error("Error fetching rising manga:", error);

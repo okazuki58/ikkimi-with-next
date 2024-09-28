@@ -31,12 +31,13 @@ export default function ContentHome() {
         console.error("Failed to fetch data:", error);
         setIsLoading(false);
       });
+    console.log(risingMangas);
   }, []);
 
   return (
     <>
       <Hero />
-      <div className="my-4">
+      <div className="my-4 min-w-full">
         <div className="py-16">
           <MangaListHeader
             sectionTitle="急上昇"
@@ -48,7 +49,7 @@ export default function ContentHome() {
         <Divider />
         <div className="py-16">
           <MangaListHeader
-            sectionTitle="今週のトップ10"
+            sectionTitle="今週のトップ50"
             subSectionTitle="Trending"
             buttonText="すべて見る"
           />

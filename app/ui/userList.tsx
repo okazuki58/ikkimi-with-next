@@ -1,146 +1,88 @@
-import Avatar from "boring-avatars";
 import Image from "next/image";
-import { MangaListHeader } from "./listHeader";
-
-const people = [
-  {
-    name: "さくら@春待ち子",
-    email: "harumachiko2023@example.com",
-    id: "@sakura_haru",
-    saved: 23,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  {
-    name: "ラーメン巡礼者",
-    email: "ramen.pilgrim@example.com",
-    id: "@noodle_traveler22222222fafena;oeifa;oifnaifeaferf",
-    saved: 56,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  {
-    name: "月見うさぎ🐰",
-    email: "tsukimi.usagi@example.com",
-    id: "@moon_rabbit",
-    saved: 17,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  {
-    name: "鯖の味噌煮",
-    email: "saba.misoni@example.com",
-    id: "@misoni_lover",
-    saved: 42,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  {
-    name: "へんしんパンダ",
-    email: "panda.transform@example.com",
-    id: "@shape_shifter",
-    saved: 31,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  {
-    name: "ゲーム廃人予備軍",
-    email: "game.addict2b@example.com",
-    id: "@game_junkie",
-    saved: 89,
-    image: [
-      "/new-covers/cover-1.webp",
-      "/new-covers/cover-2.webp",
-      "/new-covers/cover-3.webp",
-      "/new-covers/cover-4.webp",
-    ],
-  },
-  // {
-  //   name: "こたつむり💤",
-  //   email: "kotatsu.life@example.com",
-  //   id: "@warm_n_cozy",
-  //   saved: 12,
-  //   image: [
-  //     "/new-covers/cover-1.webp",
-  //     "/new-covers/cover-2.webp",
-  //     "/new-covers/cover-3.webp",
-  //     "/new-covers/cover-4.webp",
-  //   ],
-  // },
-  // {
-  //   name: "麦茶ごくごく",
-  //   email: "mugicha.gulp@example.com",
-  //   id: "@tea_gulper",
-  //   saved: 37,
-  // },
-  // {
-  //   name: "虹色パレット🎨",
-  //   email: "niji.palette@example.com",
-  //   id: "@rainbow_art",
-  //   saved: 64,
-  // },
-  // {
-  //   name: "おにぎり王子",
-  //   email: "onigiri.prince@example.com",
-  //   id: "@rice_ball_royal",
-  //   saved: 28,
-  // },
-];
+import { useEffect, useState } from "react";
+import { Manga, Profile } from "../lib/definitions";
+import {
+  fetchRecommendedUsers,
+  fetchUserBookmarkedMangas,
+  getUserBookmarks,
+} from "../lib/actions";
+import { useUser } from "../context/UserContext";
+import { getImageUrl } from "../lib/data";
+import MangaDialog from "./dialog";
 
 export default function UserList() {
+  const [users, setUsers] = useState<Profile[]>([]);
+  const [userMangas, setUserMangas] = useState<{ [userId: string]: Manga[] }>(
+    {}
+  );
+  const { user: currentUser } = useUser();
+  // ダイアログ関係
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedManga, setSelectedManga] = useState<Manga>();
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const openDialog = (manga: Manga) => {
+    setSelectedManga(manga);
+    setIsOpen(true);
+    setIsAnimating(true);
+  };
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUsers();
+    }
+  }, [currentUser]);
+
+  const fetchUsers = async () => {
+    if (currentUser) {
+      const recommendedUsers = await fetchRecommendedUsers(currentUser.id);
+      setUsers(recommendedUsers);
+
+      const mangasByUser: { [userId: string]: Manga[] } = {};
+
+      await Promise.all(
+        recommendedUsers.map(async (user) => {
+          const bookmarks = await getUserBookmarks(user.id);
+          const mangas = await fetchUserBookmarkedMangas(bookmarks);
+          mangasByUser[user.id] = mangas.slice(0, 4); // 各ユーザーのマンガを最大4件表示
+        })
+      );
+
+      setUserMangas(mangasByUser);
+    }
+  };
   return (
     <div>
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
-        {people.map((person) => (
-          <div className="flex flex-col" key={person.email}>
+        {users.map((user) => (
+          <div className="flex flex-col" key={user.id}>
             <a
               href="#"
               className="relative flex items-center justify-between space-x-3 rounded-lg bg-transparent pb-5 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2"
             >
               <div className="flex items-center space-x-3 flex-1 min-w-0">
                 <div className="flex-shrink-0 hover:brightness-90 transition">
-                  <Avatar
-                    name={person.id}
-                    colors={[
-                      "#0a0310",
-                      "#49007e",
-                      "#ff005b",
-                      "#ff7d10",
-                      "#ffb238",
-                    ]}
-                    variant="beam"
-                    size={40}
-                  />
+                  {user.avatar_url && (
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <Image
+                        src={user?.avatar_url}
+                        alt={`${user.name}のアバター`}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="min-w-0">
                   <div className="focus:outline-none">
                     {/* <span aria-hidden="true" className="absolute inset-0" /> */}
                     <span className="text-sm font-semibold text-gray-900 dark:text-white md:hover:underline">
-                      {person.name}
+                      {user.name}
                     </span>
                     <div className="flex items-center">
                       <p className="truncate text-sm text-gray-500">
-                        {person.id}
+                        {user.id}
                       </p>
                       <div className="px-2 flex-shrink-0">
                         {/* マッチ度を表示 */}
@@ -159,16 +101,16 @@ export default function UserList() {
             </a>
 
             <div className="grid grid-cols-4 gap-3">
-              {Array.from({ length: 4 }).map((_, index) => (
+              {userMangas[user.id]?.map((manga) => (
                 <div
-                  className="rounded-md overflow-hidden relative group"
-                  key={index}
+                  className="rounded-md overflow-hidden aspect-[549/780] relative group hover:cursor-pointer"
+                  key={manga.id}
+                  onClick={() => openDialog(manga)}
                 >
                   <Image
-                    src={person.image[index]}
-                    alt={person.id}
-                    width={549}
-                    height={780}
+                    src={getImageUrl(manga.image_id)}
+                    alt={manga.title}
+                    fill
                     style={{ objectFit: "cover" }}
                     className="transition-transform transform md:group-hover:scale-105"
                   />
@@ -178,6 +120,13 @@ export default function UserList() {
           </div>
         ))}
       </div>
+
+      <MangaDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        manga={selectedManga!}
+        isAnimating={isAnimating}
+      />
     </div>
   );
 }

@@ -111,7 +111,10 @@ export default function MangaDialog({
                     </li>
                   </ul>
                   <div className="flex">
-                    <BookmarkButton mangaId={localManga.id} />
+                    <BookmarkButton
+                      mangaId={localManga.id}
+                      bookmark={localManga.bookmark}
+                    />
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">

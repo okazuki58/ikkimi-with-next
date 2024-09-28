@@ -136,7 +136,7 @@ function SearchForm() {
               {titleResults.length > 0 && (
                 <div>
                   <div className="px-4 py-2 text-xs text-left font-semibold text-gray-400 bg-gray-100">
-                    作品
+                    作品 <span>({titleResults.length})</span>
                   </div>
                   {titleResults.map((manga) => (
                     <div

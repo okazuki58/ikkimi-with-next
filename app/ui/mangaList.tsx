@@ -19,7 +19,6 @@ export default function MangaList({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
   const [isAnimating, setIsAnimating] = useState(false);
-  const { bookmarkCounts } = useBookmark();
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
@@ -44,8 +43,7 @@ export default function MangaList({
                 <Image
                   src={getImageUrl(manga.image_id)}
                   alt={manga.title}
-                  width={549}
-                  height={780}
+                  fill
                   style={{ objectFit: "cover" }}
                   className="transition-transform transform md:group-hover:scale-105"
                 />
@@ -56,7 +54,7 @@ export default function MangaList({
             </div>
 
             {/* Bookmark Button */}
-            <BookmarkButton mangaId={manga.id} />
+            <BookmarkButton mangaId={manga.id} bookmark={manga.bookmark} />
           </div>
         ))}
       </div>

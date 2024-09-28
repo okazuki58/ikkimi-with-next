@@ -1,77 +1,40 @@
 import { supabase } from "@/utils/supabaseClient";
-import { Manga } from "./definitions";
-
+import { Manga, Profile } from "./definitions";
 
 export async function saveBookmark(
   userId: string | undefined,
   mangaId: number
 ): Promise<void> {
-  if (userId) {
-    // ユーザーがログインしている場合、データベースに保存
-    const { error } = await supabase
-      .from("user_bookmarks")
-      .insert({ user_id: userId, manga_id: mangaId });
+  if (!userId) return;
 
-    if (error) {
-      console.error("ブックマークの保存に失敗しました:", error.message);
-    } else {
-      const { error: updateError } = await supabase.rpc("increment_bookmark", {
-        manga_id: mangaId,
-      });
+  const { data, error } = await supabase.rpc("add_bookmark", {
+    p_user_id: userId,
+    p_manga_id: mangaId,
+  });
 
-      if (updateError) {
-        console.error(
-          "mangaテーブルの更新に失敗しました:",
-          updateError.message
-        );
-        console.error("詳細なエラー情報:", updateError);
-      }
-    }
-  } else {
-    // ログインしていない場合、キャッシュに保存
-    let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-    if (!bookmarks.includes(mangaId)) {
-      bookmarks.push(mangaId);
-      localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-    }
-  }
+  // if (error) {
+  //   console.error("RPCエラー:", error);
+  // } else {
+  //   console.log("RPC成功:", data);
+  // }
 }
 
 export async function deleteBookmark(
   userId: string | undefined,
   mangaId: number
 ): Promise<void> {
-  if (userId) {
-    // ユーザーがログインしている場合、データベースから削除
-    const { error } = await supabase
-      .from("user_bookmarks")
-      .delete()
-      .eq("user_id", userId)
-      .eq("manga_id", mangaId);
+  if (!userId) return;
 
-    if (error) {
-      console.error("ブックマークの削除に失敗しました:", error.message);
-    } else {
-      const { error: updateError } = await supabase.rpc("decrement_bookmark", {
-        manga_id: mangaId,
-      });
+  const { data, error } = await supabase.rpc("remove_bookmark", {
+    p_user_id: userId,
+    p_manga_id: mangaId,
+  });
 
-      if (updateError) {
-        console.error(
-          "mangaテーブルの更新に失敗しました:",
-          updateError.message
-        );
-        console.error("詳細なエラー情報:", updateError);
-      } else {
-        console.log("decrement_bookmarkは正常に動作しました");
-      }
-    }
-  } else {
-    // ログインしていない場合、キャッシュから削除
-    let bookmarks = JSON.parse(localStorage.getItem("bookmarks") || "[]");
-    bookmarks = bookmarks.filter((id: number) => id !== mangaId);
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  }
+  // if (error) {
+  //   console.error("RPCエラー:", error);
+  // } else {
+  //   console.log("RPC成功:", data);
+  // }
 }
 
 export async function getUserBookmarks(userId: string): Promise<number[]> {
@@ -115,20 +78,23 @@ export async function fetchUserBookmarkedMangas(
 }
 
 // 全てのブックマーク数を取得する関数
-export async function getBookmarkCounts(): Promise<{ [mangaId: number]: number }> {
+export async function getBookmarkCounts(): Promise<{
+  [mangaId: string]: number;
+}> {
   try {
     const { data, error } = await supabase
       .from("manga")
-      .select("id, bookmark");
+      .select("id, bookmark")
+      .order("id", { ascending: true });
 
     if (error) {
       console.error("Failed to get bookmark counts:", error);
       return {};
     }
 
-    const counts: { [mangaId: number]: number } = {};
+    const counts: { [mangaId: string]: number } = {};
     data?.forEach((manga: any) => {
-      counts[manga.id] = manga.bookmark;
+      counts[manga.id.toString()] = manga.bookmark;
     });
 
     return counts;
@@ -136,4 +102,23 @@ export async function getBookmarkCounts(): Promise<{ [mangaId: number]: number }
     console.error("Failed to get bookmark counts:", error);
     return {};
   }
+}
+
+// おすすめのユーザーを取得する関数
+export async function fetchRecommendedUsers(
+  currentUserId: string
+): Promise<Profile[]> {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .neq("id", currentUserId)
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  if (error) {
+    console.error("Failed to fetch recommended users:", error.message);
+    return [];
+  }
+
+  return data as Profile[];
 }

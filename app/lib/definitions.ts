@@ -5,7 +5,7 @@ export type Manga = {
   publisher: string;
   genres: string[];
   description: string;
-  likes: string;
+  likes: number;
   status: string;
   image_url: string;
   image_id: string;
@@ -17,6 +17,13 @@ export type User = {
   name: string;
   email: string;
   password: string;
+};
+
+export type Profile = {
+  id: string;
+  name: string;
+  avatar_url: string | null;
+  created_at: string;
 };
 
 export type UserLike = {

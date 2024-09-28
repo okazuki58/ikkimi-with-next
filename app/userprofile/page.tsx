@@ -82,7 +82,7 @@ export default function UserProfile() {
                 {profile?.avatar_url ? (
                   <div className="w-28 h-28 rounded-full overflow-hidden">
                     <Image
-                      src={profile?.avatar_url}
+                      src={profile.avatar_url}
                       alt={`${profile?.name}のアバター`}
                       width={112}
                       height={112}
