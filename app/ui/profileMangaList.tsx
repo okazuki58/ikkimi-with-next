@@ -66,7 +66,7 @@ export default function ProfileMangaList({
       <MangaDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        manga={selectedManga}
+        manga={selectedManga!}
         isAnimating={isAnimating}
       />
     </>

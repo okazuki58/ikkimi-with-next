@@ -7,18 +7,34 @@ import React, {
   useState,
   ReactNode,
 } from "react";
-import { supabase } from "@/lib/supabaseClient";
+import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface UserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  signOut: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
+
+  // サインアウト関数
+  const signOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("サインアウトエラー:", error.message);
+    } else {
+      setUser(null); // サインアウト後にuserをnullにセット
+      toast.success("ログアウトしました");
+      window.location.reload();
+    }
+  };
 
   useEffect(() => {
     // 初期ユーザー取得
@@ -33,18 +49,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     // 認証状態の変更をリッスン
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        setUser(session?.user ?? null);
+        if (event === "SIGNED_IN" || event === "SIGNED_OUT") {
+          setUser(session?.user ?? null);
+        }
       }
     );
 
-    // クリーンアップ
     return () => {
-      authListener.subscription.unsubscribe();
+      authListener?.subscription.unsubscribe();
     };
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, signOut }}>
       {children}
     </UserContext.Provider>
   );

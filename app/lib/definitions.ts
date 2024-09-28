@@ -5,22 +5,11 @@ export type Manga = {
   publisher: string;
   genres: string[];
   description: string;
+  likes: string;
+  status: string;
   image_url: string;
   image_id: string;
-  amazon_url: string;
   bookmark: number;
-};
-
-export type NewManga = {
-  id: number;
-  title: string;
-  authors: string[];
-  publisher: string;
-  genres: string[];
-  description: string;
-  image_file: string;
-  image_url: string;
-  amazon_url: string;
 };
 
 export type User = {

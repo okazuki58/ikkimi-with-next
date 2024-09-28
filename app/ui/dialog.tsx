@@ -9,11 +9,13 @@ import Link from "next/link";
 import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
 import { useRouter } from "next/navigation";
+import { ImageSkeleton } from "./skeletons";
+import { useBookmark } from "../context/BookmarkContext";
 
 interface MangaDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  manga: Manga | null;
+  manga: Manga;
   isAnimating: boolean;
 }
 
@@ -24,7 +26,7 @@ export default function MangaDialog({
   isAnimating,
 }: MangaDialogProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const [localManga, setLocalManga] = useState(manga);
+  const [localManga, setLocalManga] = useState<Manga>(manga);
 
   useEffect(() => {
     setLocalManga(manga);
@@ -34,7 +36,7 @@ export default function MangaDialog({
 
   function handleNav(params: string) {
     if (params) {
-      router.push(`/home/result?query=${encodeURIComponent(params)}`);
+      router.push(`/result?query=${encodeURIComponent(params)}`);
     }
   }
 
@@ -70,7 +72,7 @@ export default function MangaDialog({
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                 <div className="sm:col-span-4 lg:col-span-5">
                   {/* {isImageLoading && <ImageSkeleton />} */}
-                  <div className="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100">
+                  <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
                     <Image
                       src={getImageUrl(localManga.image_id)}
                       alt={localManga.title}
@@ -109,10 +111,7 @@ export default function MangaDialog({
                     </li>
                   </ul>
                   <div className="flex">
-                    <BookmarkButton
-                      mangaId={localManga.id}
-                      bookmark={localManga.bookmark}
-                    />
+                    <BookmarkButton mangaId={localManga.id} />
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">
@@ -120,7 +119,7 @@ export default function MangaDialog({
                     </p>
                   </div>
                   <Link
-                    href={localManga.amazon_url}
+                    href="#"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full"

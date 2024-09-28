@@ -1,16 +1,87 @@
-import Link from "next/link";
+"use client";
+import { useEffect, useState } from "react";
+import { Manga } from "./lib/definitions";
+import {
+  fetchMangaList,
+  fetchRankingMangas,
+  fetchRisingManga,
+} from "./lib/data";
+import Hero from "./ui/hero";
+import { MangaListHeader } from "./ui/listHeader";
+import MangaList from "./ui/mangaList";
+import Divider from "./ui/divider";
+import UserList from "./ui/userList";
 
-export default function Home() {
+export default function ContentHome() {
+  const [rankingMangas, setRankingMangas] = useState<Manga[]>([]);
+  const [risingMangas, setRisingMangas] = useState<Manga[]>([]);
+  const [mangas, setMangas] = useState<Manga[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([fetchMangaList(), fetchRankingMangas(), fetchRisingManga()])
+      .then(([mangaData, rankingData, risingData]) => {
+        setMangas(mangaData);
+        setRankingMangas(rankingData);
+        setRisingMangas(risingData);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch data:", error);
+        setIsLoading(false);
+      });
+  }, []);
+
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <Link href="/home">
-        <button
-          type="button"
-          className="rounded bg-indigo-600 px-5 py-3 text-md font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Go to Home
-        </button>
-      </Link>
-    </div>
+    <>
+      <Hero />
+      <div className="my-4">
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="急上昇"
+            subSectionTitle="Ranking"
+            buttonText="すべて見る"
+          />
+          <MangaList mangas={risingMangas} isLoading={isLoading} />
+        </div>
+        <Divider />
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="今週のトップ10"
+            subSectionTitle="Trending"
+            buttonText="すべて見る"
+          />
+          <MangaList mangas={rankingMangas} isLoading={isLoading} />
+        </div>
+        <Divider />
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="おすすめのユーザー"
+            subSectionTitle="Ranking"
+            buttonText="すべて見る"
+          />
+          <UserList />
+        </div>
+        <Divider />
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="あなたにおすすめ"
+            subSectionTitle="For You"
+            buttonText="すべて見る"
+          />
+          <MangaList mangas={mangas} isLoading={isLoading} />
+        </div>
+        <Divider />
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="今ブックマークされました"
+            subSectionTitle="Just Now"
+            buttonText="すべて見る"
+          />
+          <MangaList mangas={mangas} isLoading={isLoading} />
+        </div>
+      </div>
+    </>
   );
 }

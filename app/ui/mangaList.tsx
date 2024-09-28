@@ -7,6 +7,7 @@ import MangaDialog from "./dialog";
 import { MangaListSkeleton } from "./skeletons";
 import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
+import { useBookmark } from "../context/BookmarkContext";
 
 export default function MangaList({
   mangas,
@@ -16,8 +17,9 @@ export default function MangaList({
   isLoading: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedManga, setSelectedManga] = useState<Manga | null>(null);
+  const [selectedManga, setSelectedManga] = useState<Manga>();
   const [isAnimating, setIsAnimating] = useState(false);
+  const { bookmarkCounts } = useBookmark();
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
@@ -32,13 +34,13 @@ export default function MangaList({
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5">
-        {mangas.map((manga) => (
+        {mangas?.slice(0, 12).map((manga) => (
           <div key={`${manga.id}`} className="flex flex-col">
             <div
               className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
             >
-              <div className="relative rounded-md overflow-hidden">
+              <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
                 <Image
                   src={getImageUrl(manga.image_id)}
                   alt={manga.title}
@@ -54,7 +56,7 @@ export default function MangaList({
             </div>
 
             {/* Bookmark Button */}
-            <BookmarkButton mangaId={manga.id} bookmark={manga.bookmark} />
+            <BookmarkButton mangaId={manga.id} />
           </div>
         ))}
       </div>
@@ -62,7 +64,7 @@ export default function MangaList({
       <MangaDialog
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        manga={selectedManga}
+        manga={selectedManga!}
         isAnimating={isAnimating}
       />
     </>

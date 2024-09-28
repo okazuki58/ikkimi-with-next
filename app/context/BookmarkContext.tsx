@@ -1,13 +1,17 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { getUserBookmarks, deleteBookmark, saveBookmark } from "../lib/actions";
+import {
+  getUserBookmarks,
+  deleteBookmark,
+  saveBookmark,
+  getBookmarkCounts,
+} from "../lib/actions"; // getBookmarkCount を追加
 import { useUser } from "./UserContext";
-
-const TEMP_USER_ID = "410544b2-4001-4271-9855-fec4b6a6442a";
 
 interface BookmarkContextType {
   bookmarkedMangas: number[];
+  bookmarkCounts: { [mangaId: number]: number }; // ブックマーク数を管理
   toggleBookmark: (mangaId: number) => void;
   animatingMangas: number[];
 }
@@ -23,15 +27,26 @@ export const BookmarkProvider = ({
 }) => {
   const { user } = useUser();
   const [bookmarkedMangas, setBookmarkedMangas] = useState<number[]>([]);
+  const [bookmarkCounts, setBookmarkCounts] = useState<{
+    [mangaId: number]: number;
+  }>({});
   const [animatingMangas, setAnimatingMangas] = useState<number[]>([]);
 
-  // 初回ロード時にログインユーザーのブックマーク情報を反映
+  // ログインユーザーのブックマーク情報とブックマーク数を取得
   useEffect(() => {
+    const fetchBookmarkCounts = async () => {
+      const counts = await getBookmarkCounts(); // すべての漫画のブックマーク数を取得する関数を実装する
+      setBookmarkCounts(counts);
+    };
+
+    fetchBookmarkCounts();
+
     if (user) {
       const fetchUserBookmarks = async () => {
         const bookmarks = await getUserBookmarks(user.id);
         setBookmarkedMangas(bookmarks);
       };
+
       fetchUserBookmarks();
     }
   }, [user]);
@@ -42,11 +57,17 @@ export const BookmarkProvider = ({
       isBookmarked ? prev.filter((id) => id !== mangaId) : [...prev, mangaId]
     );
 
+    // ブックマーク数を更新
+    setBookmarkCounts((prevCounts) => ({
+      ...prevCounts,
+      [mangaId]: (prevCounts[mangaId] || 0) + (isBookmarked ? -1 : 1),
+    }));
+
     // アニメーションをトリガー
     setAnimatingMangas((prev) => [...prev, mangaId]);
     setTimeout(() => {
       setAnimatingMangas((prev) => prev.filter((id) => id !== mangaId));
-    }, 500); // アニメーションの時間に合わせて調整
+    }, 500);
 
     // データベースを更新
     try {
@@ -61,12 +82,23 @@ export const BookmarkProvider = ({
       setBookmarkedMangas((prev) =>
         isBookmarked ? [...prev, mangaId] : prev.filter((id) => id !== mangaId)
       );
+
+      // ブックマーク数も元に戻す
+      setBookmarkCounts((prevCounts) => ({
+        ...prevCounts,
+        [mangaId]: (prevCounts[mangaId] || 0) + (isBookmarked ? 1 : -1),
+      }));
     }
   };
 
   return (
     <BookmarkContext.Provider
-      value={{ bookmarkedMangas, animatingMangas, toggleBookmark }}
+      value={{
+        bookmarkedMangas,
+        bookmarkCounts,
+        animatingMangas,
+        toggleBookmark,
+      }}
     >
       {children}
     </BookmarkContext.Provider>

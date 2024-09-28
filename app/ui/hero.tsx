@@ -2,20 +2,16 @@
 
 import { useState } from "react";
 import MangaSearch from "./fuse";
+import SearchForm from "@/components/SearchForm";
 
 export default function Hero() {
-  const [query, setQuery] = useState("");
-
-  const handleSearch = (value: string) => {
-    setQuery(value);
-  };
-
   return (
-    <div className="flex flex-col items-center justify-between py-6 bg-white">
+    <div className="flex flex-col items-center justify-between py-6 ">
       <div className="w-full max-w-4xl flex flex-col items-center justify-center flex-grow text-center">
         <div className="w-full max-w-xl mb-8">
           <div className="relative">
-            <MangaSearch onSearch={handleSearch} />
+            {/* <MangaSearch onSearch={handleSearch} /> */}
+            <SearchForm />
           </div>
         </div>
         <h1

@@ -10,6 +10,7 @@ import normalizeString from "@/utils/normalizeString";
 const options = {
   keys: ["title", "authors"],
   threshold: 0.3,
+  includeMatches: true, // マッチ情報を含める
 };
 
 interface MangaSearchProps {
@@ -19,9 +20,8 @@ interface MangaSearchProps {
 export default function MangaSearch({ onSearch }: MangaSearchProps) {
   const [query, setQuery] = useState("");
   const [isComposing, setIsComposing] = useState(false);
-  const [suggestions, setSuggestions] = useState<
-    { title: string; author: string }[]
-  >([]);
+  const [titleSuggestions, setTitleSuggestions] = useState<string[]>([]);
+  const [authorSuggestions, setAuthorSuggestions] = useState<string[]>([]);
   const [fuse, setFuse] = useState<Fuse<any>>();
 
   useEffect(() => {
@@ -36,15 +36,9 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
 
   const router = useRouter();
 
-  // 検索を実行する関数
-  const handleSearch = (searchQuery?: string) => {
-    const queryToUse = searchQuery || query;
-    if (queryToUse) {
-      router.push(`/home/result?query=${encodeURIComponent(queryToUse)}`);
-    }
-  };
+  const MAX_TITLE_SUGGESTIONS = 5;
+  const MAX_AUTHOR_SUGGESTIONS = 5;
 
-  // 入力が変更されたときの処理
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setQuery(value);
@@ -53,26 +47,72 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
     if (value && fuse) {
       const normalizedValue = normalizeString(value);
       const results = fuse.search(normalizedValue);
-      setSuggestions(
-        results.map((result) => ({
-          title: result.item.title,
-          author: result.item.authors[0],
-        }))
-      );
+
+      const titleSet = new Set<string>();
+      const authorSet = new Set<string>();
+
+      for (const result of results) {
+        if (result.matches) {
+          for (const match of result.matches) {
+            if (
+              match.key === "title" &&
+              titleSet.size < MAX_TITLE_SUGGESTIONS
+            ) {
+              titleSet.add(result.item.title);
+            }
+
+            if (
+              match.key === "authors" &&
+              authorSet.size < MAX_AUTHOR_SUGGESTIONS
+            ) {
+              // マッチした著者名を取得
+              const matchedAuthors = result.item.authors.filter(
+                (author: string) => {
+                  const normalizedAuthor = normalizeString(author);
+                  return normalizedAuthor.includes(normalizedValue);
+                }
+              );
+              matchedAuthors.forEach((author: string) => {
+                if (authorSet.size < MAX_AUTHOR_SUGGESTIONS) {
+                  authorSet.add(author);
+                }
+              });
+            }
+          }
+        }
+
+        if (
+          titleSet.size >= MAX_TITLE_SUGGESTIONS &&
+          authorSet.size >= MAX_AUTHOR_SUGGESTIONS
+        ) {
+          break;
+        }
+      }
+
+      setTitleSuggestions(Array.from(titleSet));
+      setAuthorSuggestions(Array.from(authorSet));
     } else {
-      setSuggestions([]);
+      setTitleSuggestions([]);
+      setAuthorSuggestions([]);
     }
   };
 
-  // サジェストがクリックされたときの処理
-  const handleSuggestionClick = (title: string) => {
-    setQuery(title);
-    setSuggestions([]);
-    handleSearch(title);
+  const handleSearch = (searchQuery?: string) => {
+    const queryToUse = searchQuery || query;
+    if (queryToUse) {
+      router.push(`/result?query=${encodeURIComponent(queryToUse)}`);
+    }
+  };
+
+  const handleSuggestionClick = (value: string) => {
+    setQuery(value);
+    setTitleSuggestions([]);
+    setAuthorSuggestions([]);
+    handleSearch(value);
   };
 
   return (
-    <div>
+    <div className="relative">
       <input
         type="text"
         value={query}
@@ -90,32 +130,48 @@ export default function MangaSearch({ onSearch }: MangaSearchProps) {
       />
       <button
         type="submit"
-        onClick={() => handleSearch()} // 検索ボタンで検索実行
+        onClick={() => handleSearch()}
         className="absolute right-2 top-2 rounded-md text-sm font-bold bg-indigo-500 hover:bg-indigo-600 text-white h-8 px-4"
       >
         検索
       </button>
-      {suggestions.length > 0 && (
+      {(titleSuggestions.length > 0 || authorSuggestions.length > 0) && (
         <div
           id="suggestions"
-          className="absolute left-0 z-10 mt-2 w-2/3 origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5"
+          className="absolute left-0 z-10 mt-2 w-full origin-top-left rounded-md bg-white overflow-hidden shadow-lg ring-1 ring-black ring-opacity-5"
         >
-          {suggestions.map((suggestion) => (
-            <div key={suggestion.title || suggestion.author}>
-              <div
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
-                onClick={() => handleSuggestionClick(suggestion.title)}
-              >
-                {suggestion.title}
+          {titleSuggestions.length > 0 && (
+            <div>
+              <div className="px-4 py-2 text-xs text-left font-semibold text-gray-400 bg-gray-100">
+                作品 ({titleSuggestions.length})
               </div>
-              <div
-                className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
-                onClick={() => handleSuggestionClick(suggestion.author)}
-              >
-                {suggestion.author}
-              </div>
+              {titleSuggestions.map((title) => (
+                <div
+                  key={title}
+                  className="px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
+                  onClick={() => handleSuggestionClick(title)}
+                >
+                  {title}
+                </div>
+              ))}
             </div>
-          ))}
+          )}
+          {authorSuggestions.length > 0 && (
+            <div>
+              <div className="px-4 py-2 text-xs text-left font-semibold text-gray-400 bg-gray-100">
+                作家 ({authorSuggestions.length})
+              </div>
+              {authorSuggestions.map((author) => (
+                <div
+                  key={author}
+                  className="px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 cursor-pointer text-left"
+                  onClick={() => handleSuggestionClick(author)}
+                >
+                  {author}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

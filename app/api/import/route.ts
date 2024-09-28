@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/utils/supabaseClient";
 import fs from "fs";
 import path from "path";
 
 export async function GET() {
-  const filePath = path.join(process.cwd(), "app/data/updated_output.json");
+  const filePath = path.join(process.cwd(), "app/data/sorted_valid_urls_1_10000.json");
   const jsonData = JSON.parse(fs.readFileSync(filePath, "utf8"));
 
   const { data, error } = await supabase

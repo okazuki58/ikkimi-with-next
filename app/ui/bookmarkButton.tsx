@@ -5,18 +5,17 @@ import { toast } from "sonner";
 
 interface BookmarkButtonProps {
   mangaId: number;
-  bookmark: number;
 }
 
-export default function BookmarkButton({
-  mangaId,
-  bookmark,
-}: BookmarkButtonProps) {
-  const { bookmarkedMangas, animatingMangas, toggleBookmark } = useBookmark();
+export default function BookmarkButton({ mangaId }: BookmarkButtonProps) {
+  const { bookmarkedMangas, bookmarkCounts, animatingMangas, toggleBookmark } =
+    useBookmark();
+  const isBookmarked = bookmarkedMangas.includes(mangaId);
+  const bookmarkCount = bookmarkCounts[mangaId] || 0;
 
-  const handleClick = () => {
-    toggleBookmark(mangaId);
-    const message = bookmarkedMangas.includes(mangaId)
+  const handleClick = async () => {
+    await toggleBookmark(mangaId);
+    const message = isBookmarked
       ? "ブックマークを解除しました"
       : "ブックマークを追加しました";
     toast.success(message);
@@ -46,9 +45,7 @@ export default function BookmarkButton({
           />
         )}
         <span className="text-sm ml-1 text-gray-500 group-hover:text-slate-600">
-          {(
-            bookmark + (bookmarkedMangas.includes(mangaId) ? 1 : 0)
-          ).toLocaleString()}
+          {bookmarkCount.toLocaleString()}
         </span>
       </div>
     </>
