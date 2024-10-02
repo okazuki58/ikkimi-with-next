@@ -193,7 +193,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
                           value={name}
                           maxLength={50}
                           onChange={handleNameChange}
-                          className="p-2 w-full rounded-md border-gray-300 text-md"
+                          className="p-2 w-full rounded-md border border-gray-300 text-md"
                         />
                       </div>
 
@@ -215,7 +215,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({ isOpen, onClose }) => {
                           value={bio}
                           onChange={handleBioChange}
                           maxLength={160}
-                          className="p-2 w-full rounded-md border-gray-300 text-md"
+                          className="p-2 w-full rounded-md border border-gray-300 text-md"
                         />
                       </div>
                     </div>

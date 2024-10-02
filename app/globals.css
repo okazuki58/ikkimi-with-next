@@ -17,12 +17,6 @@
   }
 }
 
-@layer base {
-  *:focus {
-    @apply outline-none;
-  }
-}
-
 *:focus {
   /* outline: none !important;
   border: none !important; */
