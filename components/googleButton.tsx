@@ -1,12 +1,11 @@
 "use client";
 
-export function GoogleButton() {
+export default function GoogleButton() {
   const handleGoogleLogin = () => {
     window.location.href = "/api/login/google"; // サーバーサイドのエンドポイントにリダイレクト
   };
   return (
-    <a
-      href="#"
+    <button
       onClick={handleGoogleLogin}
       className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition focus-visible:ring-transparent"
     >
@@ -29,6 +28,6 @@ export function GoogleButton() {
         />
       </svg>
       <span className="text-md font-semibold leading-6">Googleでログイン</span>
-    </a>
+    </button>
   );
 }
