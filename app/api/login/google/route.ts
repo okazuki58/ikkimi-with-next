@@ -6,7 +6,7 @@ export async function GET() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:3000/auth/callback",
+      redirectTo: "http://ikkimi-with-next.vercel.app/auth/callback",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
