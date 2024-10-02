@@ -23,7 +23,10 @@ export default function AlgoSearch() {
   useEffect(() => {
     const fetchData = async () => {
       if (debouncedQuery.length > 0) {
-        const { hits } = await index.search(debouncedQuery);
+        const { hits } = await index.search(debouncedQuery, {
+          exactOnSingleWordQuery: "word",
+          typoTolerance: "min",
+        });
         setResults(hits);
         setShowSuggestions(true);
       } else {
