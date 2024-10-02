@@ -24,7 +24,7 @@ export default function AlgoSearch() {
     const fetchData = async () => {
       if (debouncedQuery.length > 0) {
         const { hits } = await index.search(debouncedQuery, {
-          exactOnSingleWordQuery: "word",
+          exactOnSingleWordQuery: "attribute",
           typoTolerance: "min",
         });
         setResults(hits);
