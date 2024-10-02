@@ -4,7 +4,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
@@ -72,17 +72,19 @@ export default function MangaDialog({
                 <div className="sm:col-span-4 lg:col-span-5">
                   {/* {isImageLoading && <ImageSkeleton />} */}
                   <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
-                    <Image
-                      src={getImageUrl(
-                        localManga.folder_group,
-                        localManga.image_id
-                      )}
-                      alt={localManga.title}
-                      className="object-cover object-center"
-                      width={549}
-                      height={780}
-                      onLoad={() => setIsImageLoading(false)}
-                    />
+                    <Suspense fallback={<ImageSkeleton />}>
+                      <Image
+                        src={getImageUrl(
+                          localManga.folder_group,
+                          localManga.image_id
+                        )}
+                        alt={localManga.title}
+                        className="object-cover object-center"
+                        width={549}
+                        height={780}
+                        onLoad={() => setIsImageLoading(false)}
+                      />
+                    </Suspense>
                   </div>
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
