@@ -70,21 +70,21 @@ export default function MangaDialog({
 
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-4 sm:grid-cols-12 lg:gap-x-8">
                 <div className="sm:col-span-4 lg:col-span-5">
-                  {/* {isImageLoading && <ImageSkeleton />} */}
+                  {isImageLoading && <ImageSkeleton />}
                   <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
-                    <Suspense fallback={<ImageSkeleton />}>
-                      <Image
-                        src={getImageUrl(
-                          localManga.folder_group,
-                          localManga.image_id
-                        )}
-                        alt={localManga.title}
-                        className="object-cover object-center"
-                        width={549}
-                        height={780}
-                        onLoad={() => setIsImageLoading(false)}
-                      />
-                    </Suspense>
+                    <Image
+                      src={getImageUrl(
+                        localManga.folder_group,
+                        localManga.image_id
+                      )}
+                      alt={localManga.title}
+                      className={`object-cover object-center transition-opacity duration-500 ${
+                        isImageLoading ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      width={549}
+                      height={780}
+                      onLoad={() => setIsImageLoading(false)}
+                    />
                   </div>
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
