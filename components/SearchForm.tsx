@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../utils/supabaseClient";
 import { useDebounce } from "use-debounce";
 import { normalizeText } from "@/utils/normalizeString";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 function SearchForm() {
   const [query, setQuery] = useState("");
@@ -19,7 +20,7 @@ function SearchForm() {
   const router = useRouter(); // ルーティングに使用
 
   // 最低入力文字数を設定（例：2文字以上）
-  const MIN_QUERY_LENGTH = 1;
+  const MIN_QUERY_LENGTH = 2;
 
   // フォーム送信時のハンドラ
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,8 +47,9 @@ function SearchForm() {
       // タイトルにマッチするマンガを取得
       const { data: titleData, error: titleError } = await supabase
         .from("manga")
-        .select("id, title")
-        .ilike("normalized_title", `%${normalized}%`)
+        .select("id, title, likes")
+        .ilike("title", `%${value}%`)
+        .order("likes", { ascending: false })
         .limit(6);
 
       // 著者にマッチするマンガを取得（RPC関数を使用）
@@ -55,7 +57,7 @@ function SearchForm() {
         "search_manga_by_author",
         {
           query: normalized,
-          result_limit: 100, // 一旦多めに取得
+          result_limit: 10, // 一旦多めに取得
         }
       );
 
@@ -109,7 +111,7 @@ function SearchForm() {
   }, []);
 
   return (
-    <div>
+    <div className="w-full md:w-[420px]">
       {/* 検索フォーム */}
       <form onSubmit={handleSearch} className="relative">
         <input
@@ -117,14 +119,16 @@ function SearchForm() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="作品名、作者名、キーワードで検索"
-          className="w-full h-12 pl-4 pr-12 text-sm md:text-text-md bg-white rounded-lg border-2 border-indigo-300 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="w-full py-3 pl-10 pr-12 text-sm md:text-text-md bg-[#f2f2fa] rounded-lg  focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-none"
+          // border-indigo-300 border-2
         />
-        <button
+        <MagnifyingGlassIcon className="size-5 absolute top-1/2 translate-y-[-50%] inset-x-3 text-gray-400" />
+        {/* <button
           type="submit"
           className="absolute right-2 top-2 rounded-md text-sm font-bold bg-indigo-500 hover:bg-indigo-600 text-white h-8 px-4"
         >
           検索
-        </button>
+        </button> */}
 
         {showSuggestions &&
           (titleResults.length > 0 || uniqueAuthors.length > 0) && (

@@ -5,6 +5,8 @@ import { BookmarkIcon as BookmarkSolid } from "@heroicons/react/24/solid";
 import { useBookmark } from "../context/BookmarkContext";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useUser } from "../context/UserContext";
+import Link from "next/link";
 
 interface BookmarkButtonProps {
   mangaId: number;
@@ -16,12 +18,25 @@ export default function BookmarkButton({
   bookmark,
 }: BookmarkButtonProps) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const { bookmarkedMangas, animatingMangas, toggleBookmark } =
-    useBookmark();
+  const { bookmarkedMangas, animatingMangas, toggleBookmark } = useBookmark();
   const isBookmarked = bookmarkedMangas.includes(mangaId);
   const [bookmarkCount, setBookmarkCount] = useState(bookmark || 0);
+  const { user } = useUser();
 
   const handleClick = async () => {
+    if (!user) {
+      toast(
+        <div className="flex flex-col gap-3 w-full">
+          <span>ブックマーク機能はログインが必要です</span>
+          <Link href="/login">
+            <button className="py-2 px-3 rounded-full w-full bg-gray-900 text-white font-bold border-none md:hover:bg-gray-700">
+              ログイン
+            </button>
+          </Link>
+        </div>
+      );
+      return;
+    }
     if (isProcessing) return;
     setIsProcessing(true);
     try {

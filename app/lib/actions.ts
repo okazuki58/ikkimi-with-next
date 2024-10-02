@@ -42,7 +42,8 @@ export async function getUserBookmarks(userId: string): Promise<number[]> {
     const { data, error } = await supabase
       .from("user_bookmarks")
       .select("manga_id")
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false }); 
 
     if (error) {
       console.error("Failed to get user bookmarks:", error);
@@ -112,6 +113,21 @@ export async function fetchRecommendedUsers(
     .from("profiles")
     .select("*")
     .neq("id", currentUserId)
+    .order("created_at", { ascending: false })
+    .limit(6);
+
+  if (error) {
+    console.error("Failed to fetch recommended users:", error.message);
+    return [];
+  }
+
+  return data as Profile[];
+}
+
+export async function getUsers(): Promise<Profile[]> {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
     .order("created_at", { ascending: false })
     .limit(6);
 

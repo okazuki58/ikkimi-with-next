@@ -23,6 +23,8 @@ const config: Config = {
           "sans-serif",
         ],
         inter: ["var(--font-inter)"],
+        unbounded: ["Unbounded", "sans-serif"],
+        note_sans_jp: ["Noto Sans JP", "sans-serif"],
       },
       keyframes: {
         smoothBounce: {
@@ -30,10 +32,15 @@ const config: Config = {
           "50%": { transform: "scale(1.2)" },
           "75%": { transform: "scale(0.95)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "scaleY(0.95)" },
+          "100%": { opacity: "1", transform: "scaleY(1)" },
+        },
       },
       animation: {
         smoothBounce:
           "smoothBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        fadeIn: "fadeIn 0.2s ease-out forwards",
       },
     },
   },

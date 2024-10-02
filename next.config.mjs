@@ -12,6 +12,12 @@ const nextConfig = {
         port: "",
         pathname: "/storage/v1/object/public/ikkimi-image/**",
       },
+      {
+        protocol: "https",
+        hostname: "xcclmezluzvwbewszwtw.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/avatars/**",
+      },
       // Googleユーザーアバター画像を許可
       {
         protocol: "https",

@@ -10,6 +10,8 @@ export type Manga = {
   image_url: string;
   image_id: string;
   bookmark: number;
+  folder_group: string;
+  amazon_url: string;
 };
 
 export type User = {
@@ -22,7 +24,10 @@ export type User = {
 export type Profile = {
   id: string;
   name: string;
-  avatar_url: string | null;
+  username: string;
+  email: string;
+  avatar_url: string;
+  bio: string | null;
   created_at: string;
 };
 

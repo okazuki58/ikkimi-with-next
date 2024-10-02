@@ -10,7 +10,6 @@ import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
 import { useRouter } from "next/navigation";
 import { ImageSkeleton } from "./skeletons";
-import { useBookmark } from "../context/BookmarkContext";
 
 interface MangaDialogProps {
   isOpen: boolean;
@@ -36,7 +35,7 @@ export default function MangaDialog({
 
   function handleNav(params: string) {
     if (params) {
-      router.push(`/result?query=${encodeURIComponent(params)}`);
+      router.push(`/search?query=${encodeURIComponent(params)}`);
     }
   }
 
@@ -74,7 +73,10 @@ export default function MangaDialog({
                   {/* {isImageLoading && <ImageSkeleton />} */}
                   <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
                     <Image
-                      src={getImageUrl(localManga.image_id)}
+                      src={getImageUrl(
+                        localManga.folder_group,
+                        localManga.image_id
+                      )}
                       alt={localManga.title}
                       className="object-cover object-center"
                       width={549}
@@ -122,7 +124,7 @@ export default function MangaDialog({
                     </p>
                   </div>
                   <Link
-                    href="#"
+                    href={manga.amazon_url || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full"

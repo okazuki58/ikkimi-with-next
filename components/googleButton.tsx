@@ -8,7 +8,7 @@ export function GoogleButton() {
     <a
       href="#"
       onClick={handleGoogleLogin}
-      className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
+      className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
         <path

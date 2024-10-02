@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,6 +15,18 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+@layer base {
+  *:focus {
+    @apply outline-none;
+  }
+}
+
+*:focus {
+  /* outline: none !important;
+  border: none !important; */
+  box-shadow: none !important;
 }
 
 @media (max-width: 640px) {

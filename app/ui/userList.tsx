@@ -5,10 +5,12 @@ import {
   fetchRecommendedUsers,
   fetchUserBookmarkedMangas,
   getUserBookmarks,
+  getUsers,
 } from "../lib/actions";
 import { useUser } from "../context/UserContext";
 import { getImageUrl } from "../lib/data";
 import MangaDialog from "./dialog";
+import Link from "next/link";
 
 export default function UserList() {
   const [users, setUsers] = useState<Profile[]>([]);
@@ -28,61 +30,63 @@ export default function UserList() {
   };
 
   useEffect(() => {
-    if (currentUser) {
-      fetchUsers();
-    }
+    fetchUsers();
   }, [currentUser]);
 
   const fetchUsers = async () => {
-    if (currentUser) {
-      const recommendedUsers = await fetchRecommendedUsers(currentUser.id);
-      setUsers(recommendedUsers);
+    const recommendedUsers = currentUser
+      ? await fetchRecommendedUsers(currentUser.id)
+      : await getUsers();
+    setUsers(recommendedUsers);
 
-      const mangasByUser: { [userId: string]: Manga[] } = {};
+    const mangasByUser: { [userId: string]: Manga[] } = {};
 
-      await Promise.all(
-        recommendedUsers.map(async (user) => {
-          const bookmarks = await getUserBookmarks(user.id);
-          const mangas = await fetchUserBookmarkedMangas(bookmarks);
-          mangasByUser[user.id] = mangas.slice(0, 4); // 各ユーザーのマンガを最大4件表示
-        })
-      );
+    await Promise.all(
+      recommendedUsers.map(async (user) => {
+        const bookmarks = await getUserBookmarks(user.id);
+        const mangas = await fetchUserBookmarkedMangas(bookmarks);
+        mangasByUser[user.id] = mangas.slice(0, 4); // 各ユーザーのマンガを最大4件表示
+      })
+    );
 
-      setUserMangas(mangasByUser);
-    }
+    setUserMangas(mangasByUser);
   };
   return (
     <div>
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
         {users.map((user) => (
           <div className="flex flex-col" key={user.id}>
-            <a
-              href="#"
-              className="relative flex items-center justify-between space-x-3 rounded-lg bg-transparent pb-5 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2"
+            <Link
+              href={`/${user.username}`}
+              className="relative flex items-center justify-between space-x-3 rounded-lg bg-transparent pb-5 focus:outline-none focus:border-none"
             >
               <div className="flex items-center space-x-3 flex-1 min-w-0">
                 <div className="flex-shrink-0 hover:brightness-90 transition">
                   {user.avatar_url && (
-                    <div className="w-10 h-10 rounded-full overflow-hidden">
-                      <Image
-                        src={user?.avatar_url}
-                        alt={`${user.name}のアバター`}
-                        width={40}
-                        height={40}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+                    <Link href={`/${user.username}`}>
+                      <div className="w-10 h-10 rounded-full overflow-hidden border">
+                        <Image
+                          src={user?.avatar_url}
+                          alt={`${user.name}のアバター`}
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </Link>
                   )}
                 </div>
                 <div className="min-w-0">
-                  <div className="focus:outline-none">
-                    {/* <span aria-hidden="true" className="absolute inset-0" /> */}
-                    <span className="text-sm font-semibold text-gray-900 dark:text-white md:hover:underline">
-                      {user.name}
-                    </span>
+                  <div className="focus:outline-none focus:border-none">
+                    <Link href={`/${user.username}`}>
+                      <span className="text-sm font-semibold text-gray-900 dark:text-white md:hover:underline">
+                        {user.name}
+                      </span>
+                    </Link>
+
                     <div className="flex items-center">
                       <p className="truncate text-sm text-gray-500">
-                        {user.id}
+                        {user.username}
                       </p>
                       <div className="px-2 flex-shrink-0">
                         {/* マッチ度を表示 */}
@@ -98,21 +102,21 @@ export default function UserList() {
                   フォロー
                 </button>
               </div>
-            </a>
+            </Link>
 
             <div className="grid grid-cols-4 gap-3">
               {userMangas[user.id]?.map((manga) => (
                 <div
-                  className="rounded-md overflow-hidden aspect-[549/780] relative group hover:cursor-pointer"
+                  className="rounded-md overflow-hidden aspect-[549/780] relative group hover:cursor-pointer border border-slate-50"
                   key={manga.id}
                   onClick={() => openDialog(manga)}
                 >
                   <Image
-                    src={getImageUrl(manga.image_id)}
+                    src={getImageUrl(manga.folder_group, manga.image_id)}
                     alt={manga.title}
                     fill
                     style={{ objectFit: "cover" }}
-                    className="transition-transform transform md:group-hover:scale-105"
+                    className="transition-transform transform md:group-hover:scale-105 "
                   />
                 </div>
               ))}

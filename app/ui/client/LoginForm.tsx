@@ -115,7 +115,7 @@ export default function LoginForm() {
       <p className="mt-2 text-sm leading-6 text-gray-500">
         アカウント登録がまだの方は{" "}
         <Link
-          href="/login"
+          href="/signup"
           className="font-semibold text-indigo-600 hover:text-indigo-500"
         >
           こちら

@@ -110,3 +110,22 @@ export function ProfileSkeleton() {
     </div>
   );
 }
+
+export function HeroSkeleton() {
+  return (
+    <div className="animate-pulse flex flex-col items-center justify-between py-32 gap-8 w-full max-w-5xl">
+      <div className="w-full max-w-4xl flex flex-col items-center justify-center flex-grow text-center">
+        <div className="w-full max-w-xl mb-8">
+          <div className="relative">
+            <div className="skeleton h-10 w-full mb-4 bg-gray-200"></div>
+          </div>
+        </div>
+        <div className="skeleton h-10 w-3/4 mb-4 bg-gray-200"></div>
+        <div className="skeleton h-6 w-1/2 bg-gray-200"></div>
+      </div>
+      <div className="max-w-xs">
+        <div className="skeleton h-14 w-full bg-gray-200"></div>
+      </div>
+    </div>
+  );
+}

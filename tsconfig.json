@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/(withHeaderFooter)/(withHero)/home/userprofile"
-, "app/algolia.mjs", "app/algolia/Hit.jsx"  ],
+    "app/(withHeaderFooter)/(withHero)/home/userprofile",
+    "app/algolia.mjs",
+    "app/algolia/Hit.jsx"
+, "app/algolia-test/page.jsx", "app/search/page.jsx"  ],
   "exclude": ["node_modules"]
 }

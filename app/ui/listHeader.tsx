@@ -1,15 +1,19 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { Manga } from "../lib/definitions";
+import Link from "next/link";
 
 type Props = {
   sectionTitle: string;
   subSectionTitle: string;
   buttonText: string;
+  buttonLink?: string;
 };
 
 export function MangaListHeader({
   sectionTitle,
   subSectionTitle,
   buttonText,
+  buttonLink,
 }: Props) {
   return (
     <div className="flex items-end justify-between mb-6">
@@ -21,13 +25,13 @@ export function MangaListHeader({
           {sectionTitle}
         </h2>
       </div>
-      <a
-        href="#"
+      <Link
+        href={`/manga/${buttonLink}`}
         className="flex items-center gap-1 text-sm text-indigo-600 md:hover:text-indigo-500 font-medium dark:text-white"
       >
         <span>{buttonText}</span>
         <ArrowRightIcon className="h-3 w-3 stroke-2" />
-      </a>
+      </Link>
     </div>
   );
 }

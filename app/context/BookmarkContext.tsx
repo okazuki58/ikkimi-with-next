@@ -34,7 +34,6 @@ export const BookmarkProvider = ({
     if (user) {
       // ユーザーのブックマークを取得
       const bookmarks = await getUserBookmarks(user.id);
-      console.log(bookmarks);
       setBookmarkedMangas(bookmarks);
     }
   };

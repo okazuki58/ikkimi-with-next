@@ -9,16 +9,21 @@ import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
 import { useBookmark } from "../context/BookmarkContext";
 
+type MangaListProps = {
+  mangas: Manga[];
+  isLoading: boolean;
+  limit?: number; // 表示数を指定するプロップスを追加、任意のため"?"を付ける
+};
+
 export default function MangaList({
   mangas,
   isLoading,
-}: {
-  mangas: Manga[];
-  isLoading: boolean;
-}) {
+  limit,
+}: MangaListProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
   const [isAnimating, setIsAnimating] = useState(false);
+  const displayLimit = limit ?? 12;
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
@@ -33,7 +38,7 @@ export default function MangaList({
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5">
-        {mangas?.slice(0, 12).map((manga) => (
+        {mangas?.slice(0, displayLimit).map((manga) => (
           <div key={`${manga.id}`} className="flex flex-col">
             <div
               className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
@@ -41,7 +46,7 @@ export default function MangaList({
             >
               <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
                 <Image
-                  src={getImageUrl(manga.image_id)}
+                  src={getImageUrl(manga.folder_group, manga.image_id)}
                   alt={manga.title}
                   fill
                   style={{ objectFit: "cover" }}

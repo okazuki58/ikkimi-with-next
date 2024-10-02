@@ -63,7 +63,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // 未ログインでプロフィールページにアクセスする場合、ログインページにリダイレクト
-  if (!user && request.nextUrl.pathname.startsWith("/userprofile")) {
+  if (!user && request.nextUrl.pathname.startsWith("/[username]")) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
