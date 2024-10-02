@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Manga } from "../lib/definitions";
 import { useState } from "react";
 import MangaDialog from "./dialog";
-import { MangaListSkeleton } from "./skeletons";
+import { ImageSkeleton, MangaListSkeleton } from "./skeletons";
 import BookmarkButton from "./bookmarkButton";
 import { getImageUrl } from "../lib/data";
 import { useBookmark } from "../context/BookmarkContext";
@@ -23,6 +23,7 @@ export default function MangaList({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const displayLimit = limit ?? 12;
 
   const openDialog = (manga: Manga) => {
@@ -45,12 +46,16 @@ export default function MangaList({
               onClick={() => openDialog(manga)}
             >
               <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
+                {!isImageLoaded && <ImageSkeleton />}
                 <Image
                   src={getImageUrl(manga.folder_group, manga.image_id)}
                   alt={manga.title}
                   fill
                   style={{ objectFit: "cover" }}
-                  className="transition-transform transform md:group-hover:scale-105"
+                  className={`transform md:group-hover:scale-105 transition-opacity duration-500 md:transition-transform md:duration-300 ${
+                    isImageLoaded ? "opacity-100" : "opacity-0"
+                  }`}
+                  onLoadingComplete={() => setIsImageLoaded(true)}
                 />
               </div>
               <h3 className="md:text-sm line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600 dark:md:group-hover:text-[#FC4747]">
