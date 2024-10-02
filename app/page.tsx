@@ -15,6 +15,10 @@ import Divider from "./ui/divider";
 import UserList from "./ui/userList";
 import { useUser } from "./context/UserContext";
 import { HeroSkeleton, MangaListSkeleton } from "./ui/skeletons";
+import Image from "next/image";
+import UserCard from "@/components/UserCard";
+import Discover from "@/components/Discover";
+import WithUser from "@/components/WIthUser";
 
 export default function ContentHome() {
   const [rankingMangas, setRankingMangas] = useState<Manga[]>([]);
@@ -75,18 +79,22 @@ export default function ContentHome() {
 
   return (
     <>
-      {!user && <Hero />}
+      {/* {!user && <Hero />} */}
       <div className="mb-4 min-w-full">
-        <div className="py-16">
+        <Discover />
+        {/* <Divider /> */}
+        {/* <UserCard />
+        <Divider /> */}
+        <div className="pb-10">
           <MangaListHeader
             sectionTitle="急上昇"
             subSectionTitle="Ranking"
             buttonText="すべて見る"
           />
-          <MangaList mangas={risingMangas} isLoading={isLoading} />
+          <MangaList mangas={risingMangas} isLoading={isLoading} limit={14} />
         </div>
         <Divider />
-        <div className="py-16">
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="総合ランキング"
             subSectionTitle="Trending"
@@ -96,7 +104,7 @@ export default function ContentHome() {
           <MangaList mangas={rankingMangas} isLoading={isLoading} limit={21} />
         </div>
         <Divider />
-        <div className="py-16">
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="おすすめのユーザー"
             subSectionTitle="Ranking"
@@ -105,33 +113,33 @@ export default function ContentHome() {
           <UserList />
         </div>
         <Divider />
-        <div className="py-16">
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="あなたにおすすめ"
             subSectionTitle="For You"
             buttonText="すべて見る"
           />
-          <MangaList mangas={mangas} isLoading={isLoading}/>
+          <MangaList mangas={mangas} isLoading={isLoading} limit={14} />
         </div>
         <Divider />
-        <div className="py-16">
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="2024年秋アニメ化作品"
             subSectionTitle="Just Now"
             buttonText="すべて見る"
             buttonLink="media"
           />
-          <MangaList mangas={mediaMangas} isLoading={isLoading} limit={18} />
+          <MangaList mangas={mediaMangas} isLoading={isLoading} limit={14} />
         </div>
         <Divider />
-        <div className="py-16">
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="受賞作品"
             subSectionTitle="Just Now"
             buttonText="すべて見る"
             buttonLink="awards"
           />
-          <MangaList mangas={awardsMangas} isLoading={isLoading} limit={18} />
+          <MangaList mangas={awardsMangas} isLoading={isLoading} limit={14} />
         </div>
       </div>
     </>

@@ -55,7 +55,7 @@ export default async function RootLayout({
             </BookmarkProvider>
           </ProfileProvider>
         </UserProvider>
-        <Toaster position="top-center" />
+        <Toaster position="bottom-center" />
         <LoginToast />
       </body>
     </html>

@@ -112,11 +112,14 @@ export default function MangaDialog({
                       {localManga.publisher}
                     </li>
                   </ul>
-                  <div className="flex">
+                  <div className="flex items-center justify-between w-full">
                     <BookmarkButton
                       mangaId={localManga.id}
                       bookmark={localManga.bookmark}
                     />
+                    <p className="text-xs text-gray-700 md:hover:text-indigo-700 border-b md:hover:border-indigo-700 cursor-pointer">
+                      ブックマーク中のユーザー
+                    </p>
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">
