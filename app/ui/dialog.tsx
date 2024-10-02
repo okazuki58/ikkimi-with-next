@@ -24,7 +24,7 @@ export default function MangaDialog({
   manga,
   isAnimating,
 }: MangaDialogProps) {
-  const [isImageLoading, setIsImageLoading] = useState(true);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [localManga, setLocalManga] = useState<Manga>(manga);
 
   useEffect(() => {
@@ -70,8 +70,8 @@ export default function MangaDialog({
 
               <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-4 sm:grid-cols-12 lg:gap-x-8">
                 <div className="sm:col-span-4 lg:col-span-5">
-                  <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
-                    {isImageLoading && <ImageSkeleton />}
+                  <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100 relative aspect-[549/780]">
+                    {!isImageLoaded && <ImageSkeleton />}
                     <Image
                       src={getImageUrl(
                         localManga.folder_group,
@@ -79,11 +79,10 @@ export default function MangaDialog({
                       )}
                       alt={localManga.title}
                       className={`object-cover object-center transition-opacity duration-500 ${
-                        isImageLoading ? "opacity-0" : "opacity-100"
+                        isImageLoaded ? "opacity-100" : "opacity-0"
                       }`}
-                      width={549}
-                      height={780}
-                      onLoad={() => setIsImageLoading(false)}
+                      layout="fill"
+                      onLoadingComplete={() => setIsImageLoaded(true)}
                     />
                   </div>
                 </div>
