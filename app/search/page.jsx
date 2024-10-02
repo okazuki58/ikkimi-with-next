@@ -1,6 +1,6 @@
 "use client";
 import algoliasearch from "algoliasearch/lite";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import MangaList from "../ui/mangaList";
 
@@ -32,13 +32,15 @@ export default function SearchResults() {
   }, [query]);
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">"{query}"の検索結果</h1>
-      {results.length > 0 ? (
-        <MangaList mangas={results} isLoading={isLoading} limit={50} />
-      ) : (
-        <p>検索結果が見つかりませんでした。</p>
-      )}
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="w-full max-w-5xl mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">"{query}"の検索結果</h1>
+        {results.length > 0 ? (
+          <MangaList mangas={results} isLoading={isLoading} limit={50} />
+        ) : (
+          <p>検索結果が見つかりませんでした。</p>
+        )}
+      </div>
+    </Suspense>
   );
 }
