@@ -1,4 +1,4 @@
-import { GoogleButton } from "@/components/googleButton";
+import { GoogleButton } from "@/components/GoogleButton";
 import LoginForm from "../ui/client/LoginForm";
 import { GithubButton } from "@/components/githubButton";
 

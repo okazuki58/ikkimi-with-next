@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useProfile } from "../context/ProfileContext";
 import { Manga, Profile } from "../lib/definitions";
-import { useBookmark } from "../context/BookmarkContext";
-import { fetchUserBookmarkedMangas } from "../lib/actions";
 import Image from "next/image";
 import { BookOpenIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import MangaList from "../ui/mangaList";
@@ -12,7 +9,6 @@ import ModalComponent from "@/components/ProfileEditModal";
 import { ProfileSkeleton } from "../ui/skeletons";
 import {
   fetchUserBookmarkedMangasWithCreatedAt,
-  fetchUserBookmarksWithDate,
   fetchUserProfileByUsername,
 } from "../lib/data";
 import Dropdown from "@/components/Dropdown";
@@ -26,12 +22,9 @@ interface ProfilePageProps {
 
 export default function ProfilePage({ params }: ProfilePageProps) {
   const { user } = useUser();
-  // const { profile } = useProfile();
   const { username } = params;
   const [profile, setProfile] = useState<Profile | null>(null);
-  // const { bookmarkedMangas } = useBookmark();
   const [bookmarkedMangas, setBookmarkedMangas] = useState<Manga[]>([]);
-  // const [mangas, setMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [sortOption, setSortOption] = useState("bookmark_date");
@@ -61,7 +54,6 @@ export default function ProfilePage({ params }: ProfilePageProps) {
       );
 
       setBookmarkedMangas(userBookmarkedMangas);
-      console.log(userBookmarkedMangas);
       setIsLoading(false);
     };
 

@@ -1,4 +1,4 @@
-import { GoogleButton } from "@/components/googleButton";
+import { GoogleButton } from "@/components/GoogleButton";
 import Link from "next/link";
 
 export default function SignupPage() {

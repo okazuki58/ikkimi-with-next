@@ -74,7 +74,7 @@ export default function AlgoSearch() {
           onKeyDown={handleKeyDown}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
-          className="w-full py-3 pl-10 pr-12 text-sm md:text-text-md bg-[#f2f2fa] rounded-lg  focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-none"
+          className="w-full h-10 py-2 pl-10  text-sm md:text-text-md bg-[#f2f2fa] rounded-lg  focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border-none"
         />
         <MagnifyingGlassIcon className="size-5 absolute top-1/2 translate-y-[-50%] inset-x-3 text-gray-400" />
         {showSuggestions && results.length > 0 && (
