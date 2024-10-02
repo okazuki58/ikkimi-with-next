@@ -71,14 +71,14 @@ export default function BookmarkButton({
           />
         ) : (
           <BookmarkOutline
-            className={`size-4 transition-transform transform group-hover:text-slate-600 ${
+            className={`size-4 transition-transform transform md:group-hover:text-slate-600 ${
               animatingMangas.includes(mangaId)
                 ? "animate-smoothBounce text-slate-400"
                 : "text-slate-400"
             }`}
           />
         )}
-        <span className="text-sm ml-1 text-gray-500 group-hover:text-slate-600">
+        <span className="text-sm ml-1 text-gray-500 md:group-hover:text-slate-600">
           {bookmarkCount.toLocaleString()}
         </span>
       </button>

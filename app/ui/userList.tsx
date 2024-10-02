@@ -104,7 +104,7 @@ export default function UserList() {
               </div>
             </Link>
 
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-4 gap-1 md:gap-2">
               {userMangas[user.id]?.map((manga) => (
                 <div
                   className="rounded-md overflow-hidden aspect-[549/780] relative group hover:cursor-pointer border border-slate-50"

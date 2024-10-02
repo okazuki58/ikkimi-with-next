@@ -37,11 +37,11 @@ export default function MangaList({
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-x-4 gap-y-5">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-2 sm:gap-x-3 gap-y-5">
         {mangas?.slice(0, displayLimit).map((manga) => (
           <div key={`${manga.id}`} className="flex flex-col">
             <div
-              className="flex flex-col gap-1.5 group pb-1 hover:cursor-pointer"
+              className="flex flex-col gap-1 sm:gap-1.5 group pb-1 hover:cursor-pointer"
               onClick={() => openDialog(manga)}
             >
               <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">

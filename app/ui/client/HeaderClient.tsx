@@ -2,14 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { BookmarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Avatar from "boring-avatars";
 import Link from "next/link";
 import { useUser } from "../../context/UserContext";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/utils/supabaseClient";
 import Image from "next/image";
-import SearchForm from "@/components/SearchForm";
-import { getAvatarUrl } from "@/app/lib/data";
 import AlgoSearch from "@/app/algolia-test/page";
 
 interface Profile {
@@ -32,26 +29,26 @@ export default function ClientHeader({ user }: { user: User | null }) {
   };
 
   const [isVisible, setIsVisible] = useState(true);
-  const scrollThreshold = 50;
+  const scrollThreshold = 120;
   let lastScrollY = 0;
+  let accumulatedDelta = 0; // スクロール量の累積差分
 
   const handleScroll = () => {
     if (typeof window !== "undefined") {
       const currentScrollY = window.scrollY;
+      const deltaY = currentScrollY - lastScrollY;
+
+      accumulatedDelta += deltaY;
 
       if (currentScrollY === 0) {
         setIsVisible(true); // 一番上にスクロールしたときはヘッダーを表示
-      } else if (
-        currentScrollY > lastScrollY &&
-        isVisible &&
-        currentScrollY > scrollThreshold
-      ) {
+        accumulatedDelta = 0; // 累積差分をリセット
+      } else if (accumulatedDelta > scrollThreshold) {
         setIsVisible(false); // 下にスクロールしているときにヘッダーを隠す
-      } else if (
-        currentScrollY < lastScrollY &&
-        currentScrollY > scrollThreshold
-      ) {
+        accumulatedDelta = 0; // 累積差分をリセット
+      } else if (accumulatedDelta < -scrollThreshold) {
         setIsVisible(true); // 上にスクロールしているときにヘッダーを表示
+        accumulatedDelta = 0; // 累積差分をリセット
       }
 
       lastScrollY = currentScrollY;

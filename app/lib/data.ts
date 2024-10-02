@@ -194,3 +194,20 @@ export async function fetchMangasWithMedia(): Promise<Manga[]> {
 
   return mangasWithMedia;
 }
+
+// リレーションを使用してawardsに関連するmangaを取得
+export async function fetchMangasWithAwards(): Promise<Manga[]> {
+  const { data, error } = await supabase
+    .from("manga")
+    .select("*, awards!inner(*)");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  // manga_to_mediaが存在するmangaを抽出
+  const mangasWithAwards = data as Manga[];
+
+  return mangasWithAwards;
+}

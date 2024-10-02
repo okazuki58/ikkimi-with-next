@@ -1,10 +1,10 @@
 export function MangaListSkeleton() {
   return (
     <div className="animate-pulse">
-      {/* <div className="h-12 bg-gray-200 rounded w-3/4 md:w-3/5 my-2"></div> */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="flex flex-col pb-5">
+      {/* <div className="h-10 w-1/5 mb-6 bg-gray-200 rounded-md"></div> */}
+      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+        {[...Array(14)].map((_, i) => (
+          <div key={i} className="flex flex-col pb-1">
             <div className="flex flex-col gap-2 pb-2">
               <div
                 className="rounded-md overflow-hidden bg-gray-200 relative"

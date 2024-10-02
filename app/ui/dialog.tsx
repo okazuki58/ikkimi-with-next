@@ -68,7 +68,7 @@ export default function MangaDialog({
                 <XMarkIcon aria-hidden="true" className="h-6 w-6" />
               </button>
 
-              <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+              <div className="grid w-full grid-cols-1 items-start gap-x-6 gap-y-4 sm:grid-cols-12 lg:gap-x-8">
                 <div className="sm:col-span-4 lg:col-span-5">
                   {/* {isImageLoading && <ImageSkeleton />} */}
                   <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100">
@@ -86,7 +86,7 @@ export default function MangaDialog({
                   </div>
                 </div>
                 <div className="sm:col-span-8 lg:col-span-7">
-                  <h2 className="text-3xl text-gray-900 sm:pr-12">
+                  <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
                     {localManga.title}
                   </h2>
                   <ul className="flex gap-2 my-4">
@@ -133,7 +133,7 @@ export default function MangaDialog({
                       type="button"
                       className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
                     >
-                      Amazonで購入
+                      Amazonで読む
                     </button>
                   </Link>
                 </div>

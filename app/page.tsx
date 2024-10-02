@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Manga } from "./lib/definitions";
 import {
   fetchMangaList,
+  fetchMangasWithAwards,
   fetchMangasWithMedia,
   fetchRankingMangas,
   fetchRisingManga,
@@ -20,6 +21,7 @@ export default function ContentHome() {
   const [risingMangas, setRisingMangas] = useState<Manga[]>([]);
   const [mediaMangas, setMediaMangas] = useState<Manga[]>([]);
   const [mangas, setMangas] = useState<Manga[]>([]);
+  const [awardsMangas, setAwardsMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useUser();
 
@@ -30,12 +32,14 @@ export default function ContentHome() {
       fetchRankingMangas(),
       fetchRisingManga(),
       fetchMangasWithMedia(),
+      fetchMangasWithAwards(),
     ])
-      .then(([mangaData, rankingData, risingData, mediaData]) => {
+      .then(([mangaData, rankingData, risingData, mediaData, awardsData]) => {
         setMangas(mangaData);
         setRankingMangas(rankingData);
         setRisingMangas(risingData);
         setMediaMangas(mediaData);
+        setAwardsMangas(awardsData);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -49,6 +53,9 @@ export default function ContentHome() {
       <>
         {/* {!user && <HeroSkeleton />} */}
         <div className="mb-4 min-w-full">
+          <div className="py-16">
+            <MangaListSkeleton />
+          </div>
           <div className="py-16">
             <MangaListSkeleton />
           </div>
@@ -86,7 +93,7 @@ export default function ContentHome() {
             buttonText="すべて見る"
             buttonLink="ranking"
           />
-          <MangaList mangas={rankingMangas} isLoading={isLoading} />
+          <MangaList mangas={rankingMangas} isLoading={isLoading} limit={21} />
         </div>
         <Divider />
         <div className="py-16">
@@ -104,7 +111,7 @@ export default function ContentHome() {
             subSectionTitle="For You"
             buttonText="すべて見る"
           />
-          <MangaList mangas={mangas} isLoading={isLoading} />
+          <MangaList mangas={mangas} isLoading={isLoading}/>
         </div>
         <Divider />
         <div className="py-16">
@@ -114,7 +121,17 @@ export default function ContentHome() {
             buttonText="すべて見る"
             buttonLink="media"
           />
-          <MangaList mangas={mediaMangas} isLoading={isLoading} />
+          <MangaList mangas={mediaMangas} isLoading={isLoading} limit={18} />
+        </div>
+        <Divider />
+        <div className="py-16">
+          <MangaListHeader
+            sectionTitle="受賞作品"
+            subSectionTitle="Just Now"
+            buttonText="すべて見る"
+            buttonLink="awards"
+          />
+          <MangaList mangas={awardsMangas} isLoading={isLoading} limit={18} />
         </div>
       </div>
     </>
