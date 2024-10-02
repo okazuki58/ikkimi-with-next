@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import { UserProvider, useUser } from "./context/UserContext";
 import Header from "./ui/header";
 import { Footer } from "./ui/footer";
-import LoginToast from "./ui/toastLogin";
+// import LoginToast from "./ui/toastLogin";
 import { ProfileProvider } from "./context/ProfileContext";
 
 const geistSans = localFont({
@@ -56,7 +56,7 @@ export default async function RootLayout({
           </ProfileProvider>
         </UserProvider>
         <Toaster position="bottom-center" />
-        <LoginToast />
+        {/* <LoginToast /> */}
       </body>
     </html>
   );

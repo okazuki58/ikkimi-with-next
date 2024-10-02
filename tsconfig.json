@@ -30,6 +30,6 @@
     "app/(withHeaderFooter)/(withHero)/home/userprofile",
     "app/algolia.mjs",
     "app/algolia/Hit.jsx"
-, "app/algolia-test/page.jsx", "app/search/page.jsx"  ],
+, "app/algolia-test/page.jsx", "app/search/page.jsx", "app/search/ClientSearchResults.jsx"  ],
   "exclude": ["node_modules"]
 }

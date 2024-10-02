@@ -1,6 +1,4 @@
 import { GoogleButton } from "@/components/googleButton";
-import LoginForm from "../ui/client/LoginForm";
-import { GithubButton } from "@/components/githubButton";
 import Link from "next/link";
 
 export default function SignupPage() {
