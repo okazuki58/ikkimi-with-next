@@ -17,7 +17,6 @@ const Page = async ({ params }: PageProps) => {
       <div className="py-16">
         <MangaListHeader
           sectionTitle="検索結果"
-          subSectionTitle="Ranking"
           buttonText=""
         />
         <MangaList mangas={[manga]} isLoading={false} />
