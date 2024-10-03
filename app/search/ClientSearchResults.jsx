@@ -3,6 +3,7 @@ import algoliasearch from "algoliasearch/lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import MangaList from "../ui/mangaList";
+import { getMangaByIds } from "../lib/data";
 
 const searchClient = algoliasearch(
   "FHD9VGP1JY",
@@ -21,7 +22,9 @@ export default function ClientSearchResults() {
       setIsLoading(true);
       if (query.length > 0) {
         const { hits } = await index.search(query);
-        setResults(hits);
+        const mangaIds = hits.map((hit) => hit.id);
+        const mangas = await getMangaByIds(mangaIds);
+        setResults(mangas);
       } else {
         setResults([]);
       }

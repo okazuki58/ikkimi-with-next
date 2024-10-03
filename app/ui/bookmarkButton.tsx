@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import Link from "next/link";
+import LoginModal from "@/components/LoginModal";
 
 interface BookmarkButtonProps {
   mangaId: number;
@@ -21,20 +22,22 @@ export default function BookmarkButton({
   const { bookmarkedMangas, animatingMangas, toggleBookmark } = useBookmark();
   const isBookmarked = bookmarkedMangas.includes(mangaId);
   const [bookmarkCount, setBookmarkCount] = useState(bookmark || 0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user } = useUser();
 
   const handleClick = async () => {
     if (!user) {
-      toast(
-        <div className="flex flex-col gap-3 w-full">
-          <span>ブックマーク機能はログインが必要です</span>
-          <Link href="/login">
-            <button className="py-2 px-3 rounded-full w-full bg-gray-900 text-white font-bold border-none md:hover:bg-gray-700">
-              ログイン
-            </button>
-          </Link>
-        </div>
-      );
+      setIsModalOpen(true);
+      // toast(
+      //   <div className="flex flex-col gap-3 w-full">
+      //     <span>ブックマーク機能はログインが必要です</span>
+      //     <Link href="/login">
+      //       <button className="py-2 px-3 rounded-full w-full bg-gray-900 text-white font-bold border-none md:hover:bg-gray-700">
+      //         ログイン
+      //       </button>
+      //     </Link>
+      //   </div>
+      // );
       return;
     }
     if (isProcessing) return;
@@ -82,6 +85,7 @@ export default function BookmarkButton({
           {bookmarkCount.toLocaleString()}
         </span>
       </button>
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 }

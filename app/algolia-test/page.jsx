@@ -24,8 +24,7 @@ export default function AlgoSearch() {
     const fetchData = async () => {
       if (debouncedQuery.length > 0) {
         const { hits } = await index.search(debouncedQuery, {
-          exactOnSingleWordQuery: "word",
-          typoTolerance: "min",
+          clickAnalytics: true,
         });
         setResults(hits);
         setShowSuggestions(true);
@@ -49,7 +48,7 @@ export default function AlgoSearch() {
 
   // エンターキー押下時の処理を追加
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !isComposing) {
+    if (e.key === "Enter" && !isComposing && query.length > 0) {
       // 検索結果ページに遷移、クエリをパラメータとして渡す
       router.push(`/search?query=${encodeURIComponent(query)}`);
     }

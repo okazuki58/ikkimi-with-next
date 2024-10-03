@@ -1,6 +1,5 @@
 import { getMangaById } from "@/app/lib/data";
-import { MangaListHeader } from "@/app/ui/listHeader";
-import MangaList from "@/app/ui/mangaList";
+import MangaDetail from "@/components/MangaDetails";
 
 interface PageProps {
   params: {
@@ -14,13 +13,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className="mb-4 min-w-full">
-      <div className="py-16">
-        <MangaListHeader
-          sectionTitle="検索結果"
-          buttonText=""
-        />
-        <MangaList mangas={[manga]} isLoading={false} />
-      </div>
+      <MangaDetail manga={manga} />
     </div>
   );
 };

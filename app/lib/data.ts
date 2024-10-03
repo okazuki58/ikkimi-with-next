@@ -12,6 +12,15 @@ export async function getMangaById(manga_id: string): Promise<Manga> {
   return data?.[0] as Manga;
 }
 
+// idから複数の漫画を取得
+export async function getMangaByIds(manga_ids: string[]): Promise<Manga[]> {
+  const { data, error } = await supabase
+    .from("manga")
+    .select("*")
+    .in("id", manga_ids);
+  return data as Manga[];
+}
+
 // 漫画一覧
 export async function fetchMangaList() {
   try {
@@ -212,4 +221,58 @@ export async function fetchMangasWithAwards(): Promise<Manga[]> {
   const mangasWithAwards = data as Manga[];
 
   return mangasWithAwards;
+}
+
+// タイトルから漫画データを取得
+export async function getMangasByTitles(titles: string[]): Promise<Manga[]> {
+  const { data, error } = await supabase
+    .from("manga")
+    .select("*")
+    .in("title", titles);
+
+  if (error) {
+    console.error("漫画データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+
+export async function getTodayRecommendedMangas(): Promise<Manga[]> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  // 当日の閲覧数を集計
+  // 関数を呼び出して閲覧数を取得
+  const { data: viewsData, error } = await supabase.rpc("get_manga_views", {
+    start_date: today.toISOString(),
+    end_date: tomorrow.toISOString(),
+  });
+
+  if (error) {
+    console.error("閲覧数の集計に失敗しました:", error);
+    return [];
+  }
+
+  const mangaIds = viewsData.map((view: any) => view.manga_id);
+
+  // 該当する漫画の情報を取得
+  const { data: mangasData, error: mangasError } = await supabase
+    .from("manga")
+    .select("*")
+    .in("id", mangaIds);
+
+  if (mangasError) {
+    console.error("漫画データの取得に失敗しました:", mangasError);
+    return [];
+  }
+
+  // 閲覧数順に漫画を並べ替え
+  const mangas = mangaIds
+    .map((id: number) => mangasData.find((manga: Manga) => manga.id === id))
+    .filter((manga: Manga | undefined): manga is Manga => manga !== undefined);
+
+  return mangas;
 }
