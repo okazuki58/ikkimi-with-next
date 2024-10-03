@@ -182,7 +182,8 @@ export const fetchRisingManga = async (): Promise<Manga[]> => {
 export async function fetchMangasWithMedia(): Promise<Manga[]> {
   const { data, error } = await supabase
     .from("manga")
-    .select("*, manga_to_media!inner(*)");
+    .select("*, manga_to_media!inner(*)")
+    .order("bookmark", { ascending: false });
 
   if (error) {
     console.error("データの取得に失敗しました:", error);
@@ -199,7 +200,8 @@ export async function fetchMangasWithMedia(): Promise<Manga[]> {
 export async function fetchMangasWithAwards(): Promise<Manga[]> {
   const { data, error } = await supabase
     .from("manga")
-    .select("*, awards!inner(*)");
+    .select("*, awards!inner(*)")
+    .order("bookmark", { ascending: false });
 
   if (error) {
     console.error("データの取得に失敗しました:", error);

@@ -4,27 +4,22 @@ import Link from "next/link";
 
 type Props = {
   sectionTitle: string;
-  subSectionTitle: string;
   buttonText: string;
   buttonLink?: string;
 };
 
 export function MangaListHeader({
   sectionTitle,
-  subSectionTitle,
   buttonText,
   buttonLink,
 }: Props) {
   return (
     <div className="flex items-end justify-between mb-6">
-      <div className="flex flex-col">
-        {/* <span className="text-indigo-600 dark:text-[#FC4747] pl-1 text-sm font-semibold font-inter mb-2 leading-6">
-          {subSectionTitle}
-        </span> */}
-        <h2 className="inline-block tracking-light text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
+      <Link href={`/manga/${buttonLink}`}>
+        <h2 className="inline-block tracking-light text-2xl font-extrabold tracking-tight text-slate-900 dark:text-slate-200">
           {sectionTitle}
         </h2>
-      </div>
+      </Link>
       <Link
         href={`/manga/${buttonLink}`}
         className="flex items-center gap-1 text-sm text-indigo-600 md:hover:text-indigo-500 font-medium dark:text-white"

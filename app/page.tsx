@@ -8,17 +8,13 @@ import {
   fetchRankingMangas,
   fetchRisingManga,
 } from "./lib/data";
-import Hero from "./ui/hero";
 import { MangaListHeader } from "./ui/listHeader";
 import MangaList from "./ui/mangaList";
 import Divider from "./ui/divider";
 import UserList from "./ui/userList";
 import { useUser } from "./context/UserContext";
-import { HeroSkeleton, MangaListSkeleton } from "./ui/skeletons";
-import Image from "next/image";
-import UserCard from "@/components/UserCard";
+import { MangaListSkeleton } from "./ui/skeletons";
 import Discover from "@/components/Discover";
-import WithUser from "@/components/WIthUser";
 
 export default function ContentHome() {
   const [rankingMangas, setRankingMangas] = useState<Manga[]>([]);
@@ -27,7 +23,6 @@ export default function ContentHome() {
   const [mangas, setMangas] = useState<Manga[]>([]);
   const [awardsMangas, setAwardsMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useUser();
 
   useEffect(() => {
     setIsLoading(true);
@@ -88,8 +83,8 @@ export default function ContentHome() {
         <div className="pb-10">
           <MangaListHeader
             sectionTitle="急上昇"
-            subSectionTitle="Ranking"
             buttonText="すべて見る"
+            buttonLink="rising"
           />
           <MangaList mangas={risingMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -97,7 +92,6 @@ export default function ContentHome() {
         <div className="py-10">
           <MangaListHeader
             sectionTitle="総合ランキング"
-            subSectionTitle="Trending"
             buttonText="すべて見る"
             buttonLink="ranking"
           />
@@ -107,7 +101,6 @@ export default function ContentHome() {
         <div className="py-10">
           <MangaListHeader
             sectionTitle="おすすめのユーザー"
-            subSectionTitle="Ranking"
             buttonText="すべて見る"
           />
           <UserList />
@@ -116,7 +109,6 @@ export default function ContentHome() {
         <div className="py-10">
           <MangaListHeader
             sectionTitle="あなたにおすすめ"
-            subSectionTitle="For You"
             buttonText="すべて見る"
           />
           <MangaList mangas={mangas} isLoading={isLoading} limit={14} />
@@ -125,7 +117,6 @@ export default function ContentHome() {
         <div className="py-10">
           <MangaListHeader
             sectionTitle="2024年秋アニメ化作品"
-            subSectionTitle="Just Now"
             buttonText="すべて見る"
             buttonLink="media"
           />
@@ -135,7 +126,6 @@ export default function ContentHome() {
         <div className="py-10">
           <MangaListHeader
             sectionTitle="受賞作品"
-            subSectionTitle="Just Now"
             buttonText="すべて見る"
             buttonLink="awards"
           />
