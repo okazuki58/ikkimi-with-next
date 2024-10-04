@@ -4,7 +4,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import BookmarkButton from "./BookmarkButton";
 import { useRouter } from "next/navigation";
@@ -78,6 +78,7 @@ export default function MangaDialog({
                         isImageLoaded ? "opacity-100" : "opacity-0"
                       }`}
                       layout="fill"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       onLoadingComplete={() => setIsImageLoaded(true)}
                     />
                   </div>
