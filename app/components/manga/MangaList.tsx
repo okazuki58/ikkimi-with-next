@@ -50,10 +50,6 @@ export default function MangaList({
                   src={`https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049945/ikkimi/${manga.image_id}.webp`}
                   alt={manga.title}
                   fill
-                  sizes="(max-width: 768px) 50vw,
-                  (max-width: 1200px) 33vw,
-                  25vw"
-                  style={{ objectFit: "cover" }}
                   className={`transform md:group-hover:scale-105 transition-opacity duration-500 md:transition-transform md:duration-300 ${
                     isImageLoaded ? "opacity-100" : "opacity-0"
                   }`}
