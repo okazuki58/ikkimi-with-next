@@ -57,7 +57,7 @@ export default function MangaList({
                   className={`transform md:group-hover:scale-105 transition-opacity duration-500 md:transition-transform md:duration-300 ${
                     isImageLoaded ? "opacity-100" : "opacity-0"
                   }`}
-                  onLoad={() => setIsImageLoaded(true)}
+                  onLoadingComplete={() => setIsImageLoaded(true)}
                 />
               </div>
               <h3 className="md:text-sm mt-1 sm:mt-1.5 line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600">
