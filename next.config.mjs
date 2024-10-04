@@ -31,6 +31,12 @@ const nextConfig = {
         port: "",
         pathname: "/**", // すべてのパスを許可
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**", // すべてのパスを許可
+      },
     ],
   },
 };

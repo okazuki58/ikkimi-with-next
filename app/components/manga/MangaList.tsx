@@ -47,7 +47,7 @@ export default function MangaList({
               <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
                 {!isImageLoaded && <ImageSkeleton />}
                 <Image
-                  src={getImageUrl(manga.folder_group, manga.image_id)}
+                  src={`https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049945/ikkimi/${manga.image_id}.webp`}
                   alt={manga.title}
                   fill
                   sizes="(max-width: 768px) 50vw,
@@ -60,7 +60,7 @@ export default function MangaList({
                   onLoad={() => setIsImageLoaded(true)}
                 />
               </div>
-              <h3 className="md:text-sm mt-1 sm:mt-1.5 line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600 dark:md:group-hover:text-[#FC4747]">
+              <h3 className="md:text-sm mt-1 sm:mt-1.5 line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600">
                 {manga.title}
               </h3>
               {/* 追加: リリース日と巻数を表示 */}
