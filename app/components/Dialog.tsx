@@ -4,10 +4,9 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import BookmarkButton from "./BookmarkButton";
-import { getImageUrl } from "../lib/data";
 import { useRouter } from "next/navigation";
 import { ImageSkeleton } from "./Skeletons";
 
