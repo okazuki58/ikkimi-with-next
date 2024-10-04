@@ -25,6 +25,12 @@ const nextConfig = {
         port: "",
         pathname: "/**", // すべてのパスを許可
       },
+      {
+        protocol: "https",
+        hostname: "ikkimi.imgix.net",
+        port: "",
+        pathname: "/**", // すべてのパスを許可
+      },
     ],
   },
 };
