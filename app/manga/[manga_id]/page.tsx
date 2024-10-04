@@ -1,5 +1,5 @@
+import MangaDetail from "@/app/components/manga/MangaDetails";
 import { getMangaById } from "@/app/lib/data";
-import MangaDetail from "@/components/MangaDetails";
 
 interface PageProps {
   params: {

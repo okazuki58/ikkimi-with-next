@@ -1,8 +1,8 @@
 "use client";
 
+import MangaList from "@/app/components/manga/MangaList";
 import { fetchMangasWithAwards } from "@/app/lib/data";
 import { Manga } from "@/app/lib/definitions";
-import MangaList from "@/app/ui/mangaList";
 import { useEffect, useState } from "react";
 
 export default function Rising() {

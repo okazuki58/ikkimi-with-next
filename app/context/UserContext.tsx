@@ -10,7 +10,6 @@ import React, {
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 interface UserContextType {
   user: User | null;
@@ -43,6 +42,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         data: { user },
       } = await supabase.auth.getUser();
       setUser(user);
+      const { data } = await supabase.auth.getSession();
+      console.log(data);
     };
     fetchUser();
 

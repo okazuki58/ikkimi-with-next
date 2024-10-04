@@ -2,9 +2,8 @@
 import algoliasearch from "algoliasearch/lite";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import MangaList from "../ui/mangaList";
 import { getMangaByIds } from "../lib/data";
-
+import MangaList from "@/app/components/manga/MangaList";
 const searchClient = algoliasearch(
   "FHD9VGP1JY",
   "cf9f92b6acc760cde5c41c0b41acb407"

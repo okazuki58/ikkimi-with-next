@@ -12,6 +12,16 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "#563bff",
+          light: "#7a65ff",
+          dark: "#3d2bbd",
+        },
+        secondary: {
+          DEFAULT: "#f2f2fa",
+          light: "#fafafe",
+          dark: "#d9d9e6",
+        },
       },
       fontFamily: {
         sf: [

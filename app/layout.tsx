@@ -1,14 +1,13 @@
 import localFont from "next/font/local";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { BookmarkProvider } from "./context/BookmarkContext";
-import { SearchProvider } from "./context/SearchContext";
+import { BookmarkProvider } from "@/app/context/BookmarkContext";
+import { SearchProvider } from "@/app/context/SearchContext";
 import { Toaster } from "sonner";
-import { UserProvider, useUser } from "./context/UserContext";
-import Header from "./ui/header";
-import { Footer } from "./ui/footer";
-// import LoginToast from "./ui/toastLogin";
-import { ProfileProvider } from "./context/ProfileContext";
+import { UserProvider } from "@/app/context/UserContext";
+import Header from "@/app/components/layout/Header";
+import { Footer } from "@/app/components/layout/Footer";
+import { ProfileProvider } from "@/app/context/ProfileContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -56,7 +55,6 @@ export default async function RootLayout({
           </ProfileProvider>
         </UserProvider>
         <Toaster position="bottom-center" />
-        {/* <LoginToast /> */}
       </body>
     </html>
   );

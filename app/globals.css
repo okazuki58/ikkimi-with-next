@@ -22,3 +22,34 @@
     @apply outline-none;
   }
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  font-size: 12px;
+  background-color: #2d2d2d; /* ツールチップの背景色 */
+  color: #fff; /* ツールチップの文字色 */
+  text-align: center;
+  border-radius: 2px;
+  padding: 5px 8px;
+
+  /* ツールチップの位置を調整 */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* ツールチップを上に表示 */
+  left: 50%;
+  transform: translateX(-50%);
+
+  /* フェードイン効果 */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

@@ -189,10 +189,7 @@ export const fetchRisingManga = async (): Promise<Manga[]> => {
 
 // リレーションを使用してmanga_to_mediaに関連するmangaを取得
 export async function fetchMangasWithMedia(): Promise<Manga[]> {
-  const { data, error } = await supabase
-    .from("manga")
-    .select("*, manga_to_media!inner(*)")
-    .order("bookmark", { ascending: false });
+  const { data, error } = await supabase.rpc("get_mangas_with_media");
 
   if (error) {
     console.error("データの取得に失敗しました:", error);
@@ -207,10 +204,7 @@ export async function fetchMangasWithMedia(): Promise<Manga[]> {
 
 // リレーションを使用してawardsに関連するmangaを取得
 export async function fetchMangasWithAwards(): Promise<Manga[]> {
-  const { data, error } = await supabase
-    .from("manga")
-    .select("*, awards!inner(*)")
-    .order("bookmark", { ascending: false });
+  const { data, error } = await supabase.rpc("get_awarded_manga");
 
   if (error) {
     console.error("データの取得に失敗しました:", error);
@@ -239,16 +233,18 @@ export async function getMangasByTitles(titles: string[]): Promise<Manga[]> {
 }
 
 export async function getTodayRecommendedMangas(): Promise<Manga[]> {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+  // 現在のUTC時刻を取得
+  const now = new Date();
 
-  // 当日の閲覧数を集計
-  // 関数を呼び出して閲覧数を取得
+  // 7日前のUTC開始時刻（0時0分0秒）
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setUTCDate(now.getUTCDate() - 7);
+  sevenDaysAgo.setUTCHours(0, 0, 0, 0);
+
+  // 閲覧数を取得
   const { data: viewsData, error } = await supabase.rpc("get_manga_views", {
-    start_date: today.toISOString(),
-    end_date: tomorrow.toISOString(),
+    start_date: sevenDaysAgo.toISOString(),
+    end_date: now.toISOString(),
   });
 
   if (error) {
@@ -269,10 +265,70 @@ export async function getTodayRecommendedMangas(): Promise<Manga[]> {
     return [];
   }
 
+  console.log(mangasData);
+
   // 閲覧数順に漫画を並べ替え
   const mangas = mangaIds
     .map((id: number) => mangasData.find((manga: Manga) => manga.id === id))
-    .filter((manga: Manga | undefined): manga is Manga => manga !== undefined);
+    .filter((manga: Manga): manga is Manga => manga !== undefined);
 
   return mangas;
+}
+
+export async function fetchMangasByReleaseDate(date: string): Promise<Manga[]> {
+  const { data, error } = await supabase
+    .from("new_release")
+    .select(
+      `
+    manga_id,
+    release_date,
+    volume,
+    manga: manga (
+      *
+    )
+  `
+    )
+    .eq("release_date", date);
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  // new_release のデータと manga のデータを統合
+  const mangas = data.map((item: any) => {
+    const manga = item.manga;
+    manga.release_date = item.release_date;
+    manga.volume = item.volume;
+    return manga;
+  });
+
+  return mangas as Manga[];
+}
+
+export async function fetchMangaCountsByDates(
+  dates: string[]
+): Promise<{ [date: string]: number }> {
+  const { data, error } = await supabase
+    .from("new_release")
+    .select("release_date")
+    .in("release_date", dates);
+
+  if (error) {
+    console.error("漫画数の取得に失敗しました:", error);
+    return {};
+  }
+
+  // データを集計
+  const counts: { [date: string]: number } = {};
+  dates.forEach((date) => {
+    counts[date] = 0; // 初期化
+  });
+  data.forEach((item: any) => {
+    if (counts[item.release_date] !== undefined) {
+      counts[item.release_date] += 1;
+    }
+  });
+
+  return counts;
 }

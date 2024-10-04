@@ -1,50 +1,70 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Manga } from "./lib/definitions";
+import { Manga } from "@/app/lib/definitions";
 import {
-  fetchMangaList,
+  fetchMangasByReleaseDate,
   fetchMangasWithAwards,
   fetchMangasWithMedia,
   fetchRankingMangas,
   fetchRisingManga,
-} from "./lib/data";
-import { MangaListHeader } from "./ui/listHeader";
-import MangaList from "./ui/mangaList";
-import Divider from "./ui/divider";
-import UserList from "./ui/userList";
-import { useUser } from "./context/UserContext";
-import { MangaListSkeleton } from "./ui/skeletons";
-import Discover from "@/components/Discover";
+  getTodayRecommendedMangas,
+} from "@/app/lib/data";
+import { MangaListHeader } from "@/app/components/manga/ListHeader";
+import MangaList from "@/app/components/manga/MangaList";
+import Divider from "@/app/components/layout/Divider";
+import UserList from "@/app/components/user/UserList";
+import { MangaListSkeleton } from "@/app/components/Skeletons";
+import Discover from "@/app/components/Discover";
+
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+dayjs.locale("ja");
 
 export default function ContentHome() {
-  const [rankingMangas, setRankingMangas] = useState<Manga[]>([]);
   const [risingMangas, setRisingMangas] = useState<Manga[]>([]);
+  const [rankingMangas, setRankingMangas] = useState<Manga[]>([]);
   const [mediaMangas, setMediaMangas] = useState<Manga[]>([]);
-  const [mangas, setMangas] = useState<Manga[]>([]);
   const [awardsMangas, setAwardsMangas] = useState<Manga[]>([]);
+  const [newReleaseMangas, setNewReleaseMangas] = useState<Manga[]>([]);
+  const [todayRecommendedMangas, setTodayRecommendedMangas] = useState<Manga[]>(
+    []
+  );
   const [isLoading, setIsLoading] = useState(true);
+  const today = dayjs().format("M月D日");
 
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
-      fetchMangaList(),
       fetchRankingMangas(),
       fetchRisingManga(),
       fetchMangasWithMedia(),
       fetchMangasWithAwards(),
+      getTodayRecommendedMangas(),
+      fetchMangasByReleaseDate(today),
     ])
-      .then(([mangaData, rankingData, risingData, mediaData, awardsData]) => {
-        setMangas(mangaData);
-        setRankingMangas(rankingData);
-        setRisingMangas(risingData);
-        setMediaMangas(mediaData);
-        setAwardsMangas(awardsData);
-        setIsLoading(false);
-      })
+      .then(
+        ([
+          rankingData,
+          risingData,
+          mediaData,
+          awardsData,
+          todayRecommendedData,
+          newReleaseData,
+        ]) => {
+          setRankingMangas(rankingData);
+          setRisingMangas(risingData);
+          setMediaMangas(mediaData);
+          setAwardsMangas(awardsData);
+          setTodayRecommendedMangas(todayRecommendedData);
+          setNewReleaseMangas(newReleaseData);
+          setIsLoading(false);
+        }
+      )
       .catch((error) => {
         console.error("Failed to fetch data:", error);
         setIsLoading(false);
       });
+    console.log(newReleaseMangas);
   }, []);
 
   if (isLoading) {
@@ -82,6 +102,19 @@ export default function ContentHome() {
         <Divider /> */}
         <div className="pb-10">
           <MangaListHeader
+            sectionTitle="新着リリース"
+            buttonText="すべて見る"
+            buttonLink="new_release"
+          />
+          <MangaList
+            mangas={newReleaseMangas}
+            isLoading={isLoading}
+            limit={14}
+          />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
             sectionTitle="急上昇"
             buttonText="すべて見る"
             buttonLink="rising"
@@ -107,11 +140,12 @@ export default function ContentHome() {
         </div>
         <Divider />
         <div className="py-10">
-          <MangaListHeader
-            sectionTitle="あなたにおすすめ"
-            buttonText="すべて見る"
+          <MangaListHeader sectionTitle="検索で話題" buttonText="すべて見る" />
+          <MangaList
+            mangas={todayRecommendedMangas}
+            isLoading={isLoading}
+            limit={14}
           />
-          <MangaList mangas={mangas} isLoading={isLoading} limit={14} />
         </div>
         <Divider />
         <div className="py-10">

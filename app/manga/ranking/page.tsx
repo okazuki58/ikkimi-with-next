@@ -2,8 +2,8 @@
 
 import { fetchRankingMangas } from "@/app/lib/data";
 import { Manga } from "@/app/lib/definitions";
-import MangaList from "@/app/ui/mangaList";
-import Dropdown from "@/components/Dropdown";
+import MangaList from "@/app/components/manga/MangaList";
+import Dropdown from "@/app/components/Dropdown";
 import { useEffect, useState } from "react";
 
 export default function Ranking() {

@@ -2,23 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { Manga } from "../lib/definitions";
-import { useUser } from "../context/UserContext";
-import { getRecommendedMangas } from "../lib/recommend";
-import MangaList from "../ui/mangaList";
+import MangaList from "@/app/components/manga/MangaList";
+import { getTodayRecommendedMangas } from "../lib/data";
 
-export default function RecommendedMangaList() {
-  const { user } = useUser();
-  const [recommendedMangas, setRecommendedMangas] = useState<Manga[]>([]);
+export default function TodayRecommendations() {
+  const [mangas, setMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecommendations = async () => {
-      if (true) {
-        const mangas = await getRecommendedMangas(
-          "2ad05188-1001-4bca-a398-10af75ba8644"
-        );
-        setRecommendedMangas(mangas);
-      }
+      const recommendedMangas = await getTodayRecommendedMangas();
+      setMangas(recommendedMangas);
       setIsLoading(false);
     };
 
@@ -27,8 +21,8 @@ export default function RecommendedMangaList() {
 
   return (
     <div className="py-10">
-      <h2 className="text-2xl font-bold mb-4">あなたへのおすすめ</h2>
-      <MangaList mangas={recommendedMangas} isLoading={isLoading} limit={14} />
+      <h2 className="text-2xl font-bold mb-4">今日のおすすめ</h2>
+      <MangaList mangas={mangas} isLoading={isLoading} limit={10} />
     </div>
   );
 }

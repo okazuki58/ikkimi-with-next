@@ -1,3 +1,9 @@
+export type NewRelease = {
+  manga_id: number;
+  release_date: string;
+  volume: number;
+};
+
 export type Manga = {
   id: number;
   title: string;
@@ -12,6 +18,8 @@ export type Manga = {
   bookmark: number;
   folder_group: string;
   amazon_url: string;
+  release_date?: string;
+  volume?: number;
 };
 
 export type User = {
@@ -28,6 +36,8 @@ export type Profile = {
   email: string;
   avatar_url: string;
   bio: string | null;
+  x_username: string | null;
+  website: string | null;
   created_at: string;
 };
 

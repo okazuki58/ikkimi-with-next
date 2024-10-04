@@ -29,7 +29,10 @@
     ".next/types/**/*.ts",
     "app/(withHeaderFooter)/(withHero)/home/userprofile",
     "app/algolia.mjs",
-    "app/algolia/Hit.jsx"
-, "app/algolia-test/page.jsx", "app/search/page.jsx", "app/search/ClientSearchResults.jsx"  ],
+    "app/algolia/Hit.jsx",
+    "app/components/AlgoSearch.jsx",
+    "app/search/page.jsx",
+    "app/search/ClientSearchResults.jsx"
+  ],
   "exclude": ["node_modules"]
 }
