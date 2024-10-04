@@ -47,12 +47,13 @@ export default function MangaList({
               <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
                 {!isImageLoaded && <ImageSkeleton />}
                 <Image
-                  src={`https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049945/ikkimi/${manga.image_id}.webp`}
+                  src={getImageUrl(manga.folder_group, manga.image_id)}
                   alt={manga.title}
                   fill
                   className={`transform md:group-hover:scale-105 transition-opacity duration-500 md:transition-transform md:duration-300 ${
                     isImageLoaded ? "opacity-100" : "opacity-0"
                   }`}
+                  style={{ objectFit: "cover" }}
                   onLoadingComplete={() => setIsImageLoaded(true)}
                 />
               </div>
