@@ -40,28 +40,28 @@ export async function fetchMangaList() {
 }
 
 // 画像
-// export function getImageUrl(folder_group: string, image_id: string): string {
-//   const { data } = supabase.storage
-//     .from("ikkimi-image")
-//     .getPublicUrl(`${folder_group}/${image_id}.webp`);
+export function getImageUrl(folder_group: string, image_id: string): string {
+  const { data } = supabase.storage
+    .from("ikkimi-image")
+    .getPublicUrl(`${folder_group}/${image_id}.webp`);
 
-//   return data.publicUrl;
-// }
-
-export function getImageUrl(
-  folder_group: string,
-  image_id: string,
-  options?: { width?: number; height?: number; format?: string }
-): string {
-  const params = new URLSearchParams();
-  if (options?.width) params.append("w", options.width.toString());
-  if (options?.height) params.append("h", options.height.toString());
-  if (options?.format) params.append("fm", options.format);
-
-  const baseUrl = `https://ikkimi.imgix.net/${folder_group}/${image_id}.webp`;
-
-  return `${baseUrl}?${params.toString()}`;
+  return data.publicUrl;
 }
+
+// export function getImageUrl(
+//   folder_group: string,
+//   image_id: string,
+//   options?: { width?: number; height?: number; format?: string }
+// ): string {
+//   const params = new URLSearchParams();
+//   if (options?.width) params.append("w", options.width.toString());
+//   if (options?.height) params.append("h", options.height.toString());
+//   if (options?.format) params.append("fm", options.format);
+
+//   const baseUrl = `https://ikkimi.imgix.net/${folder_group}/${image_id}.webp`;
+
+//   return `${baseUrl}?${params.toString()}`;
+// }
 
 // ユーザー画像
 export function getAvatarUrl(profileId: string, fileName: string): string {
