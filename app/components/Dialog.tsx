@@ -73,7 +73,10 @@ export default function MangaDialog({
                   <div className="overflow-hidden rounded-lg bg-gray-100 border border-slate-100 relative aspect-[549/780]">
                     {!isImageLoaded && <ImageSkeleton />}
                     <Image
-                      src={`https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049945/ikkimi/${localManga.image_id}.webp`}
+                      src={getImageUrl(
+                        localManga.folder_group,
+                        localManga.image_id
+                      )}
                       alt={localManga.title}
                       className={`object-cover object-center transition-opacity duration-500 ${
                         isImageLoaded ? "opacity-100" : "opacity-0"
