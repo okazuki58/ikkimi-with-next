@@ -41,7 +41,7 @@ export async function fetchMangaList() {
 
 // 画像
 export function getImageUrl(folder_group: string, image_id: string): string {
-  return `https://xcclmezluzvwbewszwtw.supabase.co/storage/v1/object/public/ikkimi-image/${folder_group}/${image_id}.webp`;
+  return `https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049946/ikkimi/${image_id}.webp`;
 }
 
 // export function getImageUrl(
