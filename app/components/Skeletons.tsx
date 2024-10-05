@@ -1,19 +1,19 @@
 export function MangaListSkeleton() {
   return (
-    <div className="animate-pulse">
+    <div className="">
       {/* <div className="h-10 w-1/5 mb-6 bg-gray-200 rounded-md"></div> */}
       <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-4">
         {[...Array(14)].map((_, i) => (
           <div key={i} className="flex flex-col pb-1">
             <div className="flex flex-col gap-2 pb-2">
               <div
-                className="rounded-md overflow-hidden bg-gray-200 relative"
+                className="rounded-md overflow-hidden bg-gray-200 relative animate-pulse"
                 style={{ paddingTop: `${(780 / 549) * 100}%` }}
               >
                 <div className="absolute inset-0"></div>
               </div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
             </div>
           </div>
         ))}

@@ -41,11 +41,7 @@ export async function fetchMangaList() {
 
 // 画像
 export function getImageUrl(folder_group: string, image_id: string): string {
-  const { data } = supabase.storage
-    .from("ikkimi-image")
-    .getPublicUrl(`${folder_group}/${image_id}.webp`);
-
-  return data.publicUrl;
+  return `https://xcclmezluzvwbewszwtw.supabase.co/storage/v1/object/public/ikkimi-image/${folder_group}/${image_id}.webp`;
 }
 
 // export function getImageUrl(
