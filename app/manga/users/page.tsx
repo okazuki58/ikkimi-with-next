@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Manga, Profile } from "../../lib/definitions";
@@ -9,10 +11,11 @@ import {
 } from "../../lib/actions";
 import { useUser } from "../../context/UserContext";
 import { getImageUrl } from "../../lib/data";
-import MangaDialog from "../Dialog";
+import MangaDialog from "../../components/Dialog";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/client";
-import LoginModal from "../modal/LoginModal";
+import LoginModal from "../../components/modal/LoginModal";
+import UserListSkeleton from "@/app/components/Skeletons";
 
 export default function UserList() {
   const [users, setUsers] = useState<Profile[]>([]);
@@ -23,6 +26,7 @@ export default function UserList() {
   const supabase = createClient();
   const [followingIds, setFollowingIds] = useState<string[]>([]);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // ダイアログ関係
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
@@ -107,10 +111,16 @@ export default function UserList() {
     );
 
     setUserMangas(mangasByUser);
+    setIsLoading(false);
   };
 
+  if (isLoading) return <UserListSkeleton />;
+
   return (
-    <div>
+    <div className="w-full max-w-5xl mx-auto py-4">
+      <div className="py-10">
+        <h1 className="text-3xl font-bold">おすすめのユーザー</h1>
+      </div>
       <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
         {users.map((user) => (
           <div className="flex flex-col" key={user.id}>
@@ -140,12 +150,11 @@ export default function UserList() {
                         <p className="truncate text-xs text-gray-500">
                           ブックマーク {userMangas[user.id]?.length}
                         </p>
-                        <div className="px-2 flex-shrink-0">
-                          {/* マッチ度を表示 */}
+                        {/* <div className="px-2 flex-shrink-0">
                           <p className="text-xs text-green-600">
                             マッチ度: 98%
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>

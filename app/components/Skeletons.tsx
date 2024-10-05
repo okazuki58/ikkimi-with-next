@@ -129,3 +129,43 @@ export function HeroSkeleton() {
     </div>
   );
 }
+
+export default function UserListSkeleton() {
+  return (
+    <div className="w-full max-w-5xl mx-auto py-4 ">
+      <div className="py-10">
+        <div className="h-10 bg-gray-200 rounded-md w-1/2 animate-pulse"></div>
+      </div>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-2">
+        {[...Array(6)].map((_, index) => (
+          <div className="flex flex-col" key={index}>
+            <div className="relative flex items-center justify-between space-x-3 rounded-lg bg-transparent pb-5">
+              <div className="flex items-center space-x-3 flex-1 min-w-0">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gray-200 animate-pulse"></div>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 rounded w-1/3 animate-pulse"></div>
+                    <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-shrink-0">
+                <div className="w-20 h-8 bg-gray-200 rounded animate-pulse"></div>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-1 md:gap-2">
+              {[...Array(4)].map((_, idx) => (
+                <div
+                  className="rounded-md overflow-hidden aspect-[549/780] bg-gray-200 animate-pulse"
+                  key={idx}
+                ></div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

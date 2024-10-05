@@ -7,7 +7,7 @@ export default function GoogleButton() {
   return (
     <button
       onClick={handleGoogleLogin}
-      className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-100 transition focus-visible:ring-transparent"
+      className="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-200 hover:bg-gray-100 transition focus-visible:ring-transparent"
     >
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
         <path
@@ -27,7 +27,7 @@ export default function GoogleButton() {
           fill="#34A853"
         />
       </svg>
-      <span className="text-md font-semibold leading-6">Googleでログイン</span>
+      <span className="text-md font-semibold leading-6">Googleで続ける</span>
     </button>
   );
 }

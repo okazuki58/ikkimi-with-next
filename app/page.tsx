@@ -106,11 +106,15 @@ export default function ContentHome() {
             buttonText="すべて見る"
             buttonLink="new_release"
           />
-          <MangaList
-            mangas={newReleaseMangas}
-            isLoading={isLoading}
-            limit={14}
-          />
+          {newReleaseMangas.length === 0 ? (
+            <p className="text-gray-500">本日の新着リリースはありません</p>
+          ) : (
+            <MangaList
+              mangas={newReleaseMangas}
+              isLoading={isLoading}
+              limit={14}
+            />
+          )}
         </div>
         <Divider />
         <div className="py-10">
@@ -135,6 +139,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="おすすめのユーザー"
             buttonText="すべて見る"
+            buttonLink="users"
           />
           <UserList />
         </div>

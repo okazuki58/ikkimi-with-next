@@ -17,6 +17,7 @@ import { createClient } from "@/utils/supabase/client";
 import XLogo from "@/app/components/XLogo";
 import Link from "next/link";
 import LoginModal from "@/app/components/modal/LoginModal";
+import NotFound from "../not-found";
 interface ProfilePageProps {
   params: {
     username: string;
@@ -175,11 +176,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   }
 
   if (!profile) {
-    return (
-      <div className="container mx-auto py-4 max-w-5xl">
-        <p>ユーザーが見つかりませんでした</p>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const isOwnProfile = user?.id === profile.id;
