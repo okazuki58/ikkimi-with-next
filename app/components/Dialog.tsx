@@ -77,11 +77,12 @@ export default function MangaDialog({
                         localManga.folder_group,
                         localManga.image_id
                       )}
+                      unoptimized
                       alt={localManga.title}
                       className={`object-cover object-center transition-opacity duration-500 ${
                         isImageLoaded ? "opacity-100" : "opacity-0"
                       }`}
-                      layout="fill"
+                      fill
                       onLoadingComplete={() => setIsImageLoaded(true)}
                     />
                   </div>
