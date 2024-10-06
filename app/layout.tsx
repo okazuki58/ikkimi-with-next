@@ -8,6 +8,7 @@ import { UserProvider } from "@/app/context/UserContext";
 import Header from "@/app/components/layout/Header";
 import { Footer } from "@/app/components/layout/Footer";
 import { ProfileProvider } from "@/app/context/ProfileContext";
+import Script from "next/script";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -38,6 +39,20 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ja" className="bg-white">
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-528RG3RVRJ"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-528RG3RVRJ');
+          `}
+        </Script>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable}  font-sf antialiased flex size-full min-h-screen flex-col dark:bg-[#10141E]`}
       >
