@@ -11,13 +11,14 @@ const searchClient = algoliasearch(
 );
 const index = searchClient.initIndex("manga_index");
 
-export default function AlgoSearch() {
+export default function AlgoSearch({ onCloseModal, isOpen }) {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
   const [isComposing, setIsComposing] = useState(false);
   const suggestionsRef = useRef(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [results, setResults] = useState([]);
+  const inputRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,6 +38,12 @@ export default function AlgoSearch() {
     fetchData();
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
   const handleClickOutside = (event) => {
     if (
       suggestionsRef.current &&
@@ -51,6 +58,9 @@ export default function AlgoSearch() {
     if (e.key === "Enter" && !isComposing && query.length > 0) {
       // 検索結果ページに遷移、クエリをパラメータとして渡す
       router.push(`/search?query=${encodeURIComponent(query)}`);
+      if (onCloseModal) {
+        onCloseModal();
+      }
     }
   };
 
@@ -66,6 +76,7 @@ export default function AlgoSearch() {
     <div className="w-full md:w-[420px]">
       <div className="relative w-full">
         <input
+          ref={inputRef}
           type="text"
           placeholder="作品名、作者名、キーワードで検索"
           value={query}
@@ -73,7 +84,7 @@ export default function AlgoSearch() {
           onKeyDown={handleKeyDown}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
-          className="w-full h-10 py-2 pl-10  text-sm md:text-text-md border border-transparent bg-secondary rounded-lg  focus:border-primary md:hover:bg-[#e4e4f5] focus:bg-white focus:hover:bg-white transition"
+          className="w-full h-10 py-2 pl-10 sm:text-sm border border-transparent bg-secondary rounded-lg  focus:border-primary md:hover:bg-[#e4e4f5] focus:bg-white focus:hover:bg-white transition"
         />
         <MagnifyingGlassIcon className="size-5 absolute top-1/2 translate-y-[-50%] inset-x-3 text-gray-400" />
         {showSuggestions && results.length > 0 && (
@@ -89,6 +100,9 @@ export default function AlgoSearch() {
                 key={hit.objectID}
                 onClick={() => {
                   router.push(`/manga/${hit.id}`);
+                  if (onCloseModal) {
+                    onCloseModal();
+                  }
                 }}
                 className="px-3 py-3 text-xs text-gray-900 hover:bg-gray-50 cursor-pointer text-left"
               >

@@ -23,7 +23,15 @@ export default function ClientSearchResults() {
         const { hits } = await index.search(query);
         const mangaIds = hits.map((hit) => hit.id);
         const mangas = await getMangaByIds(mangaIds);
-        setResults(mangas);
+        // mangas.sort((a, b) => b.bookmark - a.bookmark);
+
+        const mangasMap = new Map();
+        mangas.forEach((manga) => {
+          mangasMap.set(manga.id, manga);
+        });
+        const orderedMangas = mangaIds.map((id) => mangasMap.get(id));
+
+        setResults(orderedMangas);
       } else {
         setResults([]);
       }

@@ -21,14 +21,12 @@ export default function MangaList({
 }: MangaListProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const displayLimit = limit ?? 12;
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
     setIsOpen(true);
-    setIsAnimating(true);
   };
 
   if (isLoading) {
@@ -82,7 +80,6 @@ export default function MangaList({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         manga={selectedManga!}
-        isAnimating={isAnimating}
       />
     </>
   );

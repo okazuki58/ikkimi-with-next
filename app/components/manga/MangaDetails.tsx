@@ -31,12 +31,7 @@ const MangaDetail = ({ manga }: MangaDetailProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manga.id]);
 
-  return (
-    <div className="py-16">
-      <MangaListHeader sectionTitle="検索結果" buttonText="" />
-      <MangaList mangas={[manga]} isLoading={false} />
-    </div>
-  );
+  return <MangaList mangas={[manga]} isLoading={false} />;
 };
 
 export default MangaDetail;

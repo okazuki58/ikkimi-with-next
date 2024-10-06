@@ -2,7 +2,7 @@ export function MangaListSkeleton() {
   return (
     <div className="">
       {/* <div className="h-10 w-1/5 mb-6 bg-gray-200 rounded-md"></div> */}
-      <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-4">
+      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-2 sm:gap-x-3 gap-y-5">
         {[...Array(14)].map((_, i) => (
           <div key={i} className="flex flex-col pb-1">
             <div className="flex flex-col gap-2 pb-2">

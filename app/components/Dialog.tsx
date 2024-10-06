@@ -2,7 +2,7 @@
 
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Manga } from "../lib/definitions";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ShieldExclamationIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
@@ -15,14 +15,12 @@ interface MangaDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   manga: Manga;
-  isAnimating: boolean;
 }
 
 export default function MangaDialog({
   isOpen,
   setIsOpen,
   manga,
-  isAnimating,
 }: MangaDialogProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [localManga, setLocalManga] = useState<Manga>(manga);
@@ -52,11 +50,10 @@ export default function MangaDialog({
         aria-hidden="true"
       />
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-stretch justify-center text-center md:items-center px-4">
+        <div className="flex flex-col min-h-full items-stretch justify-center text-center md:items-center px-4">
           <DialogPanel
             transition
-            className={`flex w-full transform text-left text-base transition data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in my-8 md:max-w-2xl md:px-4 data-[closed]:md:translate-y-0 data-[closed]:md:scale-95 lg:max-w-4xl
-            ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}
+            className={`flex w-full transform text-left text-base transition data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in mt-8 sm:mb-8 mb-20 md:max-w-2xl md:px-4 data-[closed]:md:translate-y-0 data-[closed]:md:scale-95 lg:max-w-4xl`}
           >
             <div className="relative flex w-full items-center rounded-lg overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
               <button
@@ -119,7 +116,7 @@ export default function MangaDialog({
                       mangaId={localManga.id}
                       bookmark={localManga.bookmark}
                     />
-                    <p className="text-sm text-gray-700 md:hover:text-indigo-700 cursor-pointer">
+                    <p className="text-xs text-gray-700 md:hover:text-indigo-700 md:hover:underline cursor-pointer">
                       ブックマーク中のユーザー
                     </p>
                   </div>

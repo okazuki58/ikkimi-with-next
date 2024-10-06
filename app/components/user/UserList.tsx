@@ -142,9 +142,9 @@ export default function UserList() {
                         </p>
                         <div className="px-2 flex-shrink-0">
                           {/* マッチ度を表示 */}
-                          <p className="text-xs text-green-600">
+                          {/* <p className="text-xs text-green-600">
                             マッチ度: 98%
-                          </p>
+                          </p> */}
                         </div>
                       </div>
                     </div>
@@ -192,7 +192,6 @@ export default function UserList() {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         manga={selectedManga!}
-        isAnimating={isAnimating}
       />
       <LoginModal
         isOpen={isLoginModalOpen}

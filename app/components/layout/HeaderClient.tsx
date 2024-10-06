@@ -9,6 +9,7 @@ import { supabase } from "@/utils/supabaseClient";
 import Image from "next/image";
 import LoginModal from "@/app/components/modal/LoginModal";
 import AlgoSearch from "../AlgoSearch";
+import SearchModal from "../modal/SearchModal";
 
 interface Profile {
   id: string;
@@ -25,6 +26,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const handleMenuToggle = () => {
     setIsMenuOpen((prev) => !prev);
   };
@@ -121,7 +123,8 @@ export default function ClientHeader({ user }: { user: User | null }) {
               <div className="md:hidden">
                 <button
                   type="button"
-                  className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={() => setIsSearchModalOpen(true)}
+                  className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
                 >
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">View notifications</span>
@@ -129,14 +132,14 @@ export default function ClientHeader({ user }: { user: User | null }) {
                 </button>
               </div>
               <div className="hidden md:block">
-                <AlgoSearch />
+                <AlgoSearch onCloseModal={() => {}} isOpen={null} />
               </div>
 
               {user && (
                 <Link href={`/${profile?.username}`}>
                   <button
                     type="button"
-                    className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
                   >
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">View notifications</span>
@@ -199,18 +202,17 @@ export default function ClientHeader({ user }: { user: User | null }) {
                     <button
                       type="button"
                       onClick={() => setIsModalOpen(true)}
-                      className="rounded-md bg-[#563bff] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline-none ring-0"
+                      className="rounded-md px-3.5 py-2.5 text-sm font-semibold md:hover:bg-secondary focus:outline-none ring-0 transition"
                     >
                       ログイン
                     </button>
-                    {/* <Link href="/signup">
-                      <button
-                        type="button"
-                        className="rounded-md bg-[#563bff] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      >
-                        無料登録
-                      </button>
-                    </Link> */}
+                    <button
+                      type="button"
+                      onClick={() => setIsModalOpen(true)}
+                      className="rounded-md bg-primary px-3.5 py-2.5 text-sm font-semibold text-white md:hover:bg-primary-light focus:outline-none ring-0 transition"
+                    >
+                      無料登録
+                    </button>
                   </div>
                 )}
               </div>
@@ -220,6 +222,10 @@ export default function ClientHeader({ user }: { user: User | null }) {
         <LoginModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
+        />
+        <SearchModal
+          isOpen={isSearchModalOpen}
+          onClose={() => setIsSearchModalOpen(false)}
         />
       </header>
       <div className="w-full h-16"></div>

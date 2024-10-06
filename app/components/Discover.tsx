@@ -1,6 +1,7 @@
 import {
   CalendarDaysIcon,
   FireIcon,
+  MagnifyingGlassIcon,
   SparklesIcon,
   TrophyIcon,
   TvIcon,
@@ -10,16 +11,22 @@ import Link from "next/link";
 
 const tabs = [
   { name: "急上昇", icon: FireIcon, link: "/manga/rising" },
-  { name: "ランキング", icon: TrophyIcon, link: "/manga/ranking" },
+  { name: "総合ランキング", icon: TrophyIcon, link: "/manga/ranking" },
+  { name: "受賞作品", link: "/manga/awards" },
   {
     name: "おすすめのユーザー",
     icon: UserCircleIcon,
     link: "/manga/users",
   },
-  { name: "あなたにおすすめ", icon: SparklesIcon, link: "/manga/recommend" },
+  { name: "検索で話題", icon: MagnifyingGlassIcon, link: "/manga/recommend" },
   { name: "新着リリース", icon: CalendarDaysIcon, link: "/manga/new_release" },
   { name: "2024年秋アニメ化作品", icon: TvIcon, link: "/manga/media" },
-  { name: "受賞作品", icon: SparklesIcon, link: "/manga/awards" },
+  { name: "少年", link: "/manga/awards" },
+  { name: "少女", link: "/manga/awards" },
+  { name: "青年", link: "/manga/awards" },
+  { name: "女性", link: "/manga/awards" },
+  { name: "BL", link: "/manga/awards" },
+  { name: "TL", link: "/manga/awards" },
 ];
 
 export default function Discover() {

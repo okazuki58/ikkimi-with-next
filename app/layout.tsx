@@ -46,7 +46,7 @@ export default async function RootLayout({
             <BookmarkProvider>
               <SearchProvider>
                 <Header />
-                <main className="container mx-auto flex flex-1 flex-col justify-center items-center px-4 sm:px-8 py-5 max-w-5xl">
+                <main className="container mx-auto flex flex-1 flex-col justify-center items-center p-4 sm:px-8 lg:px-4 max-w-5xl">
                   {children}
                 </main>
                 <Footer />

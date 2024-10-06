@@ -232,6 +232,73 @@ export async function fetchMangasWithAwards(): Promise<Manga[]> {
   return mangasWithAwards;
 }
 
+// リレーションを使用してbl_mangaに関連するmangaを取得
+export async function fetchBLMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_bl_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+// リレーションを使用してtl_mangaに関連するmangaを取得
+export async function fetchTLMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_tl_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+// リレーションを使用してshonen_mangaに関連するmangaを取得
+export async function fetchShonenMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_shonen_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+// リレーションを使用してshojo_mangaに関連するmangaを取得
+export async function fetchShojoMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_shojo_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+// リレーションを使用してseinen_mangaに関連するmangaを取得
+export async function fetchSeinenMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_seinen_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+// リレーションを使用してjosei_mangaに関連するmangaを取得
+export async function fetchJoseiMangas(): Promise<Manga[]> {
+  const { data, error } = await supabase.rpc("get_josei_mangas");
+
+  if (error) {
+    console.error("データの取得に失敗しました:", error);
+    return [];
+  }
+
+  return data as Manga[];
+}
+
 // タイトルから漫画データを取得
 export async function getMangasByTitles(titles: string[]): Promise<Manga[]> {
   const { data, error } = await supabase

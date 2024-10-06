@@ -2,11 +2,17 @@
 import { useEffect, useState } from "react";
 import { Manga } from "@/app/lib/definitions";
 import {
+  fetchBLMangas,
+  fetchJoseiMangas,
   fetchMangasByReleaseDate,
   fetchMangasWithAwards,
   fetchMangasWithMedia,
   fetchRankingMangas,
   fetchRisingManga,
+  fetchSeinenMangas,
+  fetchShojoMangas,
+  fetchShonenMangas,
+  fetchTLMangas,
   getTodayRecommendedMangas,
 } from "@/app/lib/data";
 import { MangaListHeader } from "@/app/components/manga/ListHeader";
@@ -29,6 +35,12 @@ export default function ContentHome() {
   const [todayRecommendedMangas, setTodayRecommendedMangas] = useState<Manga[]>(
     []
   );
+  const [shonenMangas, setShonenMangas] = useState<Manga[]>([]);
+  const [shojoMangas, setShojoMangas] = useState<Manga[]>([]);
+  const [seinenMangas, setSeinenMangas] = useState<Manga[]>([]);
+  const [joseiMangas, setJoseiMangas] = useState<Manga[]>([]);
+  const [blMangas, setBlMangas] = useState<Manga[]>([]);
+  const [tlMangas, setTlMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const today = dayjs().format("M月D日");
 
@@ -41,6 +53,12 @@ export default function ContentHome() {
       fetchMangasWithAwards(),
       getTodayRecommendedMangas(),
       fetchMangasByReleaseDate(today),
+      fetchShonenMangas(),
+      fetchShojoMangas(),
+      fetchSeinenMangas(),
+      fetchJoseiMangas(),
+      fetchBLMangas(),
+      fetchTLMangas(),
     ])
       .then(
         ([
@@ -50,6 +68,12 @@ export default function ContentHome() {
           awardsData,
           todayRecommendedData,
           newReleaseData,
+          shonenData,
+          shojoData,
+          seinenData,
+          joseiData,
+          blData,
+          tlData,
         ]) => {
           setRankingMangas(rankingData);
           setRisingMangas(risingData);
@@ -57,6 +81,12 @@ export default function ContentHome() {
           setAwardsMangas(awardsData);
           setTodayRecommendedMangas(todayRecommendedData);
           setNewReleaseMangas(newReleaseData);
+          setShonenMangas(shonenData);
+          setShojoMangas(shojoData);
+          setSeinenMangas(seinenData);
+          setJoseiMangas(joseiData);
+          setBlMangas(blData);
+          setTlMangas(tlData);
           setIsLoading(false);
         }
       )
@@ -169,6 +199,60 @@ export default function ContentHome() {
             buttonLink="awards"
           />
           <MangaList mangas={awardsMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="少年漫画"
+            buttonText="すべて見る"
+            buttonLink="shonen"
+          />
+          <MangaList mangas={shonenMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="少女漫画"
+            buttonText="すべて見る"
+            buttonLink="shojo"
+          />
+          <MangaList mangas={shojoMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="青年漫画"
+            buttonText="すべて見る"
+            buttonLink="seinen"
+          />
+          <MangaList mangas={seinenMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="女性漫画"
+            buttonText="すべて見る"
+            buttonLink="josei"
+          />
+          <MangaList mangas={joseiMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="BL漫画"
+            buttonText="すべて見る"
+            buttonLink="bl"
+          />
+          <MangaList mangas={blMangas} isLoading={isLoading} limit={14} />
+        </div>
+        <Divider />
+        <div className="py-10">
+          <MangaListHeader
+            sectionTitle="TL漫画"
+            buttonText="すべて見る"
+            buttonLink="tl"
+          />
+          <MangaList mangas={tlMangas} isLoading={isLoading} limit={14} />
         </div>
       </div>
     </>
