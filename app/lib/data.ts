@@ -40,21 +40,21 @@ export async function fetchMangaList() {
 }
 
 // 画像
-// export function getImageUrl(folder_group: string, image_id: string): string {
-//   const { data } = supabase.storage
-//     .from("ikkimi-image")
-//     .getPublicUrl(`${folder_group}/${image_id}.webp`);
+export function getImageUrl(folder_group: string, image_id: string): string {
+  const { data } = supabase.storage
+    .from("ikkimi-image")
+    .getPublicUrl(`${folder_group}/${image_id}.webp`);
 
-//   return data.publicUrl;
-// }
+  return data.publicUrl;
+}
 // 画像
 // export function getImageUrl(folder_group: string, image_id: string): string {
 //   return `https://ikkimi.imgix.net/${folder_group}/${image_id}.webp`;
 // }
 // 画像
-export function getImageUrl(folder_group: string, image_id: string): string {
-  return `https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049946/ikkimi/${image_id}.webp`;
-}
+// export function getImageUrl(folder_group: string, image_id: string): string {
+//   return `https://res.cloudinary.com/ddk8mexzj/image/upload/v1728049946/ikkimi/${image_id}.webp`;
+// }
 
 // export function getImageUrl(
 //   folder_group: string,
