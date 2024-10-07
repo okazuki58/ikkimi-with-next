@@ -21,9 +21,11 @@ import Divider from "@/app/components/layout/Divider";
 import UserList from "@/app/components/user/UserList";
 import { MangaListSkeleton } from "@/app/components/Skeletons";
 import Discover from "@/app/components/Discover";
+import clientLatestBookmark from "@/app/manga/latestbookmark/clientLatestBookmark";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
+import LatestBookmarks from "@/app/manga/latestbookmark/clientLatestBookmark";
 dayjs.locale("ja");
 
 export default function ContentHome() {
@@ -131,6 +133,15 @@ export default function ContentHome() {
         {/* <UserCard />
         <Divider /> */}
         <div className="pb-10">
+          <MangaListHeader
+            sectionTitle="最新のブックマーク"
+            buttonText="すべて見る"
+            buttonLink="latestbookmark"
+          />
+          <LatestBookmarks />
+        </div>
+        <Divider />
+        <div className="py-10">
           <MangaListHeader
             sectionTitle="新着リリース"
             buttonText="すべて見る"

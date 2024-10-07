@@ -125,19 +125,25 @@ export default function MangaDialog({
                       {localManga.description}
                     </p>
                   </div>
-                  <Link
-                    href={manga.amazon_url || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full"
-                  >
-                    <button
-                      type="button"
-                      className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                  {manga.amazon_url ? (
+                    <Link
+                      href={manga.amazon_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full"
                     >
-                      Amazonで読む
-                    </button>
-                  </Link>
+                      <button
+                        type="button"
+                        className="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2"
+                      >
+                        Amazonで読む
+                      </button>
+                    </Link>
+                  ) : (
+                    <div className="text-sm px-8 py-3 text-gray-500 mt-6 flex w-full items-center justify-center rounded-md border border-transparent">
+                      Amazonリンクは追加予定です
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

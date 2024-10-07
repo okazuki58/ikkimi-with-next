@@ -47,7 +47,7 @@ export default function MangaList({
                 <Image
                   src={getImageUrl(manga.folder_group, manga.image_id)}
                   alt={manga.title}
-                  unoptimized
+                  // unoptimized
                   fill
                   className={`transform md:group-hover:scale-105 transition-opacity duration-500 md:transition-transform md:duration-300 ${
                     isImageLoaded ? "opacity-100" : "opacity-0"
