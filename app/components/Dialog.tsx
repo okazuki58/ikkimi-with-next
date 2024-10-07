@@ -88,7 +88,7 @@ export default function MangaDialog({
                   <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
                     {localManga.title}
                   </h2>
-                  <ul className="flex gap-2 my-4">
+                  <ul className="flex flex-wrap gap-2 my-4">
                     <li
                       className="px-2 py-1 text-xs border rounded-md cursor-pointer hover:bg-gray-50"
                       onClick={() => handleNav(localManga.authors[0])}

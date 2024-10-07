@@ -45,7 +45,7 @@ export default function Ranking() {
         />
       </div>
       <div className="py-4">
-        <MangaList mangas={mangas} isLoading={isLoading} limit={100} />
+        <MangaList mangas={mangas} isLoading={isLoading} limit={200} />
       </div>
     </div>
   );

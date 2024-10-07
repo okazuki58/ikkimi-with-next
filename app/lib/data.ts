@@ -171,7 +171,7 @@ export async function fetchUserBookmarkedMangasWithCreatedAt(
 }
 
 // ランキング
-export async function fetchRankingMangas(limit = 100): Promise<Manga[]> {
+export async function fetchRankingMangas(limit = 200): Promise<Manga[]> {
   const { data, error } = await supabase
     .from("manga")
     .select("*")

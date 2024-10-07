@@ -26,12 +26,10 @@ export default function UserList() {
   // ダイアログ関係
   const [isOpen, setIsOpen] = useState(false);
   const [selectedManga, setSelectedManga] = useState<Manga>();
-  const [isAnimating, setIsAnimating] = useState(false);
 
   const openDialog = (manga: Manga) => {
     setSelectedManga(manga);
     setIsOpen(true);
-    setIsAnimating(true);
   };
 
   useEffect(() => {
