@@ -6,7 +6,7 @@ export async function GET() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "https://ikki-mi.com",
+      redirectTo: "https://ikki-mi.com/auth/callback",
       queryParams: {
         access_type: "offline",
         prompt: "consent",
