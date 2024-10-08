@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer
-      className="mx-auto mt-24 w-full max-w-6xl px-4 sm:px-8"
+      className="mx-auto mt-[320px] w-full max-w-6xl px-4 sm:px-8"
       aria-labelledby="footer-heading"
     >
       <div className="flex flex-col gap-12 lg:flex-row lg:gap-0">
@@ -20,42 +22,75 @@ export function Footer() {
 
         {/* bottom */}
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-0 flex-1">
-          <div className="flex flex-col gap-4">
-            <p className="font-semibold text-gray-900">About</p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              Ikkimiについて
-            </p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              運営会社
-            </p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              お知らせ
-            </p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <p className=" font-semibold text-gray-900">Guides</p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              使い方
-            </p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              よくある質問
-            </p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <p className=" font-semibold text-gray-900">Links</p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              X(旧Twitter)
-            </p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <p className=" font-semibold text-gray-900">Legal</p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              利用規約
-            </p>
-            <p className="text-sm text-gray-700 md:hover:text-gray-900 cursor-pointer">
-              プライバシーポリシー
-            </p>
-          </div>
+          <nav className="flex flex-col gap-4">
+            <h4 className="font-semibold text-gray-900">About</h4>
+            <ul className="flex flex-col gap-4">
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  Ikkimiについて
+                </a>
+              </li>
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  運営会社
+                </a>
+              </li>
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  お知らせ
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className="flex flex-col gap-4">
+            <h4 className="font-semibold text-gray-900">Guides</h4>
+            <ul className="flex flex-col gap-4">
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  使い方
+                </a>
+              </li>
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  よくある質問
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className="flex flex-col gap-4">
+            <h4 className=" font-semibold text-gray-900">Links</h4>
+            <ul className="flex flex-col gap-4">
+              <li>
+                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                  X(旧Twitter)
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <nav className="flex flex-col gap-4">
+            <h4 className=" font-semibold text-gray-900">Legal</h4>
+            <ul className="flex flex-col gap-4">
+              <li>
+                <Link
+                  href="/legal/terms"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
+                  利用規約
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/privacy"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
+                  プライバシーポリシー
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
 

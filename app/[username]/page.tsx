@@ -407,7 +407,15 @@ export default function ProfilePage({ params }: ProfilePageProps) {
           />
         </div>
         <div className="py-4">
-          <MangaList mangas={sortedMangas} isLoading={isLoading} limit={100} />
+          {sortedMangas.length > 0 ? (
+            <MangaList
+              mangas={sortedMangas}
+              isLoading={isLoading}
+              limit={100}
+            />
+          ) : (
+            <p className="text-gray-500">ブックマークされた漫画はありません</p>
+          )}
         </div>
       </div>
 

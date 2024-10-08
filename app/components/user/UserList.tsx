@@ -117,7 +117,7 @@ export default function UserList() {
                 <div className="flex items-center space-x-3 flex-1 min-w-0">
                   <div className="flex-shrink-0 hover:brightness-90 transition">
                     {user.avatar_url && (
-                      <div className="w-10 h-10 rounded-full overflow-hidden border">
+                      <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-100">
                         <Image
                           src={user?.avatar_url}
                           alt={`${user.name}のアバター`}

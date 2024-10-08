@@ -46,6 +46,27 @@ const LatestBookmarks = () => {
     fetchBookmarks();
   }, []);
 
+  const formatBookmarkDate = (bookmarkDate: string) => {
+    const now = new Date();
+    const bookmarkTime = new Date(bookmarkDate);
+    const diffInSeconds = Math.floor(
+      (now.getTime() - bookmarkTime.getTime()) / 1000
+    );
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds}秒前`;
+    } else if (diffInSeconds < 3600) {
+      const minutes = Math.floor(diffInSeconds / 60);
+      return `${minutes}分前`;
+    } else if (diffInSeconds < 86400) {
+      const hours = Math.floor(diffInSeconds / 3600);
+      return `${hours}時間前`;
+    } else {
+      const days = Math.floor(diffInSeconds / 86400);
+      return `${days}日前`;
+    }
+  };
+
   if (isLoading) {
     return <MangaListSkeleton />;
   }
@@ -80,8 +101,8 @@ const LatestBookmarks = () => {
                 {bookmark.manga.title}
               </h3>
             </div>
-            <div className="flex gap-2 items-center mt-1 group cursor-pointer">
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-100">
+            <div className="flex gap-2 items-center mt-1 group cursor-pointer w-full">
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-100 flex-shrink-0">
                 <Image
                   src={bookmark.avatar_url}
                   alt={`${bookmark.name}のアバター`}
@@ -90,9 +111,14 @@ const LatestBookmarks = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-xs text-gray-600 md:group-hover:underline decoration-gray-500">
-                {bookmark.name}
-              </p>
+              <div className="flex flex-col w-full overflow-hidden">
+                <p className="text-xs text-gray-600 md:group-hover:underline decoration-gray-500 truncate">
+                  {bookmark.name}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {formatBookmarkDate(bookmark.bookmark_date)}
+                </p>
+              </div>
             </div>
           </div>
         ))}

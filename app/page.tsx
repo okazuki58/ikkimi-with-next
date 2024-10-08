@@ -21,7 +21,6 @@ import Divider from "@/app/components/layout/Divider";
 import UserList from "@/app/components/user/UserList";
 import { MangaListSkeleton } from "@/app/components/Skeletons";
 import Discover from "@/app/components/Discover";
-import clientLatestBookmark from "@/app/manga/latestbookmark/clientLatestBookmark";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ja";

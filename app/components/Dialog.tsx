@@ -141,7 +141,7 @@ export default function MangaDialog({
                     </Link>
                   ) : (
                     <div className="text-sm px-8 py-3 text-gray-500 mt-6 flex w-full items-center justify-center rounded-md border border-transparent">
-                      Amazonリンクは追加予定です
+                      この作品のAmazonリンクは追加予定です
                     </div>
                   )}
                 </div>
