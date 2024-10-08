@@ -52,6 +52,11 @@ export default async function RootLayout({
             gtag('config', 'G-528RG3RVRJ');
           `}
         </Script>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5359546127899420"
+          crossOrigin="anonymous"
+        ></Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable}  font-sf antialiased flex size-full min-h-screen flex-col dark:bg-[#10141E]`}

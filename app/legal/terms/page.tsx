@@ -1,11 +1,9 @@
-// app/terms/page.tsx
 export default function TermsOfService() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-center py-20">
-        <h1 className="text-3xl font-bold mb-6">利用規約</h1>
+        <h1 className="text-3xl font-bold">利用規約</h1>
       </div>
-      <div className="flex flex-col gap-6"></div>
       <p className="mb-14">
         この利用規約（以下、「本規約」といいます。）は、Ikkimi（以下、「本サービス」といいます。）を利用するすべてのユーザー（以下、「ユーザー」といいます。）に適用されます。
       </p>

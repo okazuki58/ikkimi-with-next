@@ -132,7 +132,7 @@ export function HeroSkeleton() {
 
 export default function UserListSkeleton() {
   return (
-    <div className="w-full max-w-5xl mx-auto py-4 ">
+    <div className="w-full max-w-5xl mx-auto py-4">
       <div className="py-10">
         <div className="h-10 bg-gray-200 rounded-md w-1/2 animate-pulse"></div>
       </div>

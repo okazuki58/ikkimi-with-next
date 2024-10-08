@@ -80,12 +80,16 @@ export function getAvatarUrl(profileId: string, fileName: string): string {
   return data.publicUrl || "";
 }
 
-export async function fetchUserProfileByUsername(
-  username: string
-): Promise<Profile | null> {
+export async function fetchUserProfileByUsername(username: string) {
   const { data, error } = await supabase
     .from("profiles")
-    .select("*")
+    .select(
+      `
+    *,
+    followers_count: follows!follows_followed_id_fkey(count),
+    following_count: follows!follows_follower_id_fkey(count)
+  `
+    )
     .eq("username", username)
     .single();
 
@@ -94,7 +98,7 @@ export async function fetchUserProfileByUsername(
     return null;
   }
 
-  return data as Profile;
+  return data;
 }
 
 // ブックマーク情報を取得する関数
@@ -336,7 +340,7 @@ export async function getMangasByTitles(titles: string[]): Promise<Manga[]> {
   return data as Manga[];
 }
 
-export async function getTodayRecommendedMangas(): Promise<Manga[]> {
+export async function trendingInSearch(): Promise<Manga[]> {
   // 現在のUTC時刻を取得
   const now = new Date();
 

@@ -21,10 +21,16 @@ import FollowingModal from "@/app/components/modal/FollowingModal";
 
 import NotFound from "../not-found";
 import FollowersModal from "../components/modal/FollowersModal";
+
 interface ProfilePageProps {
   params: {
     username: string;
   };
+}
+
+interface ProfileWithCounts extends Profile {
+  followers_count: number;
+  following_count: number;
 }
 
 export default function ProfilePage({ params }: ProfilePageProps) {
@@ -63,29 +69,50 @@ export default function ProfilePage({ params }: ProfilePageProps) {
     const fetchData = async () => {
       setIsLoading(true);
 
-      // 指定されたユーザー名からプロフィールを取得
-      const userProfile = await fetchUserProfileByUsername(username);
-      if (!userProfile) {
-        // ユーザーが存在しない場合の処理（エラーページの表示など）
+      // Supabaseクライアントの作成
+      const supabase = createClient();
+
+      // プロフィール情報の取得
+      const { data: profileData, error: profileError } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("username", username)
+        .single();
+
+      if (profileError || !profileData) {
         setIsLoading(false);
         return;
       }
-      setProfile(userProfile);
+      setProfile(profileData);
 
-      // ユーザーのブックマークを取得
+      // ブックマークの取得
       const userBookmarkedMangas = await fetchUserBookmarkedMangasWithCreatedAt(
-        userProfile.id
+        profileData.id
       );
-
       setBookmarkedMangas(userBookmarkedMangas);
 
-      // フォロワー数とフォロー中の数を取得
-      fetchFollowCounts(userProfile.id);
+      // フォロワー数とフォロー中の数を並列で取得
+      const [{ count: followersCount }, { count: followingCount }] =
+        await Promise.all([
+          supabase
+            .from("follows")
+            .select("*", { count: "exact", head: true })
+            .eq("followed_id", profileData.id),
+          supabase
+            .from("follows")
+            .select("*", { count: "exact", head: true })
+            .eq("follower_id", profileData.id),
+        ]);
 
-      // ユーザーがログインしていれば、フォロー状態とフォロー中のユーザーIDを取得
+      setFollowersCount(followersCount || 0);
+      setFollowingCount(followingCount || 0);
+
+      // ユーザーがログインしている場合、フォロー状態とフォロー中のユーザーIDを取得
       if (user) {
-        checkIfFollowing(user.id, userProfile.id);
-        fetchFollowingIds(user.id);
+        await Promise.all([
+          checkIfFollowing(user.id, profileData.id),
+          fetchFollowingIds(user.id),
+        ]);
       }
 
       setIsLoading(false);

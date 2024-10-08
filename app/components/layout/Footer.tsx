@@ -26,19 +26,25 @@ export function Footer() {
             <h4 className="font-semibold text-gray-900">About</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                <Link
+                  href="/about/info"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
                   Ikkimiについて
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
-                  運営会社
+                  運営者情報
                 </a>
               </li>
               <li>
-                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                <Link
+                  href="/about/info"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
                   お知らせ
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
@@ -47,9 +53,12 @@ export function Footer() {
             <h4 className="font-semibold text-gray-900">Guides</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                <Link
+                  href="/guides/howtouse"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
                   使い方
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">

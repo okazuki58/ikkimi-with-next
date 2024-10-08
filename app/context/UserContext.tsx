@@ -42,10 +42,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         data: { user },
       } = await supabase.auth.getUser();
       setUser(user);
-      const { data } = await supabase.auth.getSession();
-      console.log(data);
 
-      const { data: profiles, error } = await supabase.from("profiles").select("*");
+      const { data: profiles, error } = await supabase
+        .from("profiles")
+        .select("*");
 
       if (error) {
         console.error("データ取得エラー:", error);

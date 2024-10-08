@@ -9,6 +9,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // テキストカラー
+      textColor: {
+        primary: "hsl(225, 10%, 20%)",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

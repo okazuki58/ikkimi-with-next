@@ -1,11 +1,9 @@
 // app/how-to-use/page.tsx
 export default function HowToUse() {
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-center py-20">
-        <h1 className="text-3xl font-bold text-indigo-600 mb-6">
-          Ikkimiの使い方
-        </h1>
+        <h1 className="text-3xl font-bold text-indigo-600">Ikkimiの使い方</h1>
       </div>
 
       <section className="mb-14">
@@ -14,7 +12,7 @@ export default function HowToUse() {
           アカウントの作成
         </h2>
         <p>
-          Ikkimiを利用するには、最初にアカウントを作成する必要があります。Googleアカウントやメールアドレスを使用して簡単に登録できます。
+          Ikkimiを利用するには、最初にアカウントを作成する必要があります。Googleアカウントを使用して簡単に登録できます。※現在はGoogleアカウントのみでの登録が可能です。
         </p>
       </section>
 

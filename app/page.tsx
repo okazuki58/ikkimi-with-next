@@ -13,7 +13,7 @@ import {
   fetchShojoMangas,
   fetchShonenMangas,
   fetchTLMangas,
-  getTodayRecommendedMangas,
+  trendingInSearch,
 } from "@/app/lib/data";
 import { MangaListHeader } from "@/app/components/manga/ListHeader";
 import MangaList from "@/app/components/manga/MangaList";
@@ -33,7 +33,7 @@ export default function ContentHome() {
   const [mediaMangas, setMediaMangas] = useState<Manga[]>([]);
   const [awardsMangas, setAwardsMangas] = useState<Manga[]>([]);
   const [newReleaseMangas, setNewReleaseMangas] = useState<Manga[]>([]);
-  const [todayRecommendedMangas, setTodayRecommendedMangas] = useState<Manga[]>(
+  const [trendingInSearchMangas, setTrendingInSearchMangas] = useState<Manga[]>(
     []
   );
   const [shonenMangas, setShonenMangas] = useState<Manga[]>([]);
@@ -48,12 +48,12 @@ export default function ContentHome() {
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
+      fetchMangasByReleaseDate(today),
       fetchRankingMangas(),
       fetchRisingManga(),
       fetchMangasWithMedia(),
       fetchMangasWithAwards(),
-      getTodayRecommendedMangas(),
-      fetchMangasByReleaseDate(today),
+      trendingInSearch(),
       fetchShonenMangas(),
       fetchShojoMangas(),
       fetchSeinenMangas(),
@@ -63,12 +63,12 @@ export default function ContentHome() {
     ])
       .then(
         ([
+          newReleaseData,
           rankingData,
           risingData,
           mediaData,
           awardsData,
-          todayRecommendedData,
-          newReleaseData,
+          trendingInSearchData,
           shonenData,
           shojoData,
           seinenData,
@@ -76,12 +76,12 @@ export default function ContentHome() {
           blData,
           tlData,
         ]) => {
+          setNewReleaseMangas(newReleaseData);
           setRankingMangas(rankingData);
           setRisingMangas(risingData);
           setMediaMangas(mediaData);
           setAwardsMangas(awardsData);
-          setTodayRecommendedMangas(todayRecommendedData);
-          setNewReleaseMangas(newReleaseData);
+          setTrendingInSearchMangas(trendingInSearchData);
           setShonenMangas(shonenData);
           setShojoMangas(shojoData);
           setSeinenMangas(seinenData);
@@ -185,9 +185,13 @@ export default function ContentHome() {
         </div>
         <Divider />
         <div className="py-10">
-          <MangaListHeader sectionTitle="検索で話題" buttonText="すべて見る" />
+          <MangaListHeader
+            sectionTitle="検索で話題"
+            buttonText="すべて見る"
+            buttonLink="trendingInSearch"
+          />
           <MangaList
-            mangas={todayRecommendedMangas}
+            mangas={trendingInSearchMangas}
             isLoading={isLoading}
             limit={14}
           />
