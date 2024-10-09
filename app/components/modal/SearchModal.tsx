@@ -1,22 +1,12 @@
 import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
-// import AlgoSearch from "../AlgoSearch";
-import { useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
-
-// AlgoSearch を動的インポートし、ssr を無効化
-const AlgoSearch = dynamic(() => import("../AlgoSearch"), { ssr: false });
+import AlgoSearch from "../AlgoSearch";
 
 interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
-  inputRef: React.RefObject<HTMLInputElement>;
 }
 
-export default function SearchModal({
-  isOpen,
-  onClose,
-  inputRef,
-}: ModalComponentProps) {
+export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop
@@ -30,11 +20,7 @@ export default function SearchModal({
             transition
             className="relative transform rounded-lg text-left shadow-xl transition-all  data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 w-full sm:max-w-lg"
           >
-            <AlgoSearch
-              onCloseModal={onClose}
-              isOpen={isOpen}
-              inputRef={inputRef}
-            />
+            <AlgoSearch onCloseModal={onClose} isOpen={isOpen} />
             {/* <div>確認用</div> */}
           </DialogPanel>
         </div>

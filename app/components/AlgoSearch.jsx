@@ -11,14 +11,13 @@ const searchClient = algoliasearch(
 );
 const index = searchClient.initIndex("manga_index");
 
-export default function AlgoSearch({ onCloseModal, isOpen, inputRef }) {
+export default function AlgoSearch({ onCloseModal, isOpen }) {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
   const [isComposing, setIsComposing] = useState(false);
   const suggestionsRef = useRef(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [results, setResults] = useState([]);
-  // const inputRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -73,8 +72,6 @@ export default function AlgoSearch({ onCloseModal, isOpen, inputRef }) {
     <div className="w-full md:w-96">
       <div className="relative w-full">
         <input
-          ref={inputRef}
-          autoFocus
           type="text"
           placeholder="作品名、作者名、キーワードで検索"
           value={query}
