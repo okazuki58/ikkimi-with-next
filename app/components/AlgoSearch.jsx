@@ -11,7 +11,7 @@ const searchClient = algoliasearch(
 );
 const index = searchClient.initIndex("manga_index");
 
-export default function AlgoSearch({ onCloseModal, isOpen }) {
+export default function AlgoSearch({ inputRef, onBlur }) {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
   const [isComposing, setIsComposing] = useState(false);
@@ -51,34 +51,41 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
     if (e.key === "Enter" && !isComposing && query.length > 0) {
       // 検索結果ページに遷移、クエリをパラメータとして渡す
       router.push(`/search?query=${encodeURIComponent(query)}`);
-      if (onCloseModal) {
-        onCloseModal();
+      if (onBlur) {
+        onBlur();
       }
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+  // サジェスト項目をクリックしたときの処理
+  const handleSuggestionClick = (hit) => {
+    router.push(`/manga/${hit.id}`);
+    if (onBlur) {
+      onBlur();
     }
+    setShowSuggestions(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isOpen]);
+  }, []);
 
   return (
-    <div className="w-full md:w-96">
+    <div className="w-full md:w-[420px]">
       <div className="relative w-full">
         <input
           type="text"
+          ref={inputRef}
           placeholder="作品名、作者名、キーワードで検索"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
+          onBlur={onBlur}
           className="w-full h-10 py-2 pl-10 sm:text-sm border border-gray-300 rounded-lg  focus:border-primary md:hover:border-primary transition"
         />
         <MagnifyingGlassIcon className="size-5 absolute top-1/2 -translate-y-1/2 inset-x-3 text-gray-400" />
@@ -93,12 +100,7 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
             {results.slice(0, 5).map((hit) => (
               <li
                 key={hit.objectID}
-                onClick={() => {
-                  router.push(`/manga/${hit.id}`);
-                  if (onCloseModal) {
-                    onCloseModal();
-                  }
-                }}
+                onMouseDown={() => handleSuggestionClick(hit)}
                 className="px-3 py-3 text-xs text-gray-900 hover:bg-gray-50 cursor-pointer text-left"
               >
                 {hit.title}
