@@ -38,11 +38,11 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
     fetchData();
   }, [debouncedQuery]);
 
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
+  // useEffect(() => {
+  //   if (isOpen && inputRef.current) {
+  //     inputRef.current.focus();
+  //   }
+  // }, [isOpen]);
 
   const handleClickOutside = (event) => {
     if (
