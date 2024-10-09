@@ -1,6 +1,6 @@
 import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
 import AlgoSearch from "../AlgoSearch";
-import dynamic from "next/dynamic";
+import { useRef } from "react";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -8,6 +8,8 @@ interface ModalComponentProps {
 }
 
 export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop
@@ -21,7 +23,7 @@ export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
             transition
             className="relative transform rounded-lg text-left shadow-xl transition-all  data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 w-full sm:max-w-lg"
           >
-            <AlgoSearch onCloseModal={onClose} isOpen={isOpen} />
+            <AlgoSearch onCloseModal={onClose} isOpen={isOpen} inputRef={inputRef} />
             {/* <div>確認用</div> */}
           </DialogPanel>
         </div>

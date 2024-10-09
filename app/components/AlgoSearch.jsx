@@ -11,14 +11,14 @@ const searchClient = algoliasearch(
 );
 const index = searchClient.initIndex("manga_index");
 
-export default function AlgoSearch({ onCloseModal, isOpen }) {
+export default function AlgoSearch({ onCloseModal, isOpen, inputRef }) {
   const [query, setQuery] = useState("");
   const [debouncedQuery] = useDebounce(query, 500);
   const [isComposing, setIsComposing] = useState(false);
   const suggestionsRef = useRef(null);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [results, setResults] = useState([]);
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,14 +39,10 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
   }, [debouncedQuery]);
 
   useEffect(() => {
-    if (isOpen && inputRef.current) {
-      const timer = setTimeout(() => {
-        inputRef.current.focus();
-      }, 100); // 100msの遅延を設定
-
-      return () => clearTimeout(timer); // クリーンアップ
+    if (isOpen && inputRef && inputRef.current) {
+      inputRef.current.focus();
     }
-  }, [isOpen]);
+  }, [isOpen, inputRef]);
 
   const handleClickOutside = (event) => {
     if (

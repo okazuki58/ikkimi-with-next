@@ -132,7 +132,11 @@ export default function ClientHeader({ user }: { user: User | null }) {
                 </button>
               </div>
               <div className="hidden md:block">
-                <AlgoSearch onCloseModal={() => {}} isOpen={null} />
+                <AlgoSearch
+                  onCloseModal={() => {}}
+                  isOpen={isSearchModalOpen}
+                  inputRef={null}
+                />
               </div>
 
               {user && (
