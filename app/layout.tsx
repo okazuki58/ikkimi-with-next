@@ -74,7 +74,7 @@ export default async function RootLayout({
             </BookmarkProvider>
           </ProfileProvider>
         </UserProvider>
-        <Toaster position="bottom-center" />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );

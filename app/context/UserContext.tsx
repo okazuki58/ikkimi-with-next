@@ -42,16 +42,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         data: { user },
       } = await supabase.auth.getUser();
       setUser(user);
-
-      const { data: profiles, error } = await supabase
-        .from("profiles")
-        .select("*");
-
-      if (error) {
-        console.error("データ取得エラー:", error);
-      } else {
-        console.log("ユーザープロフィール:", profiles);
-      }
     };
     fetchUser();
 

@@ -4,6 +4,7 @@ import { fetchRisingManga } from "@/app/lib/data";
 import { Manga } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import MangaList from "@/app/components/manga/MangaList";
+
 export default function Rising() {
   const [mangas, setMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);

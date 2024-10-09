@@ -38,9 +38,12 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
     fetchData();
   }, [debouncedQuery]);
 
-  useLayoutEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
+  useEffect(() => {
+    if (isOpen) {
+      console.log("Input Ref:", inputRef.current);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }, [isOpen]);
 

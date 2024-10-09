@@ -14,7 +14,7 @@ export default function Ranking() {
   const sortOptions = [
     { value: "all", label: "全期間" },
     { value: "monthly", label: "月間" },
-    { value: "weekly", label: "週間" },
+    { value: "weekly", label: "週間" }, 
     { value: "day", label: "日" },
   ];
 
