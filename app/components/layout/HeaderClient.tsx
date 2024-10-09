@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BookmarkIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useUser } from "../../context/UserContext";
@@ -27,8 +27,16 @@ export default function ClientHeader({ user }: { user: User | null }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const handleMenuToggle = () => {
     setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleOpenSearchModal = () => {
+    setIsSearchModalOpen(true);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 300); // 100ms遅延させてフォーカスを当てる
   };
 
   const [isVisible, setIsVisible] = useState(true);
@@ -123,7 +131,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
               <div className="md:hidden">
                 <button
                   type="button"
-                  onClick={() => setIsSearchModalOpen(true)}
+                  onClick={handleOpenSearchModal}
                   className="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none"
                 >
                   <span className="absolute -inset-1.5" />
@@ -230,6 +238,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
         <SearchModal
           isOpen={isSearchModalOpen}
           onClose={() => setIsSearchModalOpen(false)}
+          inputRef={inputRef}
         />
       </header>
       <div className="w-full h-16"></div>

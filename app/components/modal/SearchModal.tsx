@@ -5,16 +5,21 @@ import { useRef } from "react";
 interface ModalComponentProps {
   isOpen: boolean;
   onClose: () => void;
+  inputRef: React.RefObject<HTMLInputElement>;
 }
 
-export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+export default function SearchModal({
+  isOpen,
+  onClose,
+  inputRef,
+}: ModalComponentProps) {
+  // const inputRef = useRef<HTMLInputElement | null>(null);
 
   return (
     <Dialog
       open={isOpen}
       onClose={onClose}
-      initialFocus={inputRef}
+      // initialFocus={inputRef}
       className="relative z-50"
     >
       <DialogBackdrop
