@@ -38,11 +38,15 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
     fetchData();
   }, [debouncedQuery]);
 
-  // useEffect(() => {
-  //   if (isOpen && inputRef.current) {
-  //     inputRef.current.focus();
-  //   }
-  // }, [isOpen]);
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      const timer = setTimeout(() => {
+        inputRef.current.focus();
+      }, 100); // 100msの遅延を設定
+
+      return () => clearTimeout(timer); // クリーンアップ
+    }
+  }, [isOpen]);
 
   const handleClickOutside = (event) => {
     if (
