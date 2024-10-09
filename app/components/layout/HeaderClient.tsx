@@ -34,9 +34,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
 
   const handleOpenSearchModal = () => {
     setIsSearchModalOpen(true);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 300); // 100ms遅延させてフォーカスを当てる
+    inputRef.current?.focus();
   };
 
   const [isVisible, setIsVisible] = useState(true);
