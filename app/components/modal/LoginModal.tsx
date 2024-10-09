@@ -1,7 +1,6 @@
 import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
-import { ArrowUpRightIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import GoogleButton from "../GoogleButton";
-import Link from "next/link";
 
 interface ModalComponentProps {
   isOpen: boolean;
