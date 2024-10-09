@@ -18,7 +18,7 @@ export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
         <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition
-            className="relative transform rounded-lg text-left shadow-xl transition-all  data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 w-full sm:max-w-lg "
+            className="relative overflow-hidden transform rounded-lg text-left shadow-xl transition-all  data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 w-full sm:max-w-lg "
           >
             <AlgoSearch onCloseModal={onClose} isOpen={isOpen} />
           </DialogPanel>
