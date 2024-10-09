@@ -14,7 +14,7 @@ export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
         className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
       />
 
-      <div className="fixed top-0 w-screen">
+      <div className="fixed top-0 w-screen z-10">
         <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
           <DialogPanel
             transition

@@ -95,7 +95,6 @@ export default function ContentHome() {
         console.error("Failed to fetch data:", error);
         setIsLoading(false);
       });
-    console.log(newReleaseMangas);
   }, []);
 
   if (isLoading) {

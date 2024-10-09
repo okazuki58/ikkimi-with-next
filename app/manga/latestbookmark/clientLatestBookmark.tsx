@@ -83,8 +83,8 @@ const LatestBookmarks = () => {
     <div>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-2 sm:gap-x-3 gap-y-5">
         {bookmarks.map((bookmark, index) => (
-          <div className="flex flex-col">
-            <div onClick={() => openDialog(bookmark.manga)} key={index}>
+          <div className="flex flex-col" key={index}>
+            <div onClick={() => openDialog(bookmark.manga)}>
               <div className="group pb-1 hover:cursor-pointer">
                 <div className="relative rounded-md aspect-[549/780] overflow-hidden border border-slate-100">
                   {!isImageLoaded && <ImageSkeleton />}

@@ -373,8 +373,6 @@ export async function trendingInSearch(): Promise<Manga[]> {
     return [];
   }
 
-  console.log(mangasData);
-
   // 閲覧数順に漫画を並べ替え
   const mangas = mangaIds
     .map((id: number) => mangasData.find((manga: Manga) => manga.id === id))
