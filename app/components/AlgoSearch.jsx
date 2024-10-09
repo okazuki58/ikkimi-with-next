@@ -73,7 +73,7 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
   }, []);
 
   return (
-    <div className="w-full md:w-[420px]">
+    <div className="w-full md:w-96">
       <div className="relative w-full">
         <input
           ref={inputRef}
@@ -86,7 +86,7 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
           onCompositionEnd={() => setIsComposing(false)}
           className="w-full h-10 py-2 pl-10 sm:text-sm border border-gray-300 rounded-lg  focus:border-primary hover:border-primary transition"
         />
-        <MagnifyingGlassIcon className="size-5 absolute top-1/2 translate-y-[-50%] inset-x-3 text-gray-400" />
+        <MagnifyingGlassIcon className="size-5 absolute top-1/2 -translate-y-1/2 inset-x-3 text-gray-400" />
         {showSuggestions && results.length > 0 && (
           <ul
             ref={suggestionsRef}

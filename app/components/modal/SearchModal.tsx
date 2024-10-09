@@ -1,5 +1,6 @@
 import { Dialog, DialogPanel, DialogBackdrop } from "@headlessui/react";
 import AlgoSearch from "../AlgoSearch";
+import dynamic from "next/dynamic";
 
 interface ModalComponentProps {
   isOpen: boolean;
@@ -20,8 +21,8 @@ export default function SearchModal({ isOpen, onClose }: ModalComponentProps) {
             transition
             className="relative transform overflow-hidden rounded-xl bg-white p-6 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:max-w-[25rem] w-full data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
           >
-            {/* <AlgoSearch onCloseModal={onClose} isOpen={isOpen} /> */}
-            <div>確認用</div>
+            <AlgoSearch onCloseModal={onClose} isOpen={isOpen} />
+            {/* <div>確認用</div> */}
           </DialogPanel>
         </div>
       </div>
