@@ -8,7 +8,7 @@ const nextConfig = {
       // Supabaseストレージからの画像を許可
       {
         protocol: "https",
-        hostname: "xcclmezluzvwbewszwtw.supabase.co",
+        hostname: "auth.ikki-mi.com",
         port: "",
         pathname: "/storage/v1/object/public/ikkimi-image/**",
       },

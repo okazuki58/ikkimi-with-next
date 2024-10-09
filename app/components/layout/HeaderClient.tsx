@@ -9,7 +9,12 @@ import { supabase } from "@/utils/supabaseClient";
 import Image from "next/image";
 import LoginModal from "@/app/components/modal/LoginModal";
 import AlgoSearch from "../AlgoSearch";
-import SearchModal from "../modal/SearchModal";
+// import SearchModal from "../modal/SearchModal";
+import dynamic from "next/dynamic";
+
+const SearchModal = dynamic(() => import("../modal/SearchModal"), {
+  ssr: false,
+});
 
 interface Profile {
   id: string;
@@ -34,7 +39,6 @@ export default function ClientHeader({ user }: { user: User | null }) {
 
   const handleOpenSearchModal = () => {
     setIsSearchModalOpen(true);
-    inputRef.current?.focus();
   };
 
   const [isVisible, setIsVisible] = useState(true);
@@ -141,7 +145,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
                 <AlgoSearch
                   onCloseModal={() => {}}
                   isOpen={isSearchModalOpen}
-                  inputRef={null}
+                  inputRef={inputRef}
                 />
               </div>
 

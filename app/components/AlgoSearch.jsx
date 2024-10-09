@@ -74,6 +74,7 @@ export default function AlgoSearch({ onCloseModal, isOpen, inputRef }) {
       <div className="relative w-full">
         <input
           ref={inputRef}
+          autoFocus
           type="text"
           placeholder="作品名、作者名、キーワードで検索"
           value={query}
