@@ -81,7 +81,7 @@ export default function AlgoSearch({ onCloseModal, isOpen, inputRef }) {
           onKeyDown={handleKeyDown}
           onCompositionStart={() => setIsComposing(true)}
           onCompositionEnd={() => setIsComposing(false)}
-          className="w-full h-10 py-2 pl-10 sm:text-sm border border-gray-300 rounded-lg  focus:border-primary hover:border-primary transition"
+          className="w-full h-10 py-2 pl-10 sm:text-sm border border-gray-300 rounded-lg  focus:border-primary md:hover:border-primary transition"
         />
         <MagnifyingGlassIcon className="size-5 absolute top-1/2 -translate-y-1/2 inset-x-3 text-gray-400" />
         {showSuggestions && results.length > 0 && (
