@@ -2,7 +2,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import algoliasearch from "algoliasearch/lite";
 import { useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 const searchClient = algoliasearch(
@@ -39,11 +39,8 @@ export default function AlgoSearch({ onCloseModal, isOpen }) {
   }, [debouncedQuery]);
 
   useEffect(() => {
-    if (isOpen) {
-      console.log("Input Ref:", inputRef.current);
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [isOpen]);
 
