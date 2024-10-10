@@ -9,6 +9,7 @@ import { supabase } from "@/utils/supabaseClient";
 import { toast } from "sonner";
 import { useProfile } from "@/app/context/ProfileContext";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/app/context/UserContext";
 
 export default function Settings({ params }: { params: { username: string } }) {
   const { profile } = useProfile();
@@ -17,9 +18,10 @@ export default function Settings({ params }: { params: { username: string } }) {
   const [userAlias, setUserAlias] = useState(username);
   const [debouncedUserAlias] = useDebounce(userAlias, 500);
   const [error, setError] = useState<string | null>(null);
-  const [isChecking, setIsChecking] = useState(false);
   const [isButtonEnabled, setIsButtonEnabled] = useState(false);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
+  const { setUser } = useUser();
+  const { setProfile } = useProfile();
   const router = useRouter();
 
   const usernameSchema = z
@@ -50,7 +52,6 @@ export default function Settings({ params }: { params: { username: string } }) {
 
     // バリデーションが成功したら重複チェックを行う
     const checkAvailability = async () => {
-      setIsChecking(true);
       const isAvailable = await checkUsernameAvailability(debouncedUserAlias);
       if (!isAvailable) {
         setError("このユーザー名は既に使用されています。");
@@ -61,7 +62,6 @@ export default function Settings({ params }: { params: { username: string } }) {
         setIsButtonEnabled(debouncedUserAlias !== username);
         setIsAvailable(true);
       }
-      setIsChecking(false);
     };
 
     checkAvailability();
@@ -99,10 +99,34 @@ export default function Settings({ params }: { params: { username: string } }) {
     }
   };
 
-  const handleDeleteAccount = () => {
-    // ここでアカウント削除の処理を行います
-    console.log("アカウントを削除");
-    setIsDialogOpen(false);
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await fetch("/api/deleteUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: profile?.id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("アカウント削除に失敗しました。");
+      }
+
+      setUser(null);
+      setProfile(null);
+      console.log("アカウントが削除されました");
+      toast.success("アカウントが削除されました", {
+        className: "bg-red-50 text-red-600 border border-red-400",
+      });
+      await supabase.auth.signOut();
+      window.location.reload();
+    } catch (error) {
+      console.error("アカウント削除中にエラーが発生しました:", error);
+      toast.error("アカウント削除に失敗しました。");
+    } finally {
+      setIsDialogOpen(false);
+    }
   };
 
   const checkUsernameAvailability = async (
@@ -178,6 +202,7 @@ export default function Settings({ params }: { params: { username: string } }) {
       <DeleteUserModal
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
+        onDelete={handleDeleteAccount}
       />
     </div>
   );

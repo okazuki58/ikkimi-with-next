@@ -59,10 +59,10 @@ export default function HowToUse() {
       <section className="mb-14">
         <p className="text-indigo-300 text-5xl font-bold mb-2">06</p>
         <h2 className="text-2xl font-semibold text-indigo-600 mb-4">
-          作品の詳細ページ
+          作品の詳細モーダル
         </h2>
         <p>
-          各作品の詳細ページでは、作品のあらすじや著者情報を確認できます。また、他のユーザーのブックマーク数も表示されますので、人気の度合いも把握できます。
+          各作品の詳細モーダルでは、作品のあらすじや著者情報を確認できます。また、他のユーザーのブックマーク数も表示されますので、人気の度合いも把握できます。
         </p>
       </section>
     </div>

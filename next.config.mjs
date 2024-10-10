@@ -18,6 +18,12 @@ const nextConfig = {
         port: "",
         pathname: "/storage/v1/object/public/avatars/**",
       },
+      {
+        protocol: "https",
+        hostname: "auth.ikki-mi.com",
+        port: "",
+        pathname: "/storage/v1/object/public/avatars/**",
+      },
       // Googleユーザーアバター画像を許可
       {
         protocol: "https",

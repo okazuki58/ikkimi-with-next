@@ -438,3 +438,30 @@ export async function fetchMangaCountsByDates(
 
   return counts;
 }
+
+// mangaIdからブックマークしたユーザーを取得
+export async function fetchBookmarkedUsers(mangaId: number) {
+  const { data: bookmarks, error: bookmarkError } = await supabase
+    .from("user_bookmarks")
+    .select("user_id")
+    .eq("manga_id", mangaId);
+
+  if (bookmarkError) {
+    console.error("Error fetching bookmarks:", bookmarkError);
+    return [];
+  }
+
+  const userIds = bookmarks.map((bookmark) => bookmark.user_id);
+
+  const { data: users, error: userError } = await supabase
+    .from("profiles")
+    .select("*")
+    .in("id", userIds);
+
+  if (userError) {
+    console.error("Error fetching users:", userError);
+    return [];
+  }
+
+  return users;
+}

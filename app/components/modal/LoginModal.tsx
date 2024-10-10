@@ -28,14 +28,15 @@ export default function LoginModal({ isOpen, onClose }: ModalComponentProps) {
               <XMarkIcon className="size-5" />
             </button>
             <div className="relative flex flex-col items-center gap-6 pb-2">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center">
                 {/* <img src="/frame-1.svg" alt="" className="size-9" />
                 <div className="font-unbounded text-4xl font-semibold text-gray-900 tracking-wide">
                   Ikkimi
                 </div> */}
-                <h1 className="font-medium text-xl py-8 mt-1">
-                  Log in or Sign up
-                </h1>
+                <h1 className="font-semibold text-xl my-3">ログイン</h1>
+                <p className="text-sm text-gray-500">
+                  アカウントをお持ちでない場合は、ログイン時に自動で作成されます。
+                </p>
               </div>
               <div className="flex flex-col items-center gap-6 w-full">
                 {/* <div className="text-sm text-gray-800 leading-6 font-medium w-fullsm:px-4 max-w-[360px]">

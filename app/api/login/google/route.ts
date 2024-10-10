@@ -7,10 +7,10 @@ export async function GET() {
     provider: "google",
     options: {
       redirectTo: "http://localhost:3000/auth/callback",
-      queryParams: {
-        access_type: "offline",
-        prompt: "consent",
-      },
+      // queryParams: {
+      //   access_type: "offline",
+      //   prompt: "consent",
+      // },
     },
   });
 

@@ -13,9 +13,14 @@ import { WhiteButton } from "../WhiteButton";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onDelete: () => void;
 }
 
-export default function DeleteUserModal({ isOpen, onClose }: ModalProps) {
+export default function DeleteUserModal({
+  isOpen,
+  onClose,
+  onDelete,
+}: ModalProps) {
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <DialogBackdrop
@@ -44,7 +49,7 @@ export default function DeleteUserModal({ isOpen, onClose }: ModalProps) {
                   <WhiteButton onClick={() => onClose()}>
                     キャンセル
                   </WhiteButton>
-                  <BlackButton onClick={() => onClose()}>削除する</BlackButton>
+                  <BlackButton onClick={() => onDelete()}>削除する</BlackButton>
                 </div>
               </div>
             </div>

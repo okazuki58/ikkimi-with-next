@@ -10,6 +10,7 @@ import BookmarkButton from "./BookmarkButton";
 import { useRouter } from "next/navigation";
 import { ImageSkeleton } from "./Skeletons";
 import { getImageUrl } from "../lib/data";
+import BookmarkedUsersModal from "./modal/BookmarkedUsersModal";
 
 interface MangaDialogProps {
   isOpen: boolean;
@@ -24,6 +25,8 @@ export default function MangaDialog({
 }: MangaDialogProps) {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [localManga, setLocalManga] = useState<Manga>(manga);
+  const [isBookmarkedUsersModalOpen, setIsBookmarkedUsersModalOpen] =
+    useState(false);
 
   useEffect(() => {
     setLocalManga(manga);
@@ -116,9 +119,12 @@ export default function MangaDialog({
                       mangaId={localManga.id}
                       bookmark={localManga.bookmark}
                     />
-                    <p className="text-xs text-gray-700 md:hover:text-indigo-700 md:hover:underline cursor-pointer">
+                    <button
+                      className="text-xs text-gray-700 md:hover:text-indigo-700 md:hover:underline cursor-pointer"
+                      onClick={() => setIsBookmarkedUsersModalOpen(true)}
+                    >
                       ブックマーク中のユーザー
-                    </p>
+                    </button>
                   </div>
                   <div className="mt-4">
                     <p className="text-sm text-gray-700">
@@ -150,6 +156,11 @@ export default function MangaDialog({
           </DialogPanel>
         </div>
       </div>
+      <BookmarkedUsersModal
+        isOpen={isBookmarkedUsersModalOpen}
+        onClose={() => setIsBookmarkedUsersModalOpen(false)}
+        mangaId={localManga.id}
+      />
     </Dialog>
   );
 }

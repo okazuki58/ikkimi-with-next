@@ -30,7 +30,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       console.error("サインアウトエラー:", error.message);
     } else {
       setUser(null); // サインアウト後にuserをnullにセット
-      toast.success("ログアウトしました");
+      // toast.success("ログアウトしました");
       window.location.reload();
     }
   };

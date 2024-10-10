@@ -195,7 +195,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
                           />
                         </div>
                       ) : (
-                        <div></div>
+                        <div className="w-10 h-10 rounded-full overflow-hidden border bg-gray-100"></div>
                       )}
                     </button>
                     {isMenuOpen && (

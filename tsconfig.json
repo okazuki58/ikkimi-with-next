@@ -33,6 +33,6 @@
     "app/components/AlgoSearch.jsx",
     "app/search/page.jsx",
     "app/search/ClientSearchResults.jsx"
-  ],
+, "app/api/deleteUser"  ],
   "exclude": ["node_modules"]
 }

@@ -27,9 +27,7 @@ export default function GoogleButton() {
           fill="#34A853"
         />
       </svg>
-      <span className="text-md font-semibold leading-6">
-        Continue with Google
-      </span>
+      <span className="text-md font-semibold leading-6">Google で続行</span>
     </button>
   );
 }

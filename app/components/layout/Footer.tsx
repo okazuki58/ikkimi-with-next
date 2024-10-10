@@ -27,17 +27,17 @@ export function Footer() {
             <ul className="flex flex-col gap-4">
               <li>
                 <Link
-                  href="/about/info"
+                  href="/about"
                   className="text-sm text-gray-700 md:hover:underline cursor-pointer"
                 >
                   Ikkimiについて
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
                   運営者情報
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/about/info"
@@ -60,11 +60,11 @@ export function Footer() {
                   使い方
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
                   よくある質問
                 </a>
-              </li>
+              </li> */}
             </ul>
           </nav>
 

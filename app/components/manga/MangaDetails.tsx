@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useUser } from "@/app/context/UserContext";
 import { Manga } from "@/app/lib/definitions";
 import { supabase } from "@/utils/supabaseClient";
-import { MangaListHeader } from "@/app/components/manga/ListHeader";
 import MangaList from "./MangaList";
 
 interface MangaDetailProps {

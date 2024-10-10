@@ -17,7 +17,11 @@ const tabs = [
     icon: UserCircleIcon,
     link: "/manga/users",
   },
-  { name: "検索で話題", icon: MagnifyingGlassIcon, link: "/manga/trendingInSearch" },
+  {
+    name: "検索で話題",
+    icon: MagnifyingGlassIcon,
+    link: "/manga/trendingInSearch",
+  },
   { name: "新着リリース", icon: CalendarDaysIcon, link: "/manga/new_release" },
   { name: "2024年秋アニメ化作品", icon: TvIcon, link: "/manga/media" },
   { name: "少年", link: "/manga/ranking?category=少年" },
@@ -37,7 +41,7 @@ export default function Discover() {
           <Link href={tab.link} key={i}>
             <span
               key={i}
-              className="flex items-center gap-2 rounded-md px-3 py-2 text-center bg-[#f2f2fa] text-gray-700 font-medium text-sm md:hover:bg-[#e6e6fc] md:hover:text-indigo-600 cursor-pointer transition"
+              className="flex items-center gap-2 rounded-md px-3 py-2 text-center bg-[#f2f2fa] text-gray-700 font-medium text-sm hover:bg-[#e6e6fc] hover:text-indigo-600 cursor-pointer transition"
             >
               {tab.icon && <tab.icon className="w-4 h-4" />}
               {tab.name}

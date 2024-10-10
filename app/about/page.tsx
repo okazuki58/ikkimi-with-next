@@ -1,73 +1,28 @@
 export default function TermsOfService() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="flex items-center justify-center py-20">
-        <h1 className="text-3xl font-bold">Ikkimiについて</h1>
+    <div className="max-w-2xl mx-auto text-gray-800">
+      <div className="w-full flex items-center justify-start py-20">
+        <h1 className="text-2xl font-bold mt-4">Ikkimi について</h1>
       </div>
-      <div className="relative sm:pb-12 sm:ml-[calc(2rem+1px)] md:ml-[calc(3.5rem+1px)] lg:ml-[max(calc(14.5rem+1px),calc(100%-48rem))]">
-        <div className="hidden absolute top-3 bottom-0 right-full mr-7 md:mr-[3.25rem] w-px bg-slate-200 dark:bg-slate-800 sm:block"></div>
-        <div className="space-y-16">
-          <article className="relative group">
-            <div className="absolute -inset-y-2.5 -inset-x-4 md:-inset-y-4 md:-inset-x-6 sm:rounded-2xl group-hover:bg-slate-50/70 dark:group-hover:bg-slate-800/50"></div>
-            <svg
-              viewBox="0 0 9 9"
-              className="hidden absolute right-full mr-6 top-2 text-slate-200 dark:text-slate-600 md:mr-12 w-[calc(0.5rem+1px)] h-[calc(0.5rem+1px)] overflow-visible sm:block"
-            >
-              <circle
-                cx="4.5"
-                cy="4.5"
-                r="4.5"
-                stroke="currentColor"
-                className="fill-white dark:fill-slate-900"
-                stroke-width="2"
-              ></circle>
-            </svg>
-            <div className="relative">
-              <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-slate-200 pt-8 lg:pt-0">
-                Radiant: A beautiful new marketing site template
-              </h3>
-              <div className="mt-2 mb-4 prose prose-slate prose-a:relative prose-a:z-10 dark:prose-dark line-clamp-2">
-                <p>
-                  Over the past couple of months we’ve been working away at a
-                  new SaaS marketing site template for Tailwind UI. It’s called{" "}
-                  <a href="https://tailwindui.com/templates/radiant">Radiant</a>
-                  , and you can start using it today.
-                </p>
-              </div>
-              <dl className="absolute left-0 top-0 lg:left-auto lg:right-full lg:mr-[calc(6.5rem+1px)]">
-                <dt className="sr-only">Date</dt>
-                <dd className="whitespace-nowrap text-sm leading-6 dark:text-slate-400">
-                  <time dateTime="2024-10-09T10:30:00.000Z">2024.10.09</time>
-                </dd>
-              </dl>
-            </div>
-            <a
-              className="flex items-center text-sm text-sky-500 font-medium"
-              href="/blog/2024-09-12-radiant-a-beautiful-new-marketing-site-template"
-            >
-              <span className="absolute -inset-y-2.5 -inset-x-4 md:-inset-y-4 md:-inset-x-6 sm:rounded-2xl"></span>
-              <span className="relative">
-                Read more
-                <span className="sr-only">
-                  , Radiant: A beautiful new marketing site template
-                </span>
-              </span>
-              <svg
-                className="relative mt-px overflow-visible ml-2.5 text-sky-300 dark:text-sky-700"
-                width="3"
-                height="6"
-                viewBox="0 0 3 6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M0 0L3 3L0 6"></path>
-              </svg>
-            </a>
-          </article>
-        </div>
+      <div className="leading-8 flex flex-col gap-10 font-medium">
+        <p className="">
+          Ikkimiは、「本当に面白いと思った作品を、気軽に共有できる」漫画推薦サービスです。
+        </p>
+        <p className="">
+          Ikkimiは、ただ読んだ漫画を記録したりレビューを投稿するのではなく、「心からおすすめしたい作品」を共有するためのサービスです。「この漫画、すごく面白かった！」と思ったら、その感動を誰かと簡単に共有できる仕組みを提供します。
+        </p>
+        <p>
+          使い方のイメージとしては、SNSでつながっている友達や家族、あるいは見知らぬ誰かに、自分の本棚にある「これは！」という作品をおすすめする感覚です。例えば、友達の家に行って、その本棚にある漫画をふと手に取り、思わず夢中になって読んでしまったあの瞬間
+          ―― Ikkimiはそんな体験をオンラインで再現し、広げていく場所です。
+        </p>
+        <p>
+          Ikkimiでは、「本当に面白い」と感じた作品だけをブックマークすることができます。あえてレビュー機能は省き、評価よりも「この作品を知ってほしい！」というシンプルな気持ちを大事にしています。サービス名の「イッキ見」からもわかるように、一気に読んでしまったような面白い作品を、他の人に伝えてもらいたいのです。
+        </p>
+        <p>
+          今後も改善を続けていく予定ですので、不具合やご意見があれば、ぜひ
+          X（旧Twitter）のDMでお知らせください。
+        </p>
+        <p>どうぞ、Ikkimi をよろしくお願いします。</p>
       </div>
     </div>
   );

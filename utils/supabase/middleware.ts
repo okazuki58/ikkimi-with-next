@@ -38,34 +38,22 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // ユーザーがログインせずに、/login か /signup 以外にアクセスしようとしている場合
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/")
-  ) {
-    // ログインページにリダイレクト
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
+  // if (
+  //   !user &&
+  //   !request.nextUrl.pathname.startsWith("/login") &&
+  //   !request.nextUrl.pathname.startsWith("/auth") &&
+  //   !request.nextUrl.pathname.startsWith("/")
+  // ) {
+  //   // ログインページにリダイレクト
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = "/login";
+  //   return NextResponse.redirect(url);
+  // }
 
-  // ユーザーがログインしていて、/login か /signup にアクセスしようとしている場合
-  if (
-    user &&
-    (request.nextUrl.pathname.startsWith("/login") ||
-      request.nextUrl.pathname.startsWith("/signup"))
-  ) {
-    // ホームページにリダイレクト
+  // ログインせずにアカウント設定にアクセスする場合、ログインページにリダイレクト
+  if (!user && request.nextUrl.pathname.startsWith("/[username]/settings")) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
-    return NextResponse.redirect(url);
-  }
-
-  // 未ログインでプロフィールページにアクセスする場合、ログインページにリダイレクト
-  if (!user && request.nextUrl.pathname.startsWith("/[username]")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
