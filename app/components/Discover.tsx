@@ -30,6 +30,7 @@ const tabs = [
   { name: "女性", link: "/manga/ranking?category=女性" },
   { name: "BL", link: "/manga/ranking?category=BL" },
   { name: "TL", link: "/manga/ranking?category=TL" },
+  { name: "Ikkimiとは？", link: "/about" },
 ];
 
 export default function Discover() {
