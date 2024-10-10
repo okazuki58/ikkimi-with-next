@@ -8,17 +8,19 @@ export function Footer() {
     >
       <div className="flex flex-col gap-12 lg:flex-row lg:gap-0">
         {/* Logo */}
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <img src="/frame-1.svg" alt="" className="size-6" />
-            <div className="font-unbounded text-2xl font-semibold text-gray-900 tracking-wide">
-              Ikkimi
+        <Link href="/">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <img src="/frame-1.svg" alt="" className="size-6" />
+              <div className="font-unbounded text-2xl font-semibold text-gray-900 tracking-wide">
+                Ikkimi
+              </div>
             </div>
+            <p className="text-sm text-gray-500 md:w-2/3">
+              次に読むべき作品を見つけるための推薦ネットワーク
+            </p>
           </div>
-          <p className="text-sm text-gray-500 md:w-2/3">
-            次に読むべき作品を見つけるための推薦ネットワーク
-          </p>
-        </div>
+        </Link>
 
         {/* bottom */}
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-0 flex-1">
