@@ -3,12 +3,13 @@
 import { fetchRankingMangas } from "@/app/lib/data";
 import { Manga } from "@/app/lib/definitions";
 import Dropdown from "@/app/components/Dropdown";
-import { useEffect, useState, useRef, Suspense } from "react";
+import { useEffect, useState, useRef } from "react";
 import MangaListForRanking from "@/app/components/manga/MangaListForRanking";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Ranking() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   // const [sortOption, setSortOption] = useState("all");
 
   // const sortOptions = [
@@ -38,20 +39,23 @@ export default function Ranking() {
     "裏社会・アングラ",
   ];
 
-  const initialCategory = (() => {
-    const categoryFromUrl = searchParams.get("category");
-    return categories.includes(categoryFromUrl ?? "")
-      ? categoryFromUrl!
-      : "総合";
-  })();
 
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedCategory, setSelectedCategory] = useState("総合");
   const [mangas, setMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isGradientVisible, setIsGradientVisible] = useState(true);
   // 各ボタンのrefを保持する配列
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  // クエリパラメータからカテゴリを取得
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const categoryFromUrl = params.get("category");
+    if (categoryFromUrl && categories.includes(categoryFromUrl)) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, []);
 
   // ジャンルに基づいてランキングを取得
   const fetchGenreRankingMangas = async (category: string | null) => {
@@ -126,51 +130,49 @@ export default function Ranking() {
   // }, []);
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="w-full max-w-5xl mx-auto py-4">
-        <div className="py-10">
-          <h1 className="text-3xl font-bold">総合ランキング</h1>
-        </div>
-        {/* <div className="flex justify-start mb-2">
+    <div className="w-full max-w-5xl mx-auto py-4">
+      <div className="py-10">
+        <h1 className="text-3xl font-bold">総合ランキング</h1>
+      </div>
+      {/* <div className="flex justify-start mb-2">
         <Dropdown
           options={sortOptions}
           selectedValue={sortOption}
           onChange={(value) => setSortOption(value)}
         />
       </div> */}
-        {/* カテゴリタブ */}
-        <div className="relative">
-          <div
-            ref={containerRef}
-            className="flex gap-2 mb-4 overflow-x-auto py-2 sm:py-4"
-          >
-            {categories.map((category, index) => (
-              <button
-                key={category}
-                ref={(el) => {
-                  buttonRefs.current[index] = el;
-                }}
-                onClick={() => setSelectedCategory(category)}
-                className={`h-10 whitespace-nowrap px-4 rounded-md border border-gray-200 ${
-                  selectedCategory === category
-                    ? "border-gray-900"
-                    : "md:hover:bg-gray-100"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          {isGradientVisible && <div className="scroll-gradient"></div>}
+      {/* カテゴリタブ */}
+      <div className="relative">
+        <div
+          ref={containerRef}
+          className="flex gap-2 mb-4 overflow-x-auto py-2 sm:py-4"
+        >
+          {categories.map((category, index) => (
+            <button
+              key={category}
+              ref={(el) => {
+                buttonRefs.current[index] = el;
+              }}
+              onClick={() => setSelectedCategory(category)}
+              className={`h-10 whitespace-nowrap px-4 rounded-md border border-gray-200 ${
+                selectedCategory === category
+                  ? "border-gray-900"
+                  : "md:hover:bg-gray-100"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
-        <div className="py-4">
-          <MangaListForRanking
-            mangas={mangas}
-            isLoading={isLoading}
-            limit={100}
-          />
-        </div>
+        {isGradientVisible && <div className="scroll-gradient"></div>}
       </div>
-    </Suspense>
+      <div className="py-4">
+        <MangaListForRanking
+          mangas={mangas}
+          isLoading={isLoading}
+          limit={100}
+        />
+      </div>
+    </div>
   );
 }
