@@ -25,6 +25,7 @@ import Discover from "@/app/components/Discover";
 import dayjs from "dayjs";
 import "dayjs/locale/ja";
 import LatestBookmarks from "@/app/manga/latestbookmark/clientLatestBookmark";
+import { useUser } from "./context/UserContext";
 dayjs.locale("ja");
 
 export default function ContentHome() {
@@ -43,6 +44,7 @@ export default function ContentHome() {
   const [blMangas, setBlMangas] = useState<Manga[]>([]);
   const [tlMangas, setTlMangas] = useState<Manga[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user } = useUser();
   const today = dayjs().format("M月D日");
 
   useEffect(() => {
@@ -126,7 +128,7 @@ export default function ContentHome() {
     <>
       {/* {!user && <Hero />} */}
       <div className="mb-4 min-w-full">
-        <Discover />
+        <Discover user={user} />
         {/* <Divider /> */}
         {/* <UserCard />
         <Divider /> */}
