@@ -40,6 +40,18 @@ export default async function RootLayout({
   return (
     <html lang="ja" className="bg-white">
       <head>
+        <meta property="og:title" content="Ikkimi" />
+        <meta
+          property="og:description"
+          content="Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ikki-mi.com/" />
+        <meta
+          property="og:image"
+          content="https://ikki-mi.com/ikkimiLogo.png"
+        />
+        <meta property="og:site_name" content="Ikkimi" />
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-528RG3RVRJ"
