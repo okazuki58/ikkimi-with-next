@@ -316,156 +316,175 @@ export default function ProfilePage({ params }: ProfilePageProps) {
   const isOwnProfile = user?.id === profile.id;
 
   return (
-    <div className="container mx-auto py-4 max-w-5xl">
-      <div className="mb-8">
-        <div className="py-6">
-          <div className="flex flex-col sm:flex-row gap-8 w-full">
-            <div>
-              <div className="w-28 h-28 rounded-full overflow-hidden border relative">
-                <Image
-                  src={profile.avatar_url}
-                  alt={`${profile.name}のアバター`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col w-full">
-              <div className="flex items-center justify-between md:text-left mb-4 gap-1">
-                <h1 className="text-2xl font-bold">{profile.name}</h1>
-                {/* <p className="text-gray-500">{profile.username}</p> */}
-                {isOwnProfile ? (
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 border transition md:hover:bg-gray-100 md:max-w-sm"
-                    onClick={() => setIsOpen(true)}
-                  >
-                    プロフィールを編集
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => handleFollowToggle(profile.id)}
-                    className={`px-4 py-2 text-sm  transition font-bold rounded-md focus:outline-none w-[120px] border ${
-                      isFollowing
-                        ? "bg-white text-slate-900 md:hover:bg-slate-100"
-                        : "bg-slate-900 text-white md:hover:bg-slate-800"
-                    }`}
-                  >
-                    {isFollowing ? "フォロー中" : "フォロー"}
-                  </button>
-                )}
-              </div>
-
+    <>
+      <head>
+        <meta name="twitter:card" content="summary_large_image" />
+        {profile.name && (
+          <meta name="twitter:title" content={`${profile.name}のマンガ本棚`} />
+        )}
+        {profile.avatar_url && (
+          <meta
+            name="twitter:url"
+            content={`https://ikki-mi.com/${username}`}
+          />
+        )}
+        <meta name="twitter:image" content="/ikkimiLogo.png" />
+      </head>
+      <div className="container mx-auto py-4 max-w-5xl">
+        <div className="mb-8">
+          <div className="py-6">
+            <div className="flex flex-col sm:flex-row gap-8 w-full">
               <div>
-                <p className="mb-4">{profile.bio}</p>
+                <div className="w-28 h-28 rounded-full overflow-hidden border relative">
+                  <Image
+                    src={profile.avatar_url}
+                    alt={`${profile.name}のアバター`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  />
+                </div>
+              </div>
 
-                <div className="flex flex-wrap justify-start gap-4 mb-4">
-                  <p className="flex items-center gap-1">
-                    <span className="font-semibold">
-                      {bookmarkedMangas.length}
-                    </span>{" "}
-                    <span className="text-gray-600 text-sm font-medium">
-                      ブックマーク
-                    </span>
-                  </p>
-                  <p className="flex items-center gap-1 group">
-                    <span className="font-semibold">{followingCount}</span>{" "}
-                    <span
-                      className="text-gray-600 text-sm font-medium group-hover:text-gray-900 cursor-pointer"
-                      onClick={fetchFollowingUsers}
+              <div className="flex flex-col w-full">
+                <div className="flex items-center justify-between md:text-left mb-4 gap-1">
+                  <h1 className="text-2xl font-bold">{profile.name}</h1>
+                  {/* <p className="text-gray-500">{profile.username}</p> */}
+                  {isOwnProfile ? (
+                    <button
+                      type="button"
+                      className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 border transition md:hover:bg-gray-100 md:max-w-sm"
+                      onClick={() => setIsOpen(true)}
                     >
-                      フォロー中
-                    </span>
-                  </p>
-                  <p className="flex items-center gap-1 group">
-                    <span className="font-semibold">{followersCount}</span>{" "}
-                    <span
-                      className="text-gray-600 text-sm font-medium group-hover:text-gray-900 cursor-pointer"
-                      onClick={fetchFollowers}
+                      プロフィールを編集
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleFollowToggle(profile.id)}
+                      className={`px-4 py-2 text-sm  transition font-bold rounded-md focus:outline-none w-[120px] border ${
+                        isFollowing
+                          ? "bg-white text-slate-900 md:hover:bg-slate-100"
+                          : "bg-slate-900 text-white md:hover:bg-slate-800"
+                      }`}
                     >
-                      フォロワー
-                    </span>
-                  </p>
+                      {isFollowing ? "フォロー中" : "フォロー"}
+                    </button>
+                  )}
                 </div>
 
-                {/* Links */}
-                <div className="flex gap-4">
-                  {profile.x_username && (
-                    <div className="tooltip">
-                      <Link
-                        href={`https://x.com/${profile.x_username}`}
-                        target="_blank"
+                <div>
+                  <p className="mb-4">{profile.bio}</p>
+
+                  <div className="flex flex-wrap justify-start gap-4 mb-4">
+                    <p className="flex items-center gap-1">
+                      <span className="font-semibold">
+                        {bookmarkedMangas.length}
+                      </span>{" "}
+                      <span className="text-gray-600 text-sm font-medium">
+                        ブックマーク
+                      </span>
+                    </p>
+                    <p className="flex items-center gap-1 group">
+                      <span className="font-semibold">{followingCount}</span>{" "}
+                      <span
+                        className="text-gray-600 text-sm font-medium group-hover:text-gray-900 cursor-pointer"
+                        onClick={fetchFollowingUsers}
                       >
-                        <XLogo />
-                      </Link>
-                      <span className="tooltiptext">{profile.x_username}</span>
-                    </div>
-                  )}
-                  {profile.website && (
-                    <div className="tooltip">
-                      <Link href={profile.website} target="_blank">
-                        <LinkIcon
-                          className="size-5 text-gray-400 md:hover:text-gray-900 cursor-pointer"
-                          strokeWidth={2}
-                        />
-                      </Link>
-                      <span className="tooltiptext">{profile.website}</span>
-                    </div>
-                  )}
+                        フォロー中
+                      </span>
+                    </p>
+                    <p className="flex items-center gap-1 group">
+                      <span className="font-semibold">{followersCount}</span>{" "}
+                      <span
+                        className="text-gray-600 text-sm font-medium group-hover:text-gray-900 cursor-pointer"
+                        onClick={fetchFollowers}
+                      >
+                        フォロワー
+                      </span>
+                    </p>
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex gap-4">
+                    {profile.x_username && (
+                      <div className="tooltip">
+                        <Link
+                          href={`https://x.com/${profile.x_username}`}
+                          target="_blank"
+                        >
+                          <XLogo />
+                        </Link>
+                        <span className="tooltiptext">
+                          {profile.x_username}
+                        </span>
+                      </div>
+                    )}
+                    {profile.website && (
+                      <div className="tooltip">
+                        <Link href={profile.website} target="_blank">
+                          <LinkIcon
+                            className="size-5 text-gray-400 md:hover:text-gray-900 cursor-pointer"
+                            strokeWidth={2}
+                          />
+                        </Link>
+                        <span className="tooltiptext">{profile.website}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="my-5">
-        <div className="flex justify-end mb-2">
-          <Dropdown
-            options={sortOptions}
-            selectedValue={sortOption}
-            onChange={(value) => setSortOption(value)}
-          />
-        </div>
-        <div className="py-4">
-          {sortedMangas.length > 0 ? (
-            <MangaList
-              mangas={sortedMangas}
-              isLoading={isLoading}
-              limit={100}
+        <div className="my-5">
+          <div className="flex justify-end mb-2">
+            <Dropdown
+              options={sortOptions}
+              selectedValue={sortOption}
+              onChange={(value) => setSortOption(value)}
             />
-          ) : (
-            <p className="text-gray-500">ブックマークされた漫画はありません</p>
-          )}
+          </div>
+          <div className="py-4">
+            {sortedMangas.length > 0 ? (
+              <MangaList
+                mangas={sortedMangas}
+                isLoading={isLoading}
+                limit={100}
+              />
+            ) : (
+              <p className="text-gray-500">
+                ブックマークされた漫画はありません
+              </p>
+            )}
+          </div>
         </div>
-      </div>
 
-      {isOwnProfile && (
-        <ModalComponent isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      )}
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-      />
-      <FollowingModal
-        isOpen={isFollowingModalOpen}
-        onClose={() => setIsFollowingModalOpen(false)}
-        followingUsers={followingUsers}
-        onFollowToggle={handleFollowToggle}
-        followingIds={followingIds}
-        currentUserId={user?.id}
-      />
-      <FollowersModal
-        isOpen={isFollowersModalOpen}
-        onClose={() => setIsFollowersModalOpen(false)}
-        users={followers}
-        onFollowToggle={handleFollowToggle}
-        followingIds={followingIds}
-        currentUserId={user?.id}
-      />
-    </div>
+        {isOwnProfile && (
+          <ModalComponent isOpen={isOpen} onClose={() => setIsOpen(false)} />
+        )}
+        <LoginModal
+          isOpen={isLoginModalOpen}
+          onClose={() => setIsLoginModalOpen(false)}
+        />
+        <FollowingModal
+          isOpen={isFollowingModalOpen}
+          onClose={() => setIsFollowingModalOpen(false)}
+          followingUsers={followingUsers}
+          onFollowToggle={handleFollowToggle}
+          followingIds={followingIds}
+          currentUserId={user?.id}
+        />
+        <FollowersModal
+          isOpen={isFollowersModalOpen}
+          onClose={() => setIsFollowersModalOpen(false)}
+          users={followers}
+          onFollowToggle={handleFollowToggle}
+          followingIds={followingIds}
+          currentUserId={user?.id}
+        />
+      </div>
+    </>
   );
 }
