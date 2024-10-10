@@ -49,9 +49,11 @@
   transition: opacity 0.3s;
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+@media (min-width: 767px) {
+  .tooltip:hover .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+  }
 }
 
 .scroll-gradient {
