@@ -465,3 +465,20 @@ export async function fetchBookmarkedUsers(mangaId: number) {
 
   return users;
 }
+
+
+async function fetchProfileByUsername(username: string): Promise<Profile | null> {
+  const supabase = createClient();
+
+  const { data: profileData, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('username', username)
+    .single();
+
+  if (error || !profileData) {
+    return null;
+  }
+
+  return profileData as Profile;
+}

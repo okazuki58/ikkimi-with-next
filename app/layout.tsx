@@ -46,7 +46,7 @@ export default async function RootLayout({
           content="Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ikki-mi.com/" />
+        <meta property="og:url" content="https://ikki-mi.com" />
         <meta
           property="og:image"
           content="https://ikki-mi.com/ikkimiLogo.png"

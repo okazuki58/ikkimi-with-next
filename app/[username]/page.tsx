@@ -7,7 +7,10 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import MangaList from "../components/manga/MangaList";
 import ModalComponent from "@/app/components/modal/ProfileEditModal";
 import { ProfileSkeleton } from "../components/Skeletons";
-import { fetchUserBookmarkedMangasWithCreatedAt } from "../lib/data";
+import {
+  fetchUserBookmarkedMangasWithCreatedAt,
+  fetchUserProfileByUsername,
+} from "../lib/data";
 import Dropdown from "@/app/components/Dropdown";
 import { useUser } from "../context/UserContext";
 import { createClient } from "@/utils/supabase/client";
@@ -18,6 +21,7 @@ import FollowingModal from "@/app/components/modal/FollowingModal";
 
 import NotFound from "../not-found";
 import FollowersModal from "../components/modal/FollowersModal";
+import { Metadata } from "next";
 
 interface ProfilePageProps {
   params: {
@@ -25,9 +29,48 @@ interface ProfilePageProps {
   };
 }
 
-interface ProfileWithCounts extends Profile {
-  followers_count: number;
-  following_count: number;
+export async function generateMetadata({
+  params,
+}: ProfilePageProps): Promise<Metadata> {
+  const { username } = params;
+
+  // プロフィール情報を取得
+  const profile = await fetchUserProfileByUsername(username);
+
+  if (!profile) {
+    return {
+      title: "ユーザーが見つかりません",
+    };
+  }
+
+  const title = `${profile.name}のマンガ本棚`;
+  const url = `https://ikki-mi.com/${username}`;
+  const image = profile.avatar_url;
+
+  return {
+    title,
+    openGraph: {
+      title,
+      url,
+      images: [
+        {
+          url: image,
+          alt: `${profile.name}のアバター`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      images: [image],
+    },
+  };
+}
+
+interface ProfilePageProps {
+  params: {
+    username: string;
+  };
 }
 
 export default function ProfilePage({ params }: ProfilePageProps) {
@@ -317,21 +360,6 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <>
-      <head>
-        <meta name="twitter:card" content="summary_large_image" />
-        {profile.name && (
-          <meta name="twitter:title" content={`${profile.name}のマンガ本棚`} />
-        )}
-        {profile.avatar_url && (
-          <meta
-            name="twitter:url"
-            content={`https://ikki-mi.com/${username}`}
-          />
-        )}
-        {profile.avatar_url && (
-          <meta name="twitter:image" content={profile.avatar_url} />
-        )}
-      </head>
       <div className="container mx-auto py-4 max-w-5xl">
         <div className="mb-8">
           <div className="py-6">
