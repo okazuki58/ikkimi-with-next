@@ -316,7 +316,7 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>{profile.name}のマンガ本棚</title>
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${profile.name}のマンガ本棚`} />
