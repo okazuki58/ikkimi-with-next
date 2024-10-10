@@ -218,7 +218,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="少年漫画"
             buttonText="すべて見る"
-            buttonLink="shonen"
+            buttonLink="/ranking?category=少年"
           />
           <MangaList mangas={shonenMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -227,7 +227,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="少女漫画"
             buttonText="すべて見る"
-            buttonLink="shojo"
+            buttonLink="/ranking?category=少女"
           />
           <MangaList mangas={shojoMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -236,7 +236,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="青年漫画"
             buttonText="すべて見る"
-            buttonLink="seinen"
+            buttonLink="/ranking?category=青年"
           />
           <MangaList mangas={seinenMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -245,7 +245,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="女性漫画"
             buttonText="すべて見る"
-            buttonLink="josei"
+            buttonLink="/ranking?category=女性"
           />
           <MangaList mangas={joseiMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -254,7 +254,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="BL漫画"
             buttonText="すべて見る"
-            buttonLink="bl"
+            buttonLink="/ranking?category=BL"
           />
           <MangaList mangas={blMangas} isLoading={isLoading} limit={14} />
         </div>
@@ -263,7 +263,7 @@ export default function ContentHome() {
           <MangaListHeader
             sectionTitle="TL漫画"
             buttonText="すべて見る"
-            buttonLink="tl"
+            buttonLink="/ranking?category=TL"
           />
           <MangaList mangas={tlMangas} isLoading={isLoading} limit={14} />
         </div>

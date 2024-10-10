@@ -7,10 +7,7 @@ import { LinkIcon } from "@heroicons/react/24/outline";
 import MangaList from "../components/manga/MangaList";
 import ModalComponent from "@/app/components/modal/ProfileEditModal";
 import { ProfileSkeleton } from "../components/Skeletons";
-import {
-  fetchUserBookmarkedMangasWithCreatedAt,
-  fetchUserProfileByUsername,
-} from "../lib/data";
+import { fetchUserBookmarkedMangasWithCreatedAt } from "../lib/data";
 import Dropdown from "@/app/components/Dropdown";
 import { useUser } from "../context/UserContext";
 import { createClient } from "@/utils/supabase/client";

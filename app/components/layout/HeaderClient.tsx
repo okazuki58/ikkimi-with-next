@@ -98,7 +98,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
 
       fetchProfile();
     }
-  }, [user]);
+  }, [user, profile]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -130,7 +130,7 @@ export default function ClientHeader({ user }: { user: User | null }) {
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-8 lg:divide-y lg:divide-gray-200">
           <div className="flex h-16 items-center justify-between">
-            <div className="relative z-10 flex px-0">
+            <div className="relative z-10 flex px-0 flex-shrink-0">
               <div className="flex flex-shrink-0 items-center">
                 <Link href="/" passHref className="flex gap-1 items-center">
                   <img src="/frame-1.svg" alt="" className="size-6" />
@@ -142,12 +142,12 @@ export default function ClientHeader({ user }: { user: User | null }) {
             </div>
 
             {/* デスクトップ画面の検索バー */}
-            <div className="hidden md:block">
+            <div className="hidden md:block md:flex-grow md:max-w-[480px] w-full mx-4">
               <AlgoSearch inputRef={inputRef} onBlur={null} />
             </div>
 
             {/* アイコンとメニュー */}
-            <div className="relative z-10 ml-4 flex items-center gap-5">
+            <div className="relative z-10 ml-4 flex items-center gap-5 flex-shrink-0">
               {/* モバイル画面の虫眼鏡アイコン */}
               <div className="md:hidden">
                 <button
@@ -210,11 +210,11 @@ export default function ClientHeader({ user }: { user: User | null }) {
                         </Link>
                         <Link
                           key={profile?.username}
-                          href={`/${profile?.username}`}
+                          href={`/${profile?.username}/settings`}
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           onClick={() => setIsMenuOpen(false)}
                         >
-                          設定
+                          アカウント設定
                         </Link>
                         <button
                           className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

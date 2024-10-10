@@ -1,6 +1,9 @@
 "use client";
 
-import { BookmarkIcon as BookmarkOutline } from "@heroicons/react/24/outline";
+import {
+  BookmarkIcon as BookmarkOutline,
+  DivideIcon,
+} from "@heroicons/react/24/outline";
 import { BookmarkIcon as BookmarkSolid } from "@heroicons/react/24/solid";
 import { useBookmark } from "../context/BookmarkContext";
 import { toast } from "sonner";
@@ -43,7 +46,9 @@ export default function BookmarkButton({
     const message = isBookmarked
       ? "ブックマークを解除しました"
       : "ブックマークを追加しました";
-    toast.success(message);
+    toast.success(message, {
+      className: "bg-indigo-50 text-indigo-600 border border-indigo-400",
+    });
   };
 
   return (

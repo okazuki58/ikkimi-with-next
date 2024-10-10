@@ -71,7 +71,7 @@ const FollowersModal: React.FC<FollowersModalProps> = ({
                             {user.name}
                           </span>
                           <span className="text-xs text-gray-400">
-                            {user.username}
+                            @{user.username}
                           </span>
                         </div>
                       </div>

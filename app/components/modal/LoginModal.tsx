@@ -23,7 +23,7 @@ export default function LoginModal({ isOpen, onClose }: ModalComponentProps) {
           >
             <button
               onClick={() => onClose()}
-              className="absolute top-6 right-6 text-gray-400"
+              className="absolute top-6 right-6 text-gray-400 z-50"
             >
               <XMarkIcon className="size-5" />
             </button>

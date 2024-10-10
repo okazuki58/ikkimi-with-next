@@ -150,7 +150,7 @@ export default function NewReleases() {
                     onClick={() => setSelectedDate(dateStr)}
                     className={`px-1 py-3 sm:px-2 text-sm rounded-md flex flex-col gap-0.5 items-center border border-gray-200 ${
                       selectedDate === dateStr
-                        ? "border-gray-700"
+                        ? "border-gray-900"
                         : "md:hover:bg-gray-100"
                     }`}
                   >

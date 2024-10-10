@@ -11,10 +11,10 @@ import { getImageUrl } from "../../lib/data";
 type MangaListProps = {
   mangas: Manga[];
   isLoading: boolean;
-  limit?: number; // 表示数を指定するプロップスを追加、任意のため"?"を付ける
+  limit?: number;
 };
 
-export default function MangaList({
+export default function MangaListForRanking({
   mangas,
   isLoading,
   limit,
@@ -29,6 +29,11 @@ export default function MangaList({
     setIsOpen(true);
   };
 
+  // const filteredMangas = mangas.filter(
+  //   (manga) =>
+  //     selectedCategory === "総合" || manga.category === selectedCategory
+  // );
+
   if (isLoading) {
     return <MangaListSkeleton />;
   }
@@ -36,7 +41,7 @@ export default function MangaList({
   return (
     <>
       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-x-2 sm:gap-x-3 gap-y-5">
-        {mangas?.slice(0, displayLimit).map((manga) => (
+        {mangas?.slice(0, displayLimit).map((manga, index) => (
           <div key={`${manga.id}`} className="flex flex-col">
             <div
               className="flex flex-col group pb-1 hover:cursor-pointer"
@@ -55,10 +60,17 @@ export default function MangaList({
                   style={{ objectFit: "cover" }}
                   onLoadingComplete={() => setIsImageLoaded(true)}
                 />
+                <div className="absolute bottom-0 left-0 text-white text-sm font-semibold p-4 m-1 size-5 bg-gray-900/50 flex items-center justify-center rounded-md">
+                  <span>{index + 1}</span>
+                </div>
               </div>
-              <h3 className="text-sm mt-1 sm:mt-1.5 line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600">
-                {manga.title}
-              </h3>
+
+              <div className="flex gap-2 items-center mt-1 sm:mt-1.5">
+                {/* <ArrowUpIcon className="w-3 h-3 stroke-2 text-red-500" /> */}
+                <h3 className="text-sm line-clamp-1 text-slate-900 dark:text-white md:group-hover:text-indigo-600">
+                  {manga.title}
+                </h3>
+              </div>
               {/* 追加: リリース日と巻数を表示 */}
               <div className="flex gap-2">
                 {manga.release_date && (
