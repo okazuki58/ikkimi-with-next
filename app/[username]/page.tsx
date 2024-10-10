@@ -1,5 +1,6 @@
 "use client";
 
+import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Manga, Profile } from "../lib/definitions";
 import Image from "next/image";
@@ -21,51 +22,6 @@ import FollowingModal from "@/app/components/modal/FollowingModal";
 
 import NotFound from "../not-found";
 import FollowersModal from "../components/modal/FollowersModal";
-import { Metadata } from "next";
-
-interface ProfilePageProps {
-  params: {
-    username: string;
-  };
-}
-
-export async function generateMetadata({
-  params,
-}: ProfilePageProps): Promise<Metadata> {
-  const { username } = params;
-
-  // プロフィール情報を取得
-  const profile = await fetchUserProfileByUsername(username);
-
-  if (!profile) {
-    return {
-      title: "ユーザーが見つかりません",
-    };
-  }
-
-  const title = `${profile.name}のマンガ本棚`;
-  const url = `https://ikki-mi.com/${username}`;
-  const image = profile.avatar_url;
-
-  return {
-    title,
-    openGraph: {
-      title,
-      url,
-      images: [
-        {
-          url: image,
-          alt: `${profile.name}のアバター`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      images: [image],
-    },
-  };
-}
 
 interface ProfilePageProps {
   params: {
@@ -360,6 +316,16 @@ export default function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <>
+    <Head>
+        <title>{profile.name}のマンガ本棚</title>
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${profile.name}のマンガ本棚`} />
+        <meta name="twitter:url" content={`https://ikki-mi.com/${username}`} />
+        <meta name="twitter:image" content={profile.avatar_url} />
+        <meta property="og:title" content={`${profile.name}のマンガ本棚`} />
+        <meta property="og:url" content={`https://ikki-mi.com/${username}`} />
+        <meta property="og:image" content={profile.avatar_url} />
+      </Head>
       <div className="container mx-auto py-4 max-w-5xl">
         <div className="mb-8">
           <div className="py-6">
