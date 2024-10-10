@@ -328,7 +328,9 @@ export default function ProfilePage({ params }: ProfilePageProps) {
             content={`https://ikki-mi.com/${username}`}
           />
         )}
-        <meta name="twitter:image" content="/ikkimiLogo.png" />
+        {profile.avatar_url && (
+          <meta name="twitter:image" content={profile.avatar_url} />
+        )}
       </head>
       <div className="container mx-auto py-4 max-w-5xl">
         <div className="mb-8">
