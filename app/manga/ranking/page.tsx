@@ -5,11 +5,8 @@ import { Manga } from "@/app/lib/definitions";
 import Dropdown from "@/app/components/Dropdown";
 import { useEffect, useState, useRef } from "react";
 import MangaListForRanking from "@/app/components/manga/MangaListForRanking";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Ranking() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   // const [sortOption, setSortOption] = useState("all");
 
   // const sortOptions = [
@@ -38,7 +35,6 @@ export default function Ranking() {
     "日常",
     "裏社会・アングラ",
   ];
-
 
   const [selectedCategory, setSelectedCategory] = useState("総合");
   const [mangas, setMangas] = useState<Manga[]>([]);
