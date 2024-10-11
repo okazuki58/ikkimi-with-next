@@ -74,7 +74,11 @@ export function Footer() {
             <h4 className=" font-semibold text-gray-900">Links</h4>
             <ul className="flex flex-col gap-4">
               <li>
-                <a className="text-sm text-gray-700 md:hover:underline cursor-pointer">
+                <a
+                  href="https://x.com/Ikkimi_official"
+                  target="_blank"
+                  className="text-sm text-gray-700 md:hover:underline cursor-pointer"
+                >
                   X(旧Twitter)
                 </a>
               </li>
