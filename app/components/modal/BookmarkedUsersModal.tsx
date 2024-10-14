@@ -57,7 +57,7 @@ export default function BoomarkedUsersModal({
               <XMarkIcon className="size-5" />
             </button>
             <div className="flex items-center justify-center p-5 border-b border-gray-200">
-              <h2 className="text-xl font-bold">フォロー中のユーザー</h2>
+              <h2 className="text-xl font-bold">この作品をブックマークしてるユーザー</h2>
             </div>
             <ul className="flex flex-col gap-3 px-4 py-6">
               {users.length === 0 ? (

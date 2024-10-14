@@ -32,7 +32,7 @@ export const metadata = {
   description:
     "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
   openGraph: {
-    title: "Ikkimi",
+    title: "Ikkimi | オンライン漫画本棚",
     description:
       "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
     url: "https://ikki-mi.com",
@@ -41,7 +41,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ikkimi",
+    title: "Ikkimi | オンライン漫画本棚",
     description:
       "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
     images: "/ikkimiLogo.png",
