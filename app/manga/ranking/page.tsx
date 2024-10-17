@@ -25,7 +25,6 @@ export default function Ranking() {
     "BL",
     "TL",
     "アクション",
-    // "オーディオ",
     "グルメ",
     "スポーツ",
     "ドラマ",

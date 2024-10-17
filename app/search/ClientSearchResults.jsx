@@ -5,8 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { getMangaByIds } from "../lib/data";
 import MangaList from "@/app/components/manga/MangaList";
 const searchClient = algoliasearch(
-  "FHD9VGP1JY",
-  "cf9f92b6acc760cde5c41c0b41acb407"
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY
 );
 const index = searchClient.initIndex("manga_index");
 

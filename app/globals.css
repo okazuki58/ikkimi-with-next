@@ -51,8 +51,8 @@
 
 @media (min-width: 767px) {
   .tooltip:hover .tooltiptext {
-    visibility: hidden;
-    opacity: 0;
+    visibility: visible;
+    opacity: 1;
   }
 }
 

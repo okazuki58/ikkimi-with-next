@@ -4,7 +4,29 @@ import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get("category") || "総合";
+  const allowedCategories = [
+    "総合",
+    "少年",
+    "少女",
+    "青年",
+    "女性",
+    "BL",
+    "TL",
+    "アクション",
+    "グルメ",
+    "スポーツ",
+    "ドラマ",
+    "ファンタジー",
+    "ホラー・ミステリー",
+    "恋愛",
+    "日常",
+    "裏社会・アングラ",
+  ];
+  const category = allowedCategories.includes(
+    searchParams.get("category") as string
+  )
+    ? (searchParams.get("category") as string)
+    : "総合";
 
   const { data, error } = await supabase
     .from("genre_rankings")
