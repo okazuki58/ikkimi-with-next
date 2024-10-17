@@ -40,7 +40,7 @@ export const metadata = {
     siteName: "Ikkimi",
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Ikkimi | オンライン漫画本棚",
     description:
       "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
