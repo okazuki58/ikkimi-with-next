@@ -1,37 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ikkimi
 
-## Getting Started
+Ikkimiは、「本当に面白いと思った作品を、気軽に共有できる」オンライン漫画本棚サービスです。このアプリケーションは、ユーザーが一気見した漫画を共有し、次に読む作品を見つけるお手伝いをします。
 
-First, run the development server:
+## 機能
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **アカウント作成**: Googleアカウントを使用して簡単に登録できます。
+- **ブックマーク機能**: 気になる漫画をブックマークして保存できます。
+- **おすすめ作品の提案**: ブックマークした作品や他のユーザーのブックマークを基に、新しいおすすめ作品を提案します。
+- **ランキング機能**: 人気の作品をランキング形式で表示します。
+- **プロフィール編集**: ユーザーは自分のプロフィールを編集できます。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 技術スタック
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js**: サーバーサイドレンダリングと静的サイト生成をサポートするReactフレームワーク。
+- **Supabase**: リアルタイムデータベースと認証機能を提供するオープンソースのFirebase代替。
+- **Tailwind CSS**: ユーティリティファーストなCSSフレームワーク。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## セットアップ
 
-## Learn More
+このプロジェクトをローカルで実行するには、以下の手順に従ってください。
 
-To learn more about Next.js, take a look at the following resources:
+1. リポジトリをクローンします。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   git clone https://github.com/yourusername/ikkimi-with-next.git
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. ディレクトリに移動します。
 
-## Deploy on Vercel
+   ```bash
+   cd ikkimi-with-next
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. 依存関係をインストールします。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# ikkimi-with-next
+   ```bash
+   npm install
+   ```
+
+4. 開発サーバーを起動します。
+
+   ```bash
+   npm run dev
+   ```
+
+5. ブラウザで [http://localhost:3000](http://localhost:3000) を開きます。
+
+## デプロイ
+
+このアプリケーションは、Vercelを使用してデプロイできます。詳細な手順については、[Vercelのドキュメント](https://vercel.com/docs)を参照してください。
+
+## 貢献
+
+貢献は大歓迎です！バグを見つけた場合や新機能の提案がある場合は、Issueを作成してください。また、プルリクエストも受け付けています。
+
+## ライセンス
+
+このプロジェクトはMITライセンスの下でライセンスされています。詳細については、LICENSEファイルを参照してください。
+
+## お問い合わせ
+
+質問やフィードバックがある場合は、[okazuki58@gmail.com](mailto:okazuki58@gmail.com)までご連絡ください。
