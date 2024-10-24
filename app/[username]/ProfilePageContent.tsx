@@ -313,16 +313,6 @@ export default function ProfilePageContent({ params }: ProfilePageProps) {
 
   return (
     <>
-      <Head>
-        <title>{profile.name}のマンガ本棚</title>
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${profile.name}のマンガ本棚`} />
-        <meta name="twitter:url" content={`https://ikki-mi.com/${username}`} />
-        <meta name="twitter:image" content={profile.avatar_url} />
-        <meta property="og:title" content={`${profile.name}のマンガ本棚`} />
-        <meta property="og:url" content={`https://ikki-mi.com/${username}`} />
-        <meta property="og:image" content={profile.avatar_url} />
-      </Head>
       <div className="container mx-auto py-4 max-w-5xl">
         <div className="mb-8">
           <div className="py-6">
