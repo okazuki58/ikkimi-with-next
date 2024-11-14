@@ -29,22 +29,19 @@ const inter = Inter({
 
 export const metadata = {
   title: "Ikkimi",
-  description:
-    "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
+  description: "オンラインでマンガ本棚がつくれるWebアプリ",
   openGraph: {
-    title: "Ikkimi | オンライン漫画本棚",
-    description:
-      "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
+    title: "Ikkimi",
+    description: "オンラインでマンガ本棚がつくれるWebアプリ",
     url: "https://ikki-mi.com",
-    images: "/ikkimi-ogp-image.png",
+    images: "/ogp-image.png",
     siteName: "Ikkimi",
   },
   twitter: {
     card: "summary",
     title: "Ikkimi | オンライン漫画本棚",
-    description:
-      "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
-    images: "/ikkimi-ogp-image.png",
+    description: "オンラインでマンガ本棚がつくれるWebアプリ",
+    images: "/ogp-image.png",
   },
   keywords: ["manga", "comic", "share"],
 };
