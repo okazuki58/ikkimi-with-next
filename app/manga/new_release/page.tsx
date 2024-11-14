@@ -119,7 +119,7 @@ export default function NewReleases() {
               </span>
             </button>
 
-            <div className="text-md font-semibold py-2">2024年10月</div>
+            <div className="text-md font-semibold py-2">2024年11月</div>
 
             {/* 翌週 */}
             <button

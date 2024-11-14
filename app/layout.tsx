@@ -36,7 +36,7 @@ export const metadata = {
     description:
       "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
     url: "https://ikki-mi.com",
-    images: "/ikkimiLogo.png",
+    images: "/ikkimi-ogp-image.png",
     siteName: "Ikkimi",
   },
   twitter: {
@@ -44,7 +44,7 @@ export const metadata = {
     title: "Ikkimi | オンライン漫画本棚",
     description:
       "Ikkimiは、面白いと思った漫画をブックマークし、世界中と共有できるサービスです。",
-    images: "/ikkimiLogo.png",
+    images: "/ikkimi-ogp-image.png",
   },
   keywords: ["manga", "comic", "share"],
 };
