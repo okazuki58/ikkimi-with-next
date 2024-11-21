@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function Maintenance() {
   return (
     <div className="flex flex-col items-center justify-center gap-10 text-center my-24">
