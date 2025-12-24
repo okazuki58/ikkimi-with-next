@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth/supabase-adapter": "^1.5.0",
+    "@auth/supabase-adapter": "^1.11.1",
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.4",
     "@restart/ui": "^1.8.0",
